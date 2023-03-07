@@ -1,7 +1,11 @@
 package jeux_RPG;
 import java.util.HashMap;
 
-public class Game {
+public class Game
+{
+	final static String[][] CommandList = {{"/quit",""},{"/move","{direction} "},{"/attack",""},{"/info",""},{"/help","{command} "}};
+	final static String[] DirectionList = {"north","south","east","west"};
+	final static String[][] AttackCommand = {{"/spell",""},{"/use","{item}"},{"/weapon",""}};
 	public Game()
 	{
 		HashMap<String, Hero> HeroHash = new HashMap<String, Hero>();

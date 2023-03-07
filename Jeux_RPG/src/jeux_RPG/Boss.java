@@ -1,6 +1,7 @@
 package jeux_RPG;
 
-public class Boss extends Person{
+public class Boss extends Person
+{
 	public Boss(String name, int HP, int damagePoint, int defensePoint)
 	{
 		this.name = name;

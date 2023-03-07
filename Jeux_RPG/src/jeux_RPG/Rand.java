@@ -1,6 +1,7 @@
 package jeux_RPG;
 
-public class Rand {
+public class Rand
+{
 	//generate a random integer between [borne1,borne2[
 	public static int randint(int borne1, int borne2)
 	{

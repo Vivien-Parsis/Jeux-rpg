@@ -1,6 +1,7 @@
 package jeux_RPG;
 
-public class Room {
+public class Room
+{
 	String RoomName;
 	Person RoomBoss;
 	Item RoomItem;
@@ -9,7 +10,8 @@ public class Room {
 	Room EastRoom;
 	Room WestRoom;
 	
-	public Room(String RoomName,Person RoomBoss,Item RoomItem){
+	public Room(String RoomName,Person RoomBoss,Item RoomItem)
+	{
 		this.RoomName = RoomName;
 		this.RoomBoss = RoomBoss;
 		this.RoomItem = RoomItem;

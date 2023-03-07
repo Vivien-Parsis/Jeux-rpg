@@ -1,6 +1,7 @@
 package jeux_RPG;
 
-public class Hero extends Person{
+public class Hero extends Person
+{
 	int currentmana;
 	int maxmana;
 	Weapon HeroWeapon;

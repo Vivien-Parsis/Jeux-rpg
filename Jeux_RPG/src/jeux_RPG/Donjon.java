@@ -1,7 +1,8 @@
 package jeux_RPG;
 import java.util.HashMap;
 
-public class Donjon {
+public class Donjon
+{
 	String DonjonName;
 	HashMap<String, Room> RoomHash = new HashMap<String, Room>();
 	Item DonjonLoot;

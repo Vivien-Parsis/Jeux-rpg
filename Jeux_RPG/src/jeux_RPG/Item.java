@@ -1,6 +1,7 @@
 package jeux_RPG;
 
-public class Item {
+public class Item
+{
 	String nameItem;
 	int weight;
 	

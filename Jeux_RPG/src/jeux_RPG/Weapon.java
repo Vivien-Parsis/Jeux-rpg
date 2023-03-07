@@ -1,6 +1,7 @@
 package jeux_RPG;
 
-public class Weapon extends Item {
+public class Weapon extends Item
+{
 	int attackpoint;
 	
 	public Weapon(String nameItem, int weight, int attackpoint)

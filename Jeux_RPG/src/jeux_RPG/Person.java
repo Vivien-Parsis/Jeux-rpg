@@ -1,6 +1,7 @@
 package jeux_RPG;
 
-public class Person {
+public class Person
+{
 	String name;
 	int HP;
 	int damagePoint;
@@ -13,6 +14,7 @@ public class Person {
 		this.damagePoint = damagePoint;
 		this.defensePoint = defensePoint;
 	}
+	
 	public Person() 
 	{this("test",50,5,5);}
 	
