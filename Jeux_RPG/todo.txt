@@ -1,6 +1,0 @@
-creer un jeu de type rpg avec au moins
-
--Personnage : Nom / PV / degats / defense (au moins 3 perso)
--Objet : Nom
--Donjon : Nom / liste Salle / Loot final(objet)
--Salle : Nom / Personnage / Loot(objet)
