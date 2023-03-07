@@ -20,5 +20,5 @@ public class Hero extends Person{
 		this.HeroSpell2 = HeroSpell2;
 	}
 	public Hero()
-	{this("Herotest",50,5,5,10,5, new Weapon(),new Spell(), new Spell());}
+	{this("Herotest",50,5,5,10,5, new Weapon(), new Spell(), new Spell());}
 }
