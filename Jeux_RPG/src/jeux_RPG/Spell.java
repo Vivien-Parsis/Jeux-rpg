@@ -15,4 +15,9 @@ public class Spell
 	}
 	public Spell()
 	{this("spelltest",5,5);}
+
+	public String toString()
+	{
+		return this.SpellName;
+	}
 }

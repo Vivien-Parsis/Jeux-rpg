@@ -15,10 +15,6 @@ public class Room
 		this.RoomName = RoomName;
 		this.RoomBoss = RoomBoss;
 		this.RoomItem = RoomItem;
-		this.NorthRoom = null;
-		this.SouthRoom = null;
-		this.EastRoom = null;
-		this.WestRoom = null;
 	}
 	public void setExit(Room NorthRoom, Room SouthRoom, Room EastRoom, Room WestRoom)
 	{
@@ -27,12 +23,13 @@ public class Room
 		this.EastRoom = EastRoom;
 		this.WestRoom = WestRoom;
 	}
+	
 	public String toString() 
 	{return this.RoomName;}
 	
 	public String stringExit()
 	{	
-		String exit =  "North : "+this.NorthRoom+"\n"
+		String exit ="North : "+this.NorthRoom+"\n"
 				+"South : "+this.SouthRoom+"\n"
 				+"East : "+this.EastRoom+"\n"
 				+"West : "+this.WestRoom;

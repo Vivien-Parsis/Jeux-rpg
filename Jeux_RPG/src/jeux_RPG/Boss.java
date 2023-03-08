@@ -10,5 +10,5 @@ public class Boss extends Person
 		this.defensePoint = defensePoint;
 	}
 	public Boss()
-	{super("bosstest",50,5,5);}
+	{this("bosstest",50,5,5);}
 }

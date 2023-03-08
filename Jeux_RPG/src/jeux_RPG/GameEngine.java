@@ -39,7 +39,6 @@ public class GameEngine
         	{System.out.println("::unknown command !");}
         }
     }
-    
 
     //execute a command
     public int Command()
@@ -93,7 +92,6 @@ public class GameEngine
 					return 4;
 				}
 			}
-			
 		}
         //move case
         if(tabCommand[0].equals(Game.CommandList[1][0]))
@@ -126,8 +124,7 @@ public class GameEngine
         	else
         	{
         		this.CurrentRoom = this.CurrentRoom.getExit(tabCommand[1]);
-        		System.out.println("::moving to "+tabCommand[1]);
-				System.out.println();
+        		System.out.println("::moving to "+tabCommand[1]+"\n");
         		System.out.println(this.info());
         		return 1;
         	}

@@ -12,4 +12,7 @@ public class Item
 	}
 	public Item()
 	{this("testitem",0);}
+
+	public String toString()
+	{return this.nameItem;}
 }
