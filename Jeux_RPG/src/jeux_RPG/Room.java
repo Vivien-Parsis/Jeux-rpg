@@ -32,10 +32,10 @@ public class Room
 	
 	public String stringExit()
 	{	
-		String exit =  "north : "+this.NorthRoom+"\n"
-				+"south : "+this.SouthRoom+"\n"
-				+"east : "+this.EastRoom+"\n"
-				+"west : "+this.WestRoom;
+		String exit =  "North : "+this.NorthRoom+"\n"
+				+"South : "+this.SouthRoom+"\n"
+				+"East : "+this.EastRoom+"\n"
+				+"West : "+this.WestRoom;
 		return exit;
 	}
 	public boolean hasExit(String exit)

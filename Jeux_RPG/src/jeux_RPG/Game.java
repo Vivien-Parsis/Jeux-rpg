@@ -3,15 +3,25 @@ import java.util.HashMap;
 
 public class Game
 {
-	final static String[][] CommandList = {{"/quit",""},{"/move","{direction} "},{"/attack",""},{"/info",""},{"/help","{command} "}};
+	final static String[][] CommandList = 
+	{{"/quit",""},
+	{"/move","{direction} "},
+	{"/attack",""},
+	{"/info",""},
+	{"/help","{command} "}};
+	final static String[][] AttackCommand = 
+	{{"/spell",""},
+	{"/use","{item}"},
+	{"/weapon",""}};
 	final static String[] DirectionList = {"north","south","east","west"};
-	final static String[][] AttackCommand = {{"/spell",""},{"/use","{item}"},{"/weapon",""}};
+
+	GameEngine gameEngine;
 	public Game()
 	{
 		HashMap<String, Hero> HeroHash = new HashMap<String, Hero>();
-		HeroHash.put("p1", new Hero("wizard",100,10,10,10,10, new Weapon(), new Spell(), new Spell()));
-		HeroHash.put("p2", new Hero("warrior",100,15,5,10,10, new Weapon(), new Spell(), new Spell()));
-		HeroHash.put("p3", new Hero("tank",100,5,15,10,10, new Weapon(), new Spell(), new Spell()));
+		HeroHash.put("p1", new Hero("Wizard",100,10,10,10,10, new Weapon(), new Spell(), new Spell()));
+		HeroHash.put("p2", new Hero("Warrior",100,15,5,10,10, new Weapon(), new Spell(), new Spell()));
+		HeroHash.put("p3", new Hero("Tank",100,5,15,10,10, new Weapon(), new Spell(), new Spell()));
 		
 		HashMap<String, Room> RoomHash = new HashMap<String, Room>();
 		//20  21  22
@@ -49,7 +59,6 @@ public class Game
 		Item mainItem = new Item("emerald",0);
 		
 		Donjon GameDonjon = new Donjon("Main",RoomHash,mainItem);
-		GameEngine mygame = new GameEngine(HeroHash,GameDonjon,RoomHash.get("start"),0,10);
-		mygame.RunGame();
+		this.gameEngine = new GameEngine(HeroHash,GameDonjon,RoomHash.get("start"),0,10);
 	}
 }

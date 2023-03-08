@@ -31,26 +31,25 @@ public class GameEngine
         	int resultcommand = this.Command();
         	if(resultcommand==0)
         	{
-        		System.out.println("\n#########");
-        		System.out.println("game stop");
-        		System.out.println("#########");
+        		System.out.println("\n#########\ngame stop\n#########");
         		this.command.close();
         		break;
         	}
         	if(resultcommand==-2)
-        	{System.out.println("unknown command !");}
+        	{System.out.println(">unknown command !");}
         }
     }
     
     public String stringCurrentSituation()
     {
     	return
-    			("~~current room~~\n"+this.CurrentRoom+
+    			("~~current room~~\n"+
+				this.CurrentRoom+
     			"\n~~~~~exits~~~~~\n"+
     			this.CurrentRoom.stringExit()+
     			"\n~~~~~boss~~~~~\n"+
     			this.CurrentRoom.RoomBoss+
-    			"\n~~~~~hero~~~~~\n"+
+    			"\n~~~~heroes~~~~\n"+
     			this.stringHeroList())
     			.replaceAll("null", "none");
     }
@@ -73,7 +72,7 @@ public class GameEngine
     	{herolist += i + " ";}
     	return herolist;
     }
-    
+    //execute a command
     public int Command()
     {
     	System.out.print(">");
@@ -97,7 +96,7 @@ public class GameEngine
         	//case of wrong format
         	if(tabCommand.length!=2)
         	{
-        		System.out.println("must be /move {direction} !");
+        		System.out.println(">must be "+Game.CommandList[1][0]+" "+Game.CommandList[1][1]+"!");
         		return -1;
         	}
         	boolean knowdirection = false;
@@ -109,20 +108,21 @@ public class GameEngine
         	//case of unknown possible direction
         	if(!knowdirection)
         	{
-        		System.out.println("no such direction");
+        		System.out.println(">no such direction");
         		return -1;
         	}
         	//case of no exit
         	if(!this.CurrentRoom.hasExit(tabCommand[1]))
         	{
-        		System.out.println("can't go that way");
+        		System.out.println(">can't go that way");
         		return -1;
         	}
         	//case of a successful move
         	else
         	{
         		this.CurrentRoom = this.CurrentRoom.getExit(tabCommand[1]);
-        		System.out.println();
+        		System.out.println(">moving to "+tabCommand[1]);
+				System.out.println();
         		System.out.println(this.info());
         		return 1;
         	}
