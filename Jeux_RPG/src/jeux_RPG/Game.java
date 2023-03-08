@@ -4,11 +4,11 @@ import java.util.HashMap;
 public class Game
 {
 	final static String[][] CommandList = 
-	{{"/quit",""},
-	{"/move","{direction} "},
-	{"/attack",""},
-	{"/info",""},
-	{"/help","{command} "}};
+	{{"/quit","","quit the game"},
+	{"/move","{direction} ", "move the player into a direction"},
+	{"/attack","", "launch attack mode on current boss"},
+	{"/info","", "display current situation"},
+	{"/help","{command} ", "display how work a command"}};
 	final static String[][] AttackCommand = 
 	{{"/spell",""},
 	{"/use","{item}"},

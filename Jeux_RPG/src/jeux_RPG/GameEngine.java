@@ -90,6 +90,41 @@ public class GameEngine
     		return 3;
     	}
     	
+		//help case
+		if(tabCommand[0].equals(Game.CommandList[4][0]))
+        {
+			if(tabCommand.length>2)
+			{
+				System.out.println(">must be "+Game.CommandList[4][0]+" "+Game.CommandList[4][1]+"!");
+        		return -1;
+			}
+			if(tabCommand.length==1)
+			{
+				System.out.println(Game.CommandList[4][2]);
+				return 4;
+			}
+			else
+			{
+				boolean knowncommand = false;
+				int index = 0;
+				for(int i = 0; i<Game.CommandList.length;i++)
+				{
+					if(tabCommand[1].equals(Game.CommandList[i][0]))
+					{index=i;knowncommand=true;break;}
+				}
+				if(!knowncommand)
+				{
+					System.out.println(">must be "+Game.CommandList[4][0]+" "+Game.CommandList[4][1]+"!");
+        			return -1;
+				}
+				else
+				{
+					System.out.println(Game.CommandList[index][2]);
+					return 4;
+				}
+			}
+			
+		}
         //move case
         if(tabCommand[0].equals(Game.CommandList[1][0]))
         {
