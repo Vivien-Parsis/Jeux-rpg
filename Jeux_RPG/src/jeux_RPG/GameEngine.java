@@ -28,7 +28,6 @@ public class GameEngine
         System.out.println(this.info());
         while(true)
         {
-        	//int resultcommand = this.Command();
 			int resultcommand = Command.RunCommand(this);
         	if(resultcommand==0)
         	{

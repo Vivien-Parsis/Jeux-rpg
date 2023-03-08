@@ -37,8 +37,7 @@ public class Command {
 				int index = 0;
 				for(int i = 0; i<Game.CommandList.length;i++)
 				{
-					if(tabCommand[1].equals(Game.CommandList[i][0]) || 
-					tabCommand[1].equals(Game.CommandList[i][0].substring(1)))
+					if(tabCommand[1].equals(Game.CommandList[i][0]) || tabCommand[1].equals(Game.CommandList[i][0].substring(1)))
 					{index=i;knowncommand=true;break;}
 				}
 				if(!knowncommand)
@@ -66,7 +65,10 @@ public class Command {
         	for(int i = 0; i<Game.DirectionList.length;i++)
         	{
         		if(tabCommand[1].equals(Game.DirectionList[i]))
-        		{knowdirection = true; break;}
+        		{
+                    knowdirection = true;
+                    break;
+                }
         	}
         	//case of unknown possible direction
         	if(!knowdirection)
