@@ -14,14 +14,14 @@ public class Game
 	{"/use","{item}"},
 	{"/weapon",""}};
 	final static String[] DirectionList = {"north","south","east","west"};
-
 	GameEngine gameEngine;
+
 	public Game()
 	{
 		HashMap<String, Hero> HeroHash = new HashMap<String, Hero>();
-		HeroHash.put("p1", new Hero("Wizard",100,10,10,10,10, new Weapon(), new Spell(), new Spell()));
+		HeroHash.put("p1", new Hero("Wizard",80,10,10,10,10, new Weapon(), new Spell(), new Spell()));
 		HeroHash.put("p2", new Hero("Warrior",100,15,5,10,10, new Weapon(), new Spell(), new Spell()));
-		HeroHash.put("p3", new Hero("Tank",100,5,15,10,10, new Weapon(), new Spell(), new Spell()));
+		HeroHash.put("p3", new Hero("Tank",125,5,15,10,10, new Weapon(), new Spell(), new Spell()));
 		
 		HashMap<String, Room> RoomHash = new HashMap<String, Room>();
 		//20  21  22
@@ -57,9 +57,9 @@ public class Game
 		RoomHash.get("22").setExit(null, RoomHash.get("12"), null, RoomHash.get("21"));
 		
 		Item mainItem = new Item("emerald",0);
-		
 		Donjon GameDonjon = new Donjon("Main",RoomHash,mainItem);
-		this.gameEngine = new GameEngine(HeroHash,GameDonjon,RoomHash.get("start"),0,10);
+
+		this.gameEngine = new GameEngine(HeroHash,GameDonjon,RoomHash.get("start"),10,0);
 	}
 	
 	public void RunGame()
