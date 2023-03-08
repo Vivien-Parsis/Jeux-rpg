@@ -61,4 +61,6 @@ public class Game
 		Donjon GameDonjon = new Donjon("Main",RoomHash,mainItem);
 		this.gameEngine = new GameEngine(HeroHash,GameDonjon,RoomHash.get("start"),0,10);
 	}
+	public void RunGame()
+	{this.gameEngine.RunGame();}
 }

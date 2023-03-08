@@ -6,6 +6,6 @@ public class Main
 	{
 		System.out.println("##########\nrunning game\n###########\n");
 		Game game = new Game();
-		game.gameEngine.RunGame();
+		game.RunGame();
 	}
 }
