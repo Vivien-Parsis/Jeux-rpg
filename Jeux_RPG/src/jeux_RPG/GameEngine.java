@@ -36,11 +36,31 @@ public class GameEngine
         	}
         	if(resultcommand==-2)
         	{System.out.println(":unknown command !");}
+            
+            //combat mod
+            if(resultcommand==2)
+            {
+                System.out.println(":launch combat on current boss\n");
+                System.out.println(stringCurrentCombat());
+                while(true)
+                {
+                    int resultFightCommand = Command.RunCombatCommand(this);
+                    if(resultFightCommand==-2)
+        	        {System.out.println(":unknown command !");}
+
+                    if(resultFightCommand==4)
+                    {
+                        System.out.println(":leaving combat\n");
+                        System.out.println(this.info());
+                        break;
+                    }
+                }
+            }
         }
     }
 
 	public String info()
-    {return "\n" + this.stringCurrentSituation() + "\n" + stringCommandList() + "\n";}
+    {return "\n" + this.stringCurrentSituation() + "\n" + Command.stringCommandList() + "\n";}
 
     public String stringCurrentSituation()
     {
@@ -55,13 +75,14 @@ public class GameEngine
     			this.stringHeroList())
     			.replaceAll("null", "none");
     }
-    
-    public static String stringCommandList()
+    public String stringCurrentCombat()
     {
-    	String list ="~~~~commands~~~~\n";
-    	for(int i = 0; i<Game.CommandList.length;i++)
-    	{list += Game.CommandList[i][0]+" "+Game.CommandList[i][1];}
-    	return list;
+        return 
+            "\n~~~~~~boss~~~~~~\n"+
+            this.CurrentRoom.RoomBoss+
+            "\n~~~~~heroes~~~~~\n"+
+            this.stringHeroList()+"\n"+
+            Command.stringCombatCommandList()+"\n";
     }
     
     public String stringHeroList()

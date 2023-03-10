@@ -1,7 +1,23 @@
 package jeux_RPG;
 
 public class Command {
-    public static int RunCommand(GameEngine mygame)
+    public static String stringCommandList()
+    {
+    	String list ="~~~~commands~~~~\n";
+    	for(int i = 0; i<Game.CommandList.length;i++)
+    	{list += Game.CommandList[i][0]+" "+Game.CommandList[i][1];}
+    	return list;
+    }
+
+	public static String stringCombatCommandList()
+    {
+    	String list ="~~~~commands~~~~\n";
+    	for(int i = 0; i<Game.AttackCommand.length;i++)
+    	{list += Game.AttackCommand[i][0]+" "+Game.AttackCommand[i][1];}
+    	return list;
+    }
+
+	public static int RunCommand(GameEngine mygame)
     {
         System.out.print(">");
     	String stringCommand = mygame.command.nextLine();
@@ -125,4 +141,56 @@ public class Command {
         //case of unknown command
         return -2;
     }
+
+	public static int RunCombatCommand(GameEngine mygame)
+	{
+		System.out.print(">");
+    	String stringCommand = mygame.command.nextLine();
+    	String[] tabCommand = stringCommand.split(" ");
+		//leave case
+		if(tabCommand[0].equals(Game.AttackCommand[4][0]))
+		{
+			if(tabCommand.length>1)
+        	{
+        		System.out.println(":must be "+Game.AttackCommand[4][0]+" "+Game.AttackCommand[4][1]+"!");
+        		return -1;
+        	}
+			return 4;
+		}
+		//help case
+		if(tabCommand[0].equals(Game.AttackCommand[0][0]))
+        {
+			if(tabCommand.length>2)
+			{
+				System.out.println(":must be "+Game.AttackCommand[0][0]+" "+Game.AttackCommand[0][1]+"!");
+        		return -1;
+			}
+			if(tabCommand.length==1)
+			{
+				System.out.println(":"+Game.AttackCommand[0][2]);
+				return 0;
+			}
+			else
+			{
+				boolean knowncommand = false;
+				int index = 0;
+				for(int i = 0; i<Game.AttackCommand.length;i++)
+				{
+					if(tabCommand[1].equals(Game.AttackCommand[i][0]) || tabCommand[1].equals(Game.AttackCommand[i][0].substring(1)))
+					{index=i;knowncommand=true;break;}
+				}
+				if(!knowncommand)
+				{
+					System.out.println(":must be "+Game.AttackCommand[0][0]+" "+Game.AttackCommand[0][1]+"!");
+        			return -1;
+				}
+				else
+				{
+					System.out.println(":"+Game.AttackCommand[index][2]);
+					return 0;
+				}
+			}
+		}
+		return -2;
+	}
 }

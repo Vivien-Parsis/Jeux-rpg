@@ -10,9 +10,11 @@ public class Game
 	{"/info","", "display current situation"},
 	{"/help","{command} ", "display how work a command"}};
 	final static String[][] AttackCommand = 
-	{{"/spell",""},
-	{"/use","{item}"},
-	{"/weapon",""}};
+	{{"/help","{command} ", "display how work a command"},
+	{"/spell","{spell} ","use one spell of your current hero"},
+	{"/use","{item} ","use one item"},
+	{"/weapon","","attack with weapon of your current hero"},
+	{"/leave","","leave combat"}};
 	final static String[] DirectionList = {"north","south","east","west"};
 	GameEngine gameEngine;
 
