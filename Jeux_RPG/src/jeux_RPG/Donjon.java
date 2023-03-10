@@ -7,7 +7,7 @@ public class Donjon
 	HashMap<String, Room> RoomHash = new HashMap<String, Room>();
 	Item DonjonLoot;
 	
-	public Donjon(String DonjonName, HashMap<String, Room> RoomHash , Item DonjonLoot)
+	public Donjon(String DonjonName, HashMap<String, Room> RoomHash, Item DonjonLoot)
 	{
 		this.DonjonName = DonjonName;
 		this.RoomHash = RoomHash;

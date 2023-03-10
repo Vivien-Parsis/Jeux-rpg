@@ -1,19 +1,34 @@
 package jeux_RPG;
 
 public class Command {
-    public static String stringCommandList()
+    final static String[][] CommandList = 
+	{{"/quit","","quit the game"},
+	{"/move","{direction} ", "move the player into a direction"},
+	{"/attack","", "launch attack mode on current boss"},
+	{"/info","", "display current situation"},
+	{"/help","{command} ", "display how work a command"},
+	{"/back","", "go back"}};
+	final static String[][] AttackCommand = 
+	{{"/help","{command} ", "display how work a command"},
+	{"/spell","{spell} ","use one spell of your current hero"},
+	{"/use","{item} ","use one item"},
+	{"/weapon","","attack with weapon of your current hero"},
+	{"/leave","","leave combat"}};
+	final static String[] DirectionList = {"north","south","east","west"};
+
+	public static String stringCommandList()
     {
     	String list ="~~~~commands~~~~\n";
-    	for(int i = 0; i<Game.CommandList.length;i++)
-    	{list += Game.CommandList[i][0]+" "+Game.CommandList[i][1];}
+    	for(int i = 0; i<CommandList.length;i++)
+    	{list += CommandList[i][0]+" "+CommandList[i][1];}
     	return list;
     }
 
 	public static String stringCombatCommandList()
     {
     	String list ="~~~~commands~~~~\n";
-    	for(int i = 0; i<Game.AttackCommand.length;i++)
-    	{list += Game.AttackCommand[i][0]+" "+Game.AttackCommand[i][1];}
+    	for(int i = 0; i<AttackCommand.length;i++)
+    	{list += AttackCommand[i][0]+" "+AttackCommand[i][1];}
     	return list;
     }
 
@@ -24,22 +39,22 @@ public class Command {
     	String[] tabCommand = stringCommand.split(" ");
         
     	//quit case
-    	if(tabCommand[0].equals(Game.CommandList[0][0]))
+    	if(tabCommand[0].equals(CommandList[0][0]))
         {
 			if(tabCommand.length>1)
 			{
-				System.out.println(":must be "+Game.CommandList[0][0]+" "+Game.CommandList[0][1]+"!");
+				System.out.println(":must be "+CommandList[0][0]+" "+CommandList[0][1]+"!");
         		return -1;
 			}
 			return 0;
 		}
     	
     	//info case
-    	if(tabCommand[0].equals(Game.CommandList[3][0]))
+    	if(tabCommand[0].equals(CommandList[3][0]))
         {
 			if(tabCommand.length>1)
 			{
-				System.out.println(":must be "+Game.CommandList[3][0]+" "+Game.CommandList[3][1]+"!");
+				System.out.println(":must be "+CommandList[3][0]+" "+CommandList[3][1]+"!");
         		return -1;
 			}
     		System.out.println(mygame.info());
@@ -47,52 +62,52 @@ public class Command {
     	}
     	
 		//help case
-		if(tabCommand[0].equals(Game.CommandList[4][0]))
+		if(tabCommand[0].equals(CommandList[4][0]))
         {
 			if(tabCommand.length>2)
 			{
-				System.out.println(":must be "+Game.CommandList[4][0]+" "+Game.CommandList[4][1]+"!");
+				System.out.println(":must be "+CommandList[4][0]+" "+CommandList[4][1]+"!");
         		return -1;
 			}
 			if(tabCommand.length==1)
 			{
-				System.out.println(":"+Game.CommandList[4][2]);
+				System.out.println(":"+CommandList[4][2]);
 				return 4;
 			}
 			else
 			{
 				boolean knowncommand = false;
 				int index = 0;
-				for(int i = 0; i<Game.CommandList.length;i++)
+				for(int i = 0; i<CommandList.length;i++)
 				{
-					if(tabCommand[1].equals(Game.CommandList[i][0]) || tabCommand[1].equals(Game.CommandList[i][0].substring(1)))
+					if(tabCommand[1].equals(CommandList[i][0]) || tabCommand[1].equals(CommandList[i][0].substring(1)))
 					{index=i;knowncommand=true;break;}
 				}
 				if(!knowncommand)
 				{
-					System.out.println(":must be "+Game.CommandList[4][0]+" "+Game.CommandList[4][1]+"!");
+					System.out.println(":must be "+CommandList[4][0]+" "+CommandList[4][1]+"!");
         			return -1;
 				}
 				else
 				{
-					System.out.println(":"+Game.CommandList[index][2]);
+					System.out.println(":"+CommandList[index][2]);
 					return 4;
 				}
 			}
 		}
         //move case
-        if(tabCommand[0].equals(Game.CommandList[1][0]))
+        if(tabCommand[0].equals(CommandList[1][0]))
         {
         	//case of wrong format
         	if(tabCommand.length!=2)
         	{
-        		System.out.println(":must be "+Game.CommandList[1][0]+" "+Game.CommandList[1][1]+"!");
+        		System.out.println(":must be "+CommandList[1][0]+" "+CommandList[1][1]+"!");
         		return -1;
         	}
         	boolean knowdirection = false;
-        	for(int i = 0; i<Game.DirectionList.length;i++)
+        	for(int i = 0; i<DirectionList.length;i++)
         	{
-        		if(tabCommand[1].equals(Game.DirectionList[i]))
+        		if(tabCommand[1].equals(DirectionList[i]))
         		{
                     knowdirection = true;
                     break;
@@ -121,11 +136,11 @@ public class Command {
         	}
         }
 		//attack case
-		if(tabCommand[0].equals(Game.CommandList[2][0]))
+		if(tabCommand[0].equals(CommandList[2][0]))
 		{
 			if(tabCommand.length>1)
 			{
-				System.out.println(":must be "+Game.CommandList[2][0]+" "+Game.CommandList[2][1]+"!");
+				System.out.println(":must be "+CommandList[2][0]+" "+CommandList[2][1]+"!");
         		return -1;
 			}
 			if(mygame.CurrentRoom.hasBoss())
@@ -140,11 +155,11 @@ public class Command {
 			}
 		}
 		//back case
-		if(tabCommand[0].equals(Game.CommandList[5][0]))
+		if(tabCommand[0].equals(CommandList[5][0]))
 		{
 			if(tabCommand.length>1)
 			{
-				System.out.println(":must be "+Game.CommandList[5][0]+" "+Game.CommandList[5][1]+"!");
+				System.out.println(":must be "+CommandList[5][0]+" "+CommandList[5][1]+"!");
         		return -1;
 			}
 			if(mygame.LastRoom==null)
@@ -175,45 +190,45 @@ public class Command {
     	String stringCommand = mygame.command.nextLine();
     	String[] tabCommand = stringCommand.split(" ");
 		//leave case
-		if(tabCommand[0].equals(Game.AttackCommand[4][0]))
+		if(tabCommand[0].equals(AttackCommand[4][0]))
 		{
 			if(tabCommand.length>1)
         	{
-        		System.out.println(":must be "+Game.AttackCommand[4][0]+" "+Game.AttackCommand[4][1]+"!");
+        		System.out.println(":must be "+AttackCommand[4][0]+" "+AttackCommand[4][1]+"!");
         		return -1;
         	}
 			return 4;
 		}
 		//help case
-		if(tabCommand[0].equals(Game.AttackCommand[0][0]))
+		if(tabCommand[0].equals(AttackCommand[0][0]))
         {
 			if(tabCommand.length>2)
 			{
-				System.out.println(":must be "+Game.AttackCommand[0][0]+" "+Game.AttackCommand[0][1]+"!");
+				System.out.println(":must be "+AttackCommand[0][0]+" "+AttackCommand[0][1]+"!");
         		return -1;
 			}
 			if(tabCommand.length==1)
 			{
-				System.out.println(":"+Game.AttackCommand[0][2]);
+				System.out.println(":"+AttackCommand[0][2]);
 				return 0;
 			}
 			else
 			{
 				boolean knowncommand = false;
 				int index = 0;
-				for(int i = 0; i<Game.AttackCommand.length;i++)
+				for(int i = 0; i<AttackCommand.length;i++)
 				{
-					if(tabCommand[1].equals(Game.AttackCommand[i][0]) || tabCommand[1].equals(Game.AttackCommand[i][0].substring(1)))
+					if(tabCommand[1].equals(AttackCommand[i][0]) || tabCommand[1].equals(AttackCommand[i][0].substring(1)))
 					{index=i;knowncommand=true;break;}
 				}
 				if(!knowncommand)
 				{
-					System.out.println(":must be "+Game.AttackCommand[0][0]+" "+Game.AttackCommand[0][1]+"!");
+					System.out.println(":must be "+AttackCommand[0][0]+" "+AttackCommand[0][1]+"!");
         			return -1;
 				}
 				else
 				{
-					System.out.println(":"+Game.AttackCommand[index][2]);
+					System.out.println(":"+AttackCommand[index][2]);
 					return 0;
 				}
 			}

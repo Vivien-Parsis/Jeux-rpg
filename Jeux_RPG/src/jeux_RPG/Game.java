@@ -3,20 +3,6 @@ import java.util.HashMap;
 
 public class Game
 {
-	final static String[][] CommandList = 
-	{{"/quit","","quit the game"},
-	{"/move","{direction} ", "move the player into a direction"},
-	{"/attack","", "launch attack mode on current boss"},
-	{"/info","", "display current situation"},
-	{"/help","{command} ", "display how work a command"},
-	{"/back","", "go back"}};
-	final static String[][] AttackCommand = 
-	{{"/help","{command} ", "display how work a command"},
-	{"/spell","{spell} ","use one spell of your current hero"},
-	{"/use","{item} ","use one item"},
-	{"/weapon","","attack with weapon of your current hero"},
-	{"/leave","","leave combat"}};
-	final static String[] DirectionList = {"north","south","east","west"};
 	GameEngine gameEngine;
 
 	public Game()

@@ -17,7 +17,5 @@ public class Spell
 	{this("spelltest",5,5);}
 
 	public String toString()
-	{
-		return this.SpellName;
-	}
+	{return this.SpellName;}
 }
