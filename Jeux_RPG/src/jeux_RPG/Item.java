@@ -13,6 +13,6 @@ public class Item
 	public Item()
 	{this("testitem",0);}
 
-	public String toString()
+	final public String toString()
 	{return this.nameItem;}
 }

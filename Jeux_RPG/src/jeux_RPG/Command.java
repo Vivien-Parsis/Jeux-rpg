@@ -12,7 +12,7 @@ public class Command {
         {
 			if(tabCommand.length>1)
 			{
-				System.out.println("::must be "+Game.CommandList[0][0]+" "+Game.CommandList[0][1]+"!");
+				System.out.println(":must be "+Game.CommandList[0][0]+" "+Game.CommandList[0][1]+"!");
         		return -1;
 			}
 			return 0;
@@ -23,7 +23,7 @@ public class Command {
         {
 			if(tabCommand.length>1)
 			{
-				System.out.println("::must be "+Game.CommandList[3][0]+" "+Game.CommandList[3][1]+"!");
+				System.out.println(":must be "+Game.CommandList[3][0]+" "+Game.CommandList[3][1]+"!");
         		return -1;
 			}
     		System.out.println(mygame.info());
@@ -35,12 +35,12 @@ public class Command {
         {
 			if(tabCommand.length>2)
 			{
-				System.out.println("::must be "+Game.CommandList[4][0]+" "+Game.CommandList[4][1]+"!");
+				System.out.println(":must be "+Game.CommandList[4][0]+" "+Game.CommandList[4][1]+"!");
         		return -1;
 			}
 			if(tabCommand.length==1)
 			{
-				System.out.println(Game.CommandList[4][2]);
+				System.out.println(":"+Game.CommandList[4][2]);
 				return 4;
 			}
 			else
@@ -54,12 +54,12 @@ public class Command {
 				}
 				if(!knowncommand)
 				{
-					System.out.println("::must be "+Game.CommandList[4][0]+" "+Game.CommandList[4][1]+"!");
+					System.out.println(":must be "+Game.CommandList[4][0]+" "+Game.CommandList[4][1]+"!");
         			return -1;
 				}
 				else
 				{
-					System.out.println(Game.CommandList[index][2]);
+					System.out.println(":"+Game.CommandList[index][2]);
 					return 4;
 				}
 			}
@@ -70,7 +70,7 @@ public class Command {
         	//case of wrong format
         	if(tabCommand.length!=2)
         	{
-        		System.out.println("::must be "+Game.CommandList[1][0]+" "+Game.CommandList[1][1]+"!");
+        		System.out.println(":must be "+Game.CommandList[1][0]+" "+Game.CommandList[1][1]+"!");
         		return -1;
         	}
         	boolean knowdirection = false;
@@ -85,20 +85,20 @@ public class Command {
         	//case of unknown possible direction
         	if(!knowdirection)
         	{
-        		System.out.println("::no such direction");
+        		System.out.println(":no such direction");
         		return -1;
         	}
         	//case of no exit
         	if(!mygame.CurrentRoom.hasExit(tabCommand[1]))
         	{
-        		System.out.println("::can't go that way");
+        		System.out.println(":can't go that way");
         		return -1;
         	}
         	//case of a successful move
         	else
         	{
         		mygame.CurrentRoom = mygame.CurrentRoom.getExit(tabCommand[1]);
-        		System.out.println("::moving to "+tabCommand[1]+"\n");
+        		System.out.println(":moving to "+tabCommand[1]+"\n");
         		System.out.println(mygame.info());
         		return 1;
         	}
@@ -108,17 +108,17 @@ public class Command {
 		{
 			if(tabCommand.length>1)
 			{
-				System.out.println("::must be "+Game.CommandList[2][0]+" "+Game.CommandList[2][1]+"!");
+				System.out.println(":must be "+Game.CommandList[2][0]+" "+Game.CommandList[2][1]+"!");
         		return -1;
 			}
 			if(mygame.CurrentRoom.hasBoss())
 			{
-				System.out.println("::launch attack on the current boss");
+				System.out.println(":launch attack on the current boss");
 				return 2;
 			}
 			else
 			{
-				System.out.println("::no boss in here !");
+				System.out.println(":no boss in here !");
 				return -1;
 			}
 		}

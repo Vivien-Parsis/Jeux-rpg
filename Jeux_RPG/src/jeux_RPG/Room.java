@@ -16,6 +16,9 @@ public class Room
 		this.RoomBoss = RoomBoss;
 		this.RoomItem = RoomItem;
 	}
+	public Room()
+	{this("RoomTest", new Boss(), new Item());}
+	
 	public void setExit(Room NorthRoom, Room SouthRoom, Room EastRoom, Room WestRoom)
 	{
 		this.NorthRoom = NorthRoom;

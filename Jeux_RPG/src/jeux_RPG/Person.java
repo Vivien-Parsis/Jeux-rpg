@@ -18,6 +18,6 @@ public class Person
 	public Person() 
 	{this("test",50,5,5);}
 	
-	public String toString()
+	final public String toString()
 	{return this.name;}
 }

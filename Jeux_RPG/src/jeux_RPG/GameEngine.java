@@ -35,7 +35,7 @@ public class GameEngine
         		break;
         	}
         	if(resultcommand==-2)
-        	{System.out.println("::unknown command !");}
+        	{System.out.println(":unknown command !");}
         }
     }
 
@@ -47,18 +47,18 @@ public class GameEngine
     	return
     			("~~current room~~\n"+
 				this.CurrentRoom+
-    			"\n~~~~~exits~~~~~\n"+
+    			"\n~~~~~~exit~~~~~~\n"+
     			this.CurrentRoom.stringExit()+
-    			"\n~~~~~boss~~~~~\n"+
+    			"\n~~~~~~boss~~~~~~\n"+
     			this.CurrentRoom.RoomBoss+
-    			"\n~~~~heroes~~~~\n"+
+    			"\n~~~~~heroes~~~~~\n"+
     			this.stringHeroList())
     			.replaceAll("null", "none");
     }
     
     public static String stringCommandList()
     {
-    	String list ="~~~commands~~~\n";
+    	String list ="~~~~commands~~~~\n";
     	for(int i = 0; i<Game.CommandList.length;i++)
     	{list += Game.CommandList[i][0]+" "+Game.CommandList[i][1];}
     	return list;
