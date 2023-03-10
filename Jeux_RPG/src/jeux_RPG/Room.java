@@ -3,14 +3,14 @@ package jeux_RPG;
 public class Room
 {
 	String RoomName;
-	Person RoomBoss;
+	Boss RoomBoss;
 	Item RoomItem;
 	Room NorthRoom;
 	Room SouthRoom;
 	Room EastRoom;
 	Room WestRoom;
 	
-	public Room(String RoomName,Person RoomBoss,Item RoomItem)
+	public Room(String RoomName, Boss RoomBoss, Item RoomItem)
 	{
 		this.RoomName = RoomName;
 		this.RoomBoss = RoomBoss;
@@ -64,4 +64,7 @@ public class Room
 		
 		return null;
 	}
+
+	public boolean hasBoss()
+	{return this.RoomBoss != null;}
 }

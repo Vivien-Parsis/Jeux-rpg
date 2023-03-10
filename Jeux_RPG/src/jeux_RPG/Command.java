@@ -9,11 +9,23 @@ public class Command {
         
     	//quit case
     	if(tabCommand[0].equals(Game.CommandList[0][0]))
-        {return 0;}
+        {
+			if(tabCommand.length>1)
+			{
+				System.out.println("::must be "+Game.CommandList[0][0]+" "+Game.CommandList[0][1]+"!");
+        		return -1;
+			}
+			return 0;
+		}
     	
     	//info case
     	if(tabCommand[0].equals(Game.CommandList[3][0]))
         {
+			if(tabCommand.length>1)
+			{
+				System.out.println("::must be "+Game.CommandList[3][0]+" "+Game.CommandList[3][1]+"!");
+        		return -1;
+			}
     		System.out.println(mygame.info());
     		return 3;
     	}
@@ -91,6 +103,25 @@ public class Command {
         		return 1;
         	}
         }
+		//attack case
+		if(tabCommand[0].equals(Game.CommandList[2][0]))
+		{
+			if(tabCommand.length>1)
+			{
+				System.out.println("::must be "+Game.CommandList[2][0]+" "+Game.CommandList[2][1]+"!");
+        		return -1;
+			}
+			if(mygame.CurrentRoom.hasBoss())
+			{
+				System.out.println("::launch attack on the current boss");
+				return 2;
+			}
+			else
+			{
+				System.out.println("::no boss in here !");
+				return -1;
+			}
+		}
         //case of unknown command
         return -2;
     }

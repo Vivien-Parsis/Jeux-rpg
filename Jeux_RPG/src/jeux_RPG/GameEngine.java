@@ -31,7 +31,6 @@ public class GameEngine
 			int resultcommand = Command.RunCommand(this);
         	if(resultcommand==0)
         	{
-        		System.out.println("\n#########\ngame stop\n#########");
         		this.command.close();
         		break;
         	}
