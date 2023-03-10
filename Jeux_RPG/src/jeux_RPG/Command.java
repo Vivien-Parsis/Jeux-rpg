@@ -113,6 +113,7 @@ public class Command {
         	//case of a successful move
         	else
         	{
+				mygame.LastRoom.push(mygame.CurrentRoom);
         		mygame.CurrentRoom = mygame.CurrentRoom.getExit(tabCommand[1]);
         		System.out.println(":moving to "+tabCommand[1]+"\n");
         		System.out.println(mygame.info());
@@ -136,6 +137,32 @@ public class Command {
 			{
 				System.out.println(":no boss in here !");
 				return -1;
+			}
+		}
+		//back case
+		if(tabCommand[0].equals(Game.CommandList[5][0]))
+		{
+			if(tabCommand.length>1)
+			{
+				System.out.println(":must be "+Game.CommandList[5][0]+" "+Game.CommandList[5][1]+"!");
+        		return -1;
+			}
+			if(mygame.LastRoom==null)
+			{
+				System.out.println(":no previous romm");
+				return -1;
+			}
+			if(mygame.LastRoom.isEmpty())
+			{
+				System.out.println(":no previous romm");
+				return -1;
+			}
+			else
+			{
+				System.out.println(":go back\n");
+				mygame.CurrentRoom = mygame.LastRoom.pop();
+				System.out.println(mygame.info());
+				return 5;
 			}
 		}
         //case of unknown command

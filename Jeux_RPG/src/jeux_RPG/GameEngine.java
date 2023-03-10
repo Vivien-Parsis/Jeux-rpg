@@ -1,6 +1,7 @@
 package jeux_RPG;
 
 import java.util.Scanner;
+import java.util.Stack;
 import java.util.HashMap;
 
 public class GameEngine
@@ -12,6 +13,7 @@ public class GameEngine
     Room CurrentRoom;
     int HeroMaxWeight;
     int HeroCurrentWeight;
+    Stack<Room> LastRoom;
  
     public GameEngine(HashMap<String, Hero> HeroHash, Donjon GameDonjon, Room CurrentRoom, int HeroMaxWeight, int HeroCurrentWeight) 
     {
@@ -21,6 +23,7 @@ public class GameEngine
         this.HeroCurrentWeight = HeroCurrentWeight;
         this.HeroMaxWeight = HeroMaxWeight;
         this.HeroBag = new HashMap<String, Item>();
+        this.LastRoom = new Stack<Room>();
     }
     
     public void RunGame()

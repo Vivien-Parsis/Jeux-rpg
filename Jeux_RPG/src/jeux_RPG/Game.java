@@ -8,7 +8,8 @@ public class Game
 	{"/move","{direction} ", "move the player into a direction"},
 	{"/attack","", "launch attack mode on current boss"},
 	{"/info","", "display current situation"},
-	{"/help","{command} ", "display how work a command"}};
+	{"/help","{command} ", "display how work a command"},
+	{"/back","", "go back"}};
 	final static String[][] AttackCommand = 
 	{{"/help","{command} ", "display how work a command"},
 	{"/spell","{spell} ","use one spell of your current hero"},
