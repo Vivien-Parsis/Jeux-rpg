@@ -1,6 +1,8 @@
 package jeux_RPG;
 import java.util.HashMap;
-
+/**
+*	Class that create the gameEngine and his config
+*/
 public class Game
 {
 	GameEngine gameEngine;

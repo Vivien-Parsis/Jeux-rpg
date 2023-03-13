@@ -1,20 +1,31 @@
 package jeux_RPG;
-
+/**
+*	Class that handle command
+*/
 public class Command {
+    /**
+     *	List of all commands in explore phase
+     */
     final static String[][] CommandList = 
 	{{"/quit", "", "quit the game"},
 	{"/move", "{direction} ", "move the player into a direction"},
 	{"/attack","", "launch attack mode on current boss"},
-	{"/info", "", "display current situation"},
+	{"/info","{hero/boss/item}","display current info about the current boss, a hero, a item or current situation"},
 	{"/help", "{command} ", "display how work a command"},
 	{"/back", "", "go back"}};
+	/**
+     *	List of all commands in combat phase
+     */
 	final static String[][] AttackCommand = 
 	{{"/help", "{command} ", "display how work a command"},
 	{"/spell", "{spell} ", "use one spell of your current hero"},
 	{"/use", "{item} ", "use one item"},
 	{"/weapon", "", "attack with weapon of your current hero"},
 	{"/leave", "", "leave combat"},
-	{"/info","{hero/boss}","display current info about the current boss or a hero"}};
+	{"/info","{hero/boss/item}","display current info about the current boss, a hero or a item"}};
+	/**
+     *	List of all possible direction
+     */
 	final static String[] DirectionList = {"north", "south", "east", "west"};
 	/**
  	*	return all commands	

@@ -44,13 +44,13 @@ public class Room
 	}
 	public boolean hasExit(String exit)
 	{
-		if(exit.equals("north") && this.NorthRoom != null)
+		if(exit.equals(Command.DirectionList[0]) && this.NorthRoom != null)
 		{return true;}
-		if(exit.equals("south") && this.SouthRoom != null)
+		if(exit.equals(Command.DirectionList[1]) && this.SouthRoom != null)
 		{return true;}
-		if(exit.equals("east") && this.EastRoom != null)
+		if(exit.equals(Command.DirectionList[2]) && this.EastRoom != null)
 		{return true;}
-		if(exit.equals("west") && this.WestRoom != null)
+		if(exit.equals(Command.DirectionList[3]) && this.WestRoom != null)
 		{return true;}
 		
 		return false;
@@ -63,13 +63,13 @@ public class Room
 		if(hasExit(direction)==false)
 		{return null;}
 		
-		if(direction.equals("north"))
+		if(direction.equals(Command.DirectionList[0]))
 		{return this.NorthRoom;}
-		if(direction.equals("south"))
+		if(direction.equals(Command.DirectionList[1]))
 		{return this.SouthRoom;}
-		if(direction.equals("east"))
+		if(direction.equals(Command.DirectionList[2]))
 		{return this.EastRoom;}
-		if(direction.equals("west"))
+		if(direction.equals(Command.DirectionList[3]))
 		{return this.WestRoom;}
 		
 		return null;

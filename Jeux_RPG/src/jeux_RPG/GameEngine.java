@@ -3,7 +3,9 @@ package jeux_RPG;
 import java.util.Scanner;
 import java.util.Stack;
 import java.util.HashMap;
-
+/**
+*	Class that handle engine of the game
+*/
 public class GameEngine
 {
     HashMap<String, Hero> HeroHash = new HashMap<String, Hero>();
