@@ -56,18 +56,59 @@ public class Command {
 			return 0;
 		}
     	
-    	//info case
-    	if(tabCommand[0].equals(CommandList[3][0]))
+		//info case
+		if(tabCommand[0].equals(CommandList[3][0]))
         {
-			if(tabCommand.length>1)
+    		if(tabCommand.length>2)
 			{
 				System.out.println(":must be "+CommandList[3][0]+" "+CommandList[3][1]+"!");
-        		return -1;
+				return -1;
 			}
-    		System.out.println(mygame.info());
-    		return 3;
-    	}
-    	
+			if(tabCommand.length==1)
+			{
+				System.out.println(mygame.info());
+				return 3;
+			}
+			String info = "";
+			boolean isboss = false;
+			if(mygame.CurrentRoom.RoomBoss!=null)
+			{
+				isboss = tabCommand[1].equals("boss") || tabCommand[1].equals(mygame.CurrentRoom.RoomBoss.name);
+			}
+			
+			if(isboss)
+			{
+				info=mygame.CurrentRoom.RoomBoss.info();
+			}
+			boolean ishero = false;
+			for(Hero hero : mygame.HeroHash.values())
+			{
+				if(hero.name.equals(tabCommand[1]))
+				{
+					ishero = true;
+					info = hero.info();
+					break;
+				}
+			}
+			boolean isitem = false;
+			for(Item item : mygame.HeroBag.values())
+			{
+				if(item.nameItem.equals(tabCommand[1]))
+				{
+					isitem = true;
+					info = item.info();
+					break;
+				}
+			}
+			if(!isboss && !ishero && !isitem)
+			{
+				System.out.println(":unknown");
+				return -1;
+			}
+			System.out.println(":"+info);
+				
+			return 3;
+		}	
 		//help case
 		if(tabCommand[0].equals(CommandList[4][0]))
         {
@@ -281,9 +322,19 @@ public class Command {
 					break;
 				}
 			}
-			if(!isboss && !ishero)
+			boolean isitem = false;
+			for(Item item : mygame.HeroBag.values())
 			{
-				System.out.println(":unknow person");
+				if(item.nameItem.equals(tabCommand[1]))
+				{
+					isitem = true;
+					info = item.info();
+					break;
+				}
+			}
+			if(!isboss && !ishero && !isitem)
+			{
+				System.out.println(":unknown");
 				return -1;
 			}
 			System.out.println(":"+info);

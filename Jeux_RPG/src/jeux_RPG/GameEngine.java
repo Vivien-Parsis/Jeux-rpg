@@ -153,9 +153,8 @@ public class GameEngine
  	*/
      public void getCurrentWeight()
      {
-         for(Item e : HeroBag.values())
-         {
-            this.HeroCurrentWeight+=e.weight;
-         }
+        this.HeroCurrentWeight = 0;
+        for(Item e : HeroBag.values())
+        {this.HeroCurrentWeight+=e.weight;}
      }
 }

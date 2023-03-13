@@ -45,7 +45,7 @@ public class Game
 		RoomHash.get("21").setExit(null, RoomHash.get("11"), RoomHash.get("22"), RoomHash.get("20"));
 		RoomHash.get("22").setExit(null, RoomHash.get("12"), null, RoomHash.get("21"));
 		
-		Item mainItem = new Item("emerald",0);
+		Item mainItem = new Item("emerald",0,"");
 		Donjon GameDonjon = new Donjon("Main",RoomHash,mainItem);
 
 		this.gameEngine = new GameEngine(HeroHash,GameDonjon,RoomHash.get("start"),10,0);

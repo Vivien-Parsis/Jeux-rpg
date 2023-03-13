@@ -27,4 +27,5 @@ public class Boss extends Person
 	{
 		return this.name;
 	}
+
 }
