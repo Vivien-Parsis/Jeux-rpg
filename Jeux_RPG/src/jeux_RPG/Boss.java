@@ -5,7 +5,8 @@ public class Boss extends Person
 	public Boss(String name, int HP, int damagePoint, int defensePoint)
 	{
 		this.name = name;
-		this.HP = HP;
+		this.maxHP = HP;
+		this.currentHP = HP;
 		this.damagePoint = damagePoint;
 		this.defensePoint = defensePoint;
 	}
@@ -18,14 +19,14 @@ public class Boss extends Person
 	public String info()
 	{
 		return 
-			this+"(HP:"+this.HP+
+			this.name+"(HP:"+this.currentHP+"/"+this.maxHP+
 			", damage point:"+this.damagePoint+
 			", defense point:"+this.defensePoint+")";
 	}
 
 	public String toString()
 	{
-		return this.name;
+		return this.name + "(HP:"+this.maxHP+")";
 	}
 
 }

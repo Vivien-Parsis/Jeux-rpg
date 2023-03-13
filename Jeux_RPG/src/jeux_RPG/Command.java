@@ -10,7 +10,7 @@ public class Command {
 	{{"/quit", "", "quit the game"},
 	{"/move", "{direction} ", "move the player into a direction"},
 	{"/attack","", "launch attack mode on current boss"},
-	{"/info","{hero/boss/item}","display current info about the current boss, a hero, a item or current situation"},
+	{"/info","{hero/boss/item/none} ","display current info about the current boss, a hero, a item or current situation"},
 	{"/help", "{command} ", "display how work a command"},
 	{"/back", "", "go back"}};
 	/**
@@ -22,11 +22,7 @@ public class Command {
 	{"/use", "{item} ", "use one item"},
 	{"/weapon", "", "attack with weapon of your current hero"},
 	{"/leave", "", "leave combat"},
-	{"/info","{hero/boss/item}","display current info about the current boss, a hero or a item"}};
-	/**
-     *	List of all possible direction
-     */
-	final static String[] DirectionList = {"north", "south", "east", "west"};
+	{"/info","{hero/boss/item} ","display current info about the current boss, a hero or a item"}};
 	/**
  	*	return all commands	
  	*/
@@ -35,7 +31,7 @@ public class Command {
     	String list ="~~~~commands~~~~\n";
     	for(int i = 0; i<CommandList.length;i++)
     	{list += CommandList[i][0]+" "+CommandList[i][1];}
-    	return list;
+    	return list.replaceAll(" /", ", /");
     }
 	/**
  	*	return all commands of the combat phase	
@@ -45,7 +41,7 @@ public class Command {
     	String list ="~~~~commands~~~~\n";
     	for(int i = 0; i<AttackCommand.length;i++)
     	{list += AttackCommand[i][0]+" "+AttackCommand[i][1];}
-    	return list;
+    	return list.replaceAll(" /", ", /");
     }
 	/**
  	*	execute a command
@@ -92,7 +88,7 @@ public class Command {
 				info=mygame.CurrentRoom.RoomBoss.info();
 			}
 			boolean ishero = false;
-			for(Hero hero : mygame.HeroHash.values())
+			for(Hero hero : mygame.HeroList)
 			{
 				if(hero.name.equals(tabCommand[1]))
 				{
@@ -102,7 +98,7 @@ public class Command {
 				}
 			}
 			boolean isitem = false;
-			for(Item item : mygame.HeroBag.values())
+			for(Item item : mygame.HeroBag)
 			{
 				if(item.nameItem.equals(tabCommand[1]))
 				{
@@ -164,9 +160,9 @@ public class Command {
         		return -1;
         	}
         	boolean knowdirection = false;
-        	for(int i = 0; i<DirectionList.length;i++)
+        	for(int i = 0; i<Room.DirectionList.length;i++)
         	{
-        		if(tabCommand[1].equals(DirectionList[i]))
+        		if(tabCommand[1].equals(Room.DirectionList[i]))
         		{
                     knowdirection = true;
                     break;
@@ -324,7 +320,7 @@ public class Command {
 				info=mygame.CurrentRoom.RoomBoss.info();
 			}
 			boolean ishero = false;
-			for(Hero hero : mygame.HeroHash.values())
+			for(Hero hero : mygame.HeroList)
 			{
 				if(hero.name.equals(tabCommand[1]))
 				{
@@ -334,7 +330,7 @@ public class Command {
 				}
 			}
 			boolean isitem = false;
-			for(Item item : mygame.HeroBag.values())
+			for(Item item : mygame.HeroBag)
 			{
 				if(item.nameItem.equals(tabCommand[1]))
 				{

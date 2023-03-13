@@ -9,7 +9,10 @@ public class Room
 	Room SouthRoom;
 	Room EastRoom;
 	Room WestRoom;
-	
+	/**
+     *	List of all possible direction
+     */
+	final static String[] DirectionList = {"north", "south", "east", "west"};
 	public Room(String RoomName, Boss RoomBoss, Item RoomItem)
 	{
 		this.RoomName = RoomName;
@@ -36,21 +39,22 @@ public class Room
  	*/
 	public String stringExit()
 	{	
-		String exit ="North : "+this.NorthRoom+"\n"
+		String exit =("North : "+this.NorthRoom+"\n"
 				+"South : "+this.SouthRoom+"\n"
 				+"East : "+this.EastRoom+"\n"
-				+"West : "+this.WestRoom;
+				+"West : "+this.WestRoom)
+    			.replaceAll("null", "no exit");
 		return exit;
 	}
 	public boolean hasExit(String exit)
 	{
-		if(exit.equals(Command.DirectionList[0]) && this.NorthRoom != null)
+		if(exit.equals(DirectionList[0]) && this.NorthRoom != null)
 		{return true;}
-		if(exit.equals(Command.DirectionList[1]) && this.SouthRoom != null)
+		if(exit.equals(DirectionList[1]) && this.SouthRoom != null)
 		{return true;}
-		if(exit.equals(Command.DirectionList[2]) && this.EastRoom != null)
+		if(exit.equals(DirectionList[2]) && this.EastRoom != null)
 		{return true;}
-		if(exit.equals(Command.DirectionList[3]) && this.WestRoom != null)
+		if(exit.equals(DirectionList[3]) && this.WestRoom != null)
 		{return true;}
 		
 		return false;
@@ -63,13 +67,13 @@ public class Room
 		if(hasExit(direction)==false)
 		{return null;}
 		
-		if(direction.equals(Command.DirectionList[0]))
+		if(direction.equals(DirectionList[0]))
 		{return this.NorthRoom;}
-		if(direction.equals(Command.DirectionList[1]))
+		if(direction.equals(DirectionList[1]))
 		{return this.SouthRoom;}
-		if(direction.equals(Command.DirectionList[2]))
+		if(direction.equals(DirectionList[2]))
 		{return this.EastRoom;}
-		if(direction.equals(Command.DirectionList[3]))
+		if(direction.equals(DirectionList[3]))
 		{return this.WestRoom;}
 		
 		return null;

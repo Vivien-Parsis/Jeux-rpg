@@ -3,14 +3,16 @@ package jeux_RPG;
 public class Person
 {
 	String name;
-	int HP;
+	int maxHP;
+	int currentHP;
 	int damagePoint;
 	int defensePoint;
 	
 	public Person(String name,int HP, int damagePoint, int defensePoint)
 	{
 		this.name = name;
-		this.HP = HP;
+		this.maxHP = HP;
+		this.currentHP = HP;
 		this.damagePoint = damagePoint;
 		this.defensePoint = defensePoint;
 	}

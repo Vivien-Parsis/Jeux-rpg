@@ -2,14 +2,14 @@ package jeux_RPG;
 
 import java.util.Scanner;
 import java.util.Stack;
-import java.util.HashMap;
+import java.util.ArrayList;
 /**
 *	Class that handle engine of the game
 */
 public class GameEngine
 {
-    HashMap<String, Hero> HeroHash = new HashMap<String, Hero>();
-    HashMap<String, Item> HeroBag = new HashMap<String, Item>();
+    ArrayList<Item> HeroBag = new ArrayList<Item>();
+    ArrayList<Hero> HeroList = new ArrayList<Hero>();
 	Scanner command = new Scanner(System.in);	
     Donjon GameDonjon;
     Room CurrentRoom;
@@ -17,16 +17,17 @@ public class GameEngine
     int HeroCurrentWeight;
     Stack<Room> LastRoom;
  
-    public GameEngine(HashMap<String, Hero> HeroHash, Donjon GameDonjon, Room CurrentRoom, int HeroMaxWeight, int HeroCurrentWeight) 
+    public GameEngine(ArrayList<Hero> HeroList, Donjon GameDonjon, Room CurrentRoom, int HeroMaxWeight, int HeroCurrentWeight) 
     {
-        this.HeroHash = HeroHash;
+        this.HeroList = HeroList;
         this.GameDonjon = GameDonjon;
         this.CurrentRoom = CurrentRoom;
         this.HeroCurrentWeight = HeroCurrentWeight;
         this.HeroMaxWeight = HeroMaxWeight;
-        this.HeroBag = new HashMap<String, Item>();
+        this.HeroBag = new ArrayList<Item>();
         this.LastRoom = new Stack<Room>();
-        this.HeroBag.put("test", new Item());
+        //this.HeroBag.add(new Item());
+        //this.HeroBag.add(new Item());
     }
     /**
  	* Run the game
@@ -54,7 +55,7 @@ public class GameEngine
                 boolean successfulleave = false;
                 while(true)
                 {
-                    for(Hero currentHero: HeroHash.values())
+                    for(Hero currentHero : HeroList)
                     {
                         System.out.println(stringCurrentCombat(currentHero));
                         while(true)
@@ -86,6 +87,12 @@ public class GameEngine
                     }
                     if(resultFightCommand==4 && successfulleave)
                     {break;}
+                    for(Hero currentHero : HeroList)
+                    {
+                        currentHero.currentmana+=currentHero.manaregen;
+                        if(currentHero.currentmana>currentHero.maxmana)
+                        {currentHero.currentmana=currentHero.maxmana;}
+                    }
                 }
             }
         }
@@ -120,7 +127,7 @@ public class GameEngine
     {
         return 
             "\n~~current hero~~\n"+
-            currenthero+
+            currenthero.info()+
             "\n~~~~~~boss~~~~~~\n"+
             this.CurrentRoom.RoomBoss+
             "\n~~~~~heroes~~~~~\n"+
@@ -135,28 +142,30 @@ public class GameEngine
     public String stringHeroList()
     {
     	String herolist = "";
-    	for(Hero hero : HeroHash.values())
+    	for(Hero hero : HeroList)
     	{herolist += hero + " \n";}
-    	return herolist;
+    	return herolist.substring(0,herolist.length()-1);
     }
     /**
  	* Return all item of the bag
  	*/
      public String stringBag()
      {
-         String bag = "weight:"+HeroCurrentWeight+"/"+HeroMaxWeight+"\n";
-         for(Item item : HeroBag.values())
-         {bag += item + " ";}
-         return bag;
+        if(HeroBag.size()==0)
+        {return "empty";}
+        String bag = "weight:"+HeroCurrentWeight+"/"+HeroMaxWeight+"\n";
+        for(Item item : HeroBag)
+        {bag += item + " ";}
+        return bag.substring(0,bag.length()-1).replaceAll(" ",", ");
      }
 
-     /**
+    /**
  	* calculate the current weight of the player
  	*/
      public void getCurrentWeight()
      {
         this.HeroCurrentWeight = 0;
-        for(Item e : HeroBag.values())
+        for(Item e : HeroBag)
         {this.HeroCurrentWeight+=e.weight;}
      }
 }

@@ -25,6 +25,6 @@ public class Spell
  	*/
 	public String info()
 	{
-		return this+"(mana cost :"+this.Manacost+", damage :"+this.DamagePoint+")";
+		return this+"(mana cost:"+this.Manacost+", damage:"+this.DamagePoint+")";
 	}
 }
