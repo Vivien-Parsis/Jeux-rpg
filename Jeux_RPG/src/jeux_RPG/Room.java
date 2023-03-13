@@ -1,5 +1,7 @@
 package jeux_RPG;
 
+//import java.util.HashMap;
+
 public class Room
 {
 	String RoomName;
@@ -9,6 +11,7 @@ public class Room
 	Room SouthRoom;
 	Room EastRoom;
 	Room WestRoom;
+	//HashMap<String, Room> HashExit;
 	/**
      *	List of all possible direction
      */
@@ -46,15 +49,18 @@ public class Room
     			.replaceAll("null", "no exit");
 		return exit;
 	}
-	public boolean hasExit(String exit)
+	/**
+ 	*	check if their is a exit in the selected direction
+ 	*/
+	public boolean hasExit(String direction)
 	{
-		if(exit.equals(DirectionList[0]) && this.NorthRoom != null)
+		if(direction.equals(DirectionList[0]) && this.NorthRoom != null)
 		{return true;}
-		if(exit.equals(DirectionList[1]) && this.SouthRoom != null)
+		if(direction.equals(DirectionList[1]) && this.SouthRoom != null)
 		{return true;}
-		if(exit.equals(DirectionList[2]) && this.EastRoom != null)
+		if(direction.equals(DirectionList[2]) && this.EastRoom != null)
 		{return true;}
-		if(exit.equals(DirectionList[3]) && this.WestRoom != null)
+		if(direction.equals(DirectionList[3]) && this.WestRoom != null)
 		{return true;}
 		
 		return false;

@@ -293,16 +293,33 @@ public class Command {
 		//spell case
 		if(tabCommand[0].equals(AttackCommand[1][0]))
 		{
+			if(tabCommand.length!=2)
+			{
+				System.out.println(":must be "+AttackCommand[1][0]+" "+AttackCommand[1][1]+"!");
+        		return -1;
+			}
 			return 1;
 		}
 		//use case
 		if(tabCommand[0].equals(AttackCommand[2][0]))
 		{
+			if(tabCommand.length!=2)
+			{
+				System.out.println(":must be "+AttackCommand[2][0]+" "+AttackCommand[2][1]+"!");
+        		return -1;
+			}
 			return 2;
 		}
 		//weapon case
 		if(tabCommand[0].equals(AttackCommand[3][0]))
 		{
+			if(tabCommand.length!=1)
+			{
+				System.out.println(":must be "+AttackCommand[3][0]+" "+AttackCommand[3][1]+"!");
+        		return -1;
+			}
+			System.out.println(":attacking with a weapon");
+			mygame.hurtBoss((currentHero.HeroWeapon.attackpoint*currentHero.damagePoint)-mygame.CurrentRoom.RoomBoss.defensePoint);
 			return 3;
 		}
 		//info case

@@ -19,7 +19,5 @@ public class Item
 	{return this.nameItem;}
 
 	public String info()
-	{
-		return this+"(weight:"+this.weight+". "+description+")";
-	}
+	{return this+"(weight:"+this.weight+". "+description+")";}
 }

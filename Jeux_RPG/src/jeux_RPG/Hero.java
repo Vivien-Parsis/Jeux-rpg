@@ -35,7 +35,7 @@ public class Hero extends Person
 	public String info()
 	{
 		return 
-			this.name +"\nHP:"+this.currentHP+"/"+this.maxHP+
+			this.name +"\nHP:"+this.currentHP+"/"+this.maxHP+", damage point:"+this.damagePoint+
 			",\nMana:"+this.currentmana+"/"+this.maxmana+", mana regen:"+this.manaregen+
 			",\nWeapon:"+this.HeroWeapon.info()+
 			",\nSpell 1:"+this.HeroSpell1.info()+

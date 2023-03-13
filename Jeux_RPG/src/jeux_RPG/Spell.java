@@ -24,7 +24,5 @@ public class Spell
  	* 	return info of the spell
  	*/
 	public String info()
-	{
-		return this+"(mana cost:"+this.Manacost+", damage:"+this.DamagePoint+")";
-	}
+	{return this+"(mana cost:"+this.Manacost+", damage:"+this.DamagePoint+")";}
 }

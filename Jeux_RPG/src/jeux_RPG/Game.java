@@ -11,15 +11,15 @@ public class Game
 	public Game()
 	{
 		ArrayList<Hero> HeroList = new ArrayList<Hero>();
-		HeroList.add(new Hero("Wizard",80,10,10,10,10,2, new Weapon(), new Spell(), new Spell()));
-		HeroList.add(new Hero("Warrior",100,15,5,10,10,1, new Weapon(), new Spell(), new Spell()));
-		HeroList.add(new Hero("Tank",125,5,15,10,10,1, new Weapon(), new Spell(), new Spell()));
+		Weapon staff = new Weapon();
+		Weapon sword = new Weapon();
+		Weapon glaive = new Weapon();
+		HeroList.add(new Hero("Wizard",80,15,10,10,10,2, staff, new Spell(), new Spell()));
+		HeroList.add(new Hero("Warrior",100,15,5,10,10,1, sword, new Spell(), new Spell()));
+		HeroList.add(new Hero("Tank",125,10,15,10,10,1, glaive, new Spell(), new Spell()));
 		
 		HashMap<String, Room> RoomHash = new HashMap<String, Room>();
-		//20  21  22
-		//10  11  12
-		//00  01  02
-		//xx start xx  	
+		
 		RoomHash.put( "start", new Room("gate", null, null));
 		
 		RoomHash.put( "00", new Room("noname", new Boss(), new Item()));

@@ -25,8 +25,5 @@ public class Boss extends Person
 	}
 
 	public String toString()
-	{
-		return this.name + "(HP:"+this.maxHP+")";
-	}
-
+	{return this.name + "(HP:"+this.currentHP+"/"+this.maxHP+")";}
 }

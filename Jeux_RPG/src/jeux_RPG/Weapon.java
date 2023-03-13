@@ -17,7 +17,5 @@ public class Weapon extends Item
  	*	return info of the weapon 
  	*/
 	public String info()
-	{
-		return this+"(damage point:"+this.attackpoint+")";
-	}
+	{return this+"(damage point:"+this.attackpoint+")";}
 }

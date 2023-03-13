@@ -97,6 +97,10 @@ public class GameEngine
             }
         }
     }
+    public void hurtBoss(int damage)
+    {
+        this.CurrentRoom.RoomBoss.currentHP-=damage;
+    }
     /**
  	* Return info of the current room of the player and the commands
  	*/
