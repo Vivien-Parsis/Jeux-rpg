@@ -2,20 +2,23 @@ package jeux_RPG;
 
 public class Command {
     final static String[][] CommandList = 
-	{{"/quit","","quit the game"},
-	{"/move","{direction} ", "move the player into a direction"},
+	{{"/quit", "", "quit the game"},
+	{"/move", "{direction} ", "move the player into a direction"},
 	{"/attack","", "launch attack mode on current boss"},
-	{"/info","", "display current situation"},
-	{"/help","{command} ", "display how work a command"},
-	{"/back","", "go back"}};
+	{"/info", "", "display current situation"},
+	{"/help", "{command} ", "display how work a command"},
+	{"/back", "", "go back"}};
 	final static String[][] AttackCommand = 
-	{{"/help","{command} ", "display how work a command"},
-	{"/spell","{spell} ","use one spell of your current hero"},
-	{"/use","{item} ","use one item"},
-	{"/weapon","","attack with weapon of your current hero"},
-	{"/leave","","leave combat"}};
-	final static String[] DirectionList = {"north","south","east","west"};
-
+	{{"/help", "{command} ", "display how work a command"},
+	{"/spell", "{spell} ", "use one spell of your current hero"},
+	{"/use", "{item} ", "use one item"},
+	{"/weapon", "", "attack with weapon of your current hero"},
+	{"/leave", "", "leave combat"},
+	{"/info","{hero/boss}","display current info about the current boss or a hero"}};
+	final static String[] DirectionList = {"north", "south", "east", "west"};
+	/**
+ 	*	return all commands	
+ 	*/
 	public static String stringCommandList()
     {
     	String list ="~~~~commands~~~~\n";
@@ -23,7 +26,9 @@ public class Command {
     	{list += CommandList[i][0]+" "+CommandList[i][1];}
     	return list;
     }
-
+	/**
+ 	*	return all commands of the combat phase	
+ 	*/
 	public static String stringCombatCommandList()
     {
     	String list ="~~~~commands~~~~\n";
@@ -31,7 +36,9 @@ public class Command {
     	{list += AttackCommand[i][0]+" "+AttackCommand[i][1];}
     	return list;
     }
-
+	/**
+ 	*	execute a command
+ 	*/
 	public static int RunCommand(GameEngine mygame)
     {
         System.out.print(">");
@@ -183,8 +190,10 @@ public class Command {
         //case of unknown command
         return -2;
     }
-
-	public static int RunCombatCommand(GameEngine mygame)
+	/**
+ 	*	execute a combat command	
+ 	*/
+	public static int RunCombatCommand(GameEngine mygame, Hero currentHero)
 	{
 		System.out.print(">");
     	String stringCommand = mygame.command.nextLine();
@@ -232,6 +241,54 @@ public class Command {
 					return 0;
 				}
 			}
+		}
+		//spell case
+		if(tabCommand[0].equals(AttackCommand[1][0]))
+		{
+			return 1;
+		}
+		//use case
+		if(tabCommand[0].equals(AttackCommand[2][0]))
+		{
+			return 2;
+		}
+		//weapon case
+		if(tabCommand[0].equals(AttackCommand[3][0]))
+		{
+			return 3;
+		}
+		//info case
+		if(tabCommand[0].equals(AttackCommand[5][0]))
+		{
+			if(tabCommand.length!=2)
+			{
+				System.out.println(":must be "+AttackCommand[5][0]+" "+AttackCommand[5][1]+"!");
+        		return -1;
+			}
+			String info = "";
+			boolean isboss = tabCommand[1].equals("boss") || tabCommand[1].equals(mygame.CurrentRoom.RoomBoss.name);
+			if(isboss)
+			{
+				info=mygame.CurrentRoom.RoomBoss.info();
+			}
+			boolean ishero = false;
+			for(Hero hero : mygame.HeroHash.values())
+			{
+				if(hero.name.equals(tabCommand[1]))
+				{
+					ishero = true;
+					info = hero.info();
+					break;
+				}
+			}
+			if(!isboss && !ishero)
+			{
+				System.out.println(":unknow person");
+				return -1;
+			}
+			System.out.println(":"+info);
+			
+			return 5;
 		}
 		return -2;
 	}

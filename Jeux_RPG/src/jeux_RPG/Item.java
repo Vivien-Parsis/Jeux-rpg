@@ -11,7 +11,7 @@ public class Item
 		this.weight = weight;
 	}
 	public Item()
-	{this("testitem",0);}
+	{this("testitem",1);}
 
 	final public String toString()
 	{return this.nameItem;}

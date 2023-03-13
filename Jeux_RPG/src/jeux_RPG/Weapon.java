@@ -12,4 +12,12 @@ public class Weapon extends Item
 	}
 	public Weapon()
 	{this("testweapon",1,1);}
+	
+	/**
+ 	*	return info of the weapon 
+ 	*/
+	public String info()
+	{
+		return this+"(damage point :"+this.attackpoint+")";
+	}
 }

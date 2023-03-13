@@ -22,4 +22,20 @@ public class Hero extends Person
 	}
 	public Hero()
 	{this("Herotest",50,5,5,10,5, new Weapon(), new Spell(), new Spell());}
+
+	public String toString()
+	{return this.name +"(HP:"+this.HP+", Mana:"+this.currentmana+"/"+this.maxmana+")";}
+
+	/**
+ 	* Return all info of the hero 
+ 	*/
+	public String info()
+	{
+		return 
+			this.name +"(HP:"+this.HP+
+			", Mana:"+this.currentmana+"/"+this.maxmana+
+			",\n Weapon:"+this.HeroWeapon.info()+
+			",\n Spell 1:"+this.HeroSpell1.info()+
+			",\n Spell 2:"+this.HeroSpell2.info()+")";
+	}
 }

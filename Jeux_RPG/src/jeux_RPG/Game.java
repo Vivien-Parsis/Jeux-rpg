@@ -50,7 +50,9 @@ public class Game
 
 		this.gameEngine = new GameEngine(HeroHash,GameDonjon,RoomHash.get("start"),10,0);
 	}
-	
+	/**
+ 	* Run the game
+ 	*/
 	public void RunGame()
 	{this.gameEngine.RunGame();}
 }

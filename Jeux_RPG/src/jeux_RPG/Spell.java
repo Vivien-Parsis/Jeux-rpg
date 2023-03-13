@@ -17,5 +17,14 @@ public class Spell
 	{this("spelltest",5,5);}
 
 	public String toString()
-	{return this.SpellName;}
+	{
+		return this.SpellName;
+	}
+	/**
+ 	* 	return info of the spell
+ 	*/
+	public String info()
+	{
+		return this+"(mana cost :"+this.Manacost+", damage :"+this.DamagePoint+")";
+	}
 }

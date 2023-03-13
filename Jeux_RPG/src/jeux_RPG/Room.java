@@ -18,7 +18,9 @@ public class Room
 	}
 	public Room()
 	{this("RoomTest", new Boss(), new Item());}
-	
+	/**
+ 	*	Set up all exit
+ 	*/
 	public void setExit(Room NorthRoom, Room SouthRoom, Room EastRoom, Room WestRoom)
 	{
 		this.NorthRoom = NorthRoom;
@@ -29,7 +31,9 @@ public class Room
 	
 	public String toString() 
 	{return this.RoomName;}
-	
+	/**
+ 	*	Return all exits of the room
+ 	*/
 	public String stringExit()
 	{	
 		String exit ="North : "+this.NorthRoom+"\n"
@@ -51,23 +55,28 @@ public class Room
 		
 		return false;
 	}
-	public Room getExit(String exit)
+	/**
+ 	*	Return if possible, the exit selected by the direction 
+ 	*/
+	public Room getExit(String direction)
 	{
-		if(hasExit(exit)==false)
+		if(hasExit(direction)==false)
 		{return null;}
 		
-		if(exit.equals("north"))
+		if(direction.equals("north"))
 		{return this.NorthRoom;}
-		if(exit.equals("south"))
+		if(direction.equals("south"))
 		{return this.SouthRoom;}
-		if(exit.equals("east"))
+		if(direction.equals("east"))
 		{return this.EastRoom;}
-		if(exit.equals("west"))
+		if(direction.equals("west"))
 		{return this.WestRoom;}
 		
 		return null;
 	}
-
+	/**
+ 	*	Return if their is an alive boss in the room
+ 	*/
 	public boolean hasBoss()
 	{return this.RoomBoss != null;}
 }
