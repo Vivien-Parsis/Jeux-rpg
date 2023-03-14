@@ -11,7 +11,7 @@ public class Game
 	public Game()
 	{	
 		ArrayList<Hero> HeroList = new ArrayList<Hero>();
-		
+		//creat all heroes	
 		Weapon staff = new Weapon("staff",1,1);
 		Spell[] WizardSpell = {
 			new Spell("fire ball","offensive",5,1),

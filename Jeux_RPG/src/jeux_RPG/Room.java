@@ -27,7 +27,10 @@ public class Room
  	*	Set up exit for a one direction
  	*/
 	public void setExit(String direction, Room exit)
-	{this.HashExit.replace(direction, exit);}
+	{
+		if(knownDirection(direction))
+		{this.HashExit.replace(direction, exit);}
+	}
 	
 	public String toString() 
 	{return this.RoomName;}
