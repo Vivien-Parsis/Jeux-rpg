@@ -11,7 +11,7 @@ public class Room
 	/**
      *	List of all possible direction
      */
-	final static String[] DirectionList = {"north", "south", "east", "west"};
+	final static String[] DirectionList = {"north", "south", "east", "west","up","down"};
 	public Room(String RoomName, Boss RoomBoss, Item RoomItem)
 	{
 		this.RoomName = RoomName;
@@ -38,7 +38,11 @@ public class Room
 	{	
 		String exit = "";
 		for(String direction : DirectionList)
-		{exit += direction+ ":"+this.HashExit.get(direction)+"\n";}
+		{
+			if(this.HashExit.get(direction)==null)
+			{continue;}
+			exit += direction+ ":"+this.HashExit.get(direction)+"\n";
+		}
 		return exit.substring(0,exit.length()-1).replaceAll("null", "no exit");
 	}
 	/**

@@ -53,6 +53,7 @@ public class GameEngine
             {
                 int resultFightCommand = 0;
                 boolean successfulleave = false;
+                boolean winoncurrentboss = false;
                 while(true)
                 {
                     for(Hero currentHero : HeroList)
@@ -64,7 +65,18 @@ public class GameEngine
                             if(resultFightCommand==-2)
         	                {System.out.println(":unknown command !");}
                             if(resultFightCommand==1 || resultFightCommand==2 || resultFightCommand==3)
-                            {break;}
+                            {
+                                if(this.CurrentRoom.RoomBoss.currentHP<=0)
+                                {
+                                    winoncurrentboss = true;
+                                    this.CurrentRoom.RoomBoss = null;
+                                    System.out.println("win on the current boss !\n\n"+this.info());
+                                    //
+                                    //drop
+                                    //
+                                }
+                                break;
+                            }
                             if(resultFightCommand==4)
                             {
                                 System.out.println(":attempting to leave the combat");
@@ -83,10 +95,13 @@ public class GameEngine
                                 break;
                             }
                         }
-                        if(resultFightCommand==4 && successfulleave)
+                        //
+                        //boss attack here
+                        //
+                        if((resultFightCommand==4 && successfulleave) || winoncurrentboss)
                         {break;}
                     }
-                    if(resultFightCommand==4 && successfulleave)
+                    if((resultFightCommand==4 && successfulleave) || winoncurrentboss)
                     {break;}
                     for(Hero currentHero : HeroList)
                     {

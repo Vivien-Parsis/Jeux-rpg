@@ -48,9 +48,9 @@ public class Game
 		RoomHash.put("22", new Room("22", new Boss(), new Item()));
 		
 		//setup exit for all rooms
-		RoomHash.get("start").setExit("north",RoomHash.get("01"));
+		RoomHash.get("start").setExit("down",RoomHash.get("01"));
 
-		RoomHash.get("00").setExit("north",RoomHash.get("10"));
+		//RoomHash.get("00").setExit("north",RoomHash.get("10"));
 		RoomHash.get("00").setExit("east",RoomHash.get("01"));
 
 		RoomHash.get("01").setExit("south",RoomHash.get("start"));
