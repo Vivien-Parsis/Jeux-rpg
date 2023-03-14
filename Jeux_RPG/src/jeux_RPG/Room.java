@@ -17,6 +17,7 @@ public class Room
 		this.RoomName = RoomName;
 		this.RoomBoss = RoomBoss;
 		this.RoomItem = RoomItem;
+		HashExit = new HashMap<String, Room>();
 		for(String Direction : DirectionList)
 		{this.HashExit.put(Direction, null);}
 	}
@@ -45,15 +46,11 @@ public class Room
  	*/
 	public boolean hasExit(String direction)
 	{
-		if(direction.equals(DirectionList[0]) && this.NorthRoom != null)
+		if(knownDirection(direction)==false)
+		{return false;}
+		if(this.HashExit.get(direction)!=null)
 		{return true;}
-		if(direction.equals(DirectionList[1]) && this.SouthRoom != null)
-		{return true;}
-		if(direction.equals(DirectionList[2]) && this.EastRoom != null)
-		{return true;}
-		if(direction.equals(DirectionList[3]) && this.WestRoom != null)
-		{return true;}
-		
+
 		return false;
 	}
 	/**
@@ -61,23 +58,30 @@ public class Room
  	*/
 	public Room getExit(String direction)
 	{
+		if(knownDirection(direction)==false)
+		{return null;}
 		if(hasExit(direction)==false)
 		{return null;}
-		
-		if(direction.equals(DirectionList[0]))
-		{return this.NorthRoom;}
-		if(direction.equals(DirectionList[1]))
-		{return this.SouthRoom;}
-		if(direction.equals(DirectionList[2]))
-		{return this.EastRoom;}
-		if(direction.equals(DirectionList[3]))
-		{return this.WestRoom;}
-		
-		return null;
+		else
+		{return this.HashExit.get(direction);}
 	}
 	/**
  	*	Return if their is an alive boss in the room
  	*/
 	public boolean hasBoss()
 	{return this.RoomBoss != null;}
+
+	public static boolean knownDirection(String directiontocheck)
+	{
+		boolean knownDirection = false;
+		for(String direction : DirectionList)
+		{
+			if(direction.equals(directiontocheck))
+			{
+				knownDirection = true;
+				break;
+			}
+		}
+		return knownDirection;
+	}
 }

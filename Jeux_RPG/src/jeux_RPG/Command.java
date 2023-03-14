@@ -159,15 +159,8 @@ public class Command {
         		System.out.println(":must be "+CommandList[1][0]+" "+CommandList[1][1]+"!");
         		return -1;
         	}
-        	boolean knowdirection = false;
-        	for(int i = 0; i<Room.DirectionList.length;i++)
-        	{
-        		if(tabCommand[1].equals(Room.DirectionList[i]))
-        		{
-                    knowdirection = true;
-                    break;
-                }
-        	}
+        	boolean knowdirection = Room.knownDirection(tabCommand[1]);
+        	
         	//case of unknown possible direction
         	if(!knowdirection)
         	{
