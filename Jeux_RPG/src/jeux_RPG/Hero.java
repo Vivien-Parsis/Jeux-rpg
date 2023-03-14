@@ -19,7 +19,8 @@ public class Hero extends Person
 		this.maxmana = maxmana;
 		this.manaregen = manaregen;
 		this.HeroWeapon = HeroWeapon;
-		this.HeroSpell = HeroSpell;
+		if(HeroSpell.length==2)
+		{this.HeroSpell = HeroSpell;}
 	}
 	public Hero()
 	{
