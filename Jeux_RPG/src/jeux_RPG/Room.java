@@ -1,17 +1,13 @@
 package jeux_RPG;
 
-//import java.util.HashMap;
+import java.util.HashMap;
 
 public class Room
 {
 	String RoomName;
 	Boss RoomBoss;
 	Item RoomItem;
-	Room NorthRoom;
-	Room SouthRoom;
-	Room EastRoom;
-	Room WestRoom;
-	//HashMap<String, Room> HashExit;
+	HashMap<String, Room> HashExit;
 	/**
      *	List of all possible direction
      */
@@ -21,19 +17,16 @@ public class Room
 		this.RoomName = RoomName;
 		this.RoomBoss = RoomBoss;
 		this.RoomItem = RoomItem;
+		for(String Direction : DirectionList)
+		{this.HashExit.put(Direction, null);}
 	}
 	public Room()
 	{this("RoomTest", new Boss(), new Item());}
 	/**
  	*	Set up all exit
  	*/
-	public void setExit(Room NorthRoom, Room SouthRoom, Room EastRoom, Room WestRoom)
-	{
-		this.NorthRoom = NorthRoom;
-		this.SouthRoom = SouthRoom;
-		this.EastRoom = EastRoom;
-		this.WestRoom = WestRoom;
-	}
+	public void setExit(String direction, Room exit)
+	{this.HashExit.replace(direction, exit);}
 	
 	public String toString() 
 	{return this.RoomName;}
@@ -42,12 +35,10 @@ public class Room
  	*/
 	public String stringExit()
 	{	
-		String exit =("North : "+this.NorthRoom+"\n"
-				+"South : "+this.SouthRoom+"\n"
-				+"East : "+this.EastRoom+"\n"
-				+"West : "+this.WestRoom)
-    			.replaceAll("null", "no exit");
-		return exit;
+		String exit = "";
+		for(String direction : DirectionList)
+		{exit += direction+ ":"+this.HashExit.get(direction)+"\n";}
+		return exit.substring(0,exit.length()-1).replaceAll("null", "no exit");
 	}
 	/**
  	*	check if their is a exit in the selected direction
