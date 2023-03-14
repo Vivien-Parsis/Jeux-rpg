@@ -24,7 +24,7 @@ public class Room
 	public Room()
 	{this("RoomTest", new Boss(), new Item());}
 	/**
- 	*	Set up all exit
+ 	*	Set up exit for a one direction
  	*/
 	public void setExit(String direction, Room exit)
 	{this.HashExit.replace(direction, exit);}
@@ -70,7 +70,10 @@ public class Room
  	*/
 	public boolean hasBoss()
 	{return this.RoomBoss != null;}
-
+	
+	/**
+ 	*	check is a known direction
+ 	*/
 	public static boolean knownDirection(String directiontocheck)
 	{
 		boolean knownDirection = false;

@@ -30,6 +30,7 @@ public class Game
 			new Spell("shield bash","stun",10,1)};
 		HeroList.add(new Hero("Tank",125,10,15,10,10,1, glaive, TankSpell));
 		
+		//create all rooms
 		HashMap<String, Room> RoomHash = new HashMap<String, Room>();
 		
 		RoomHash.put("start", new Room("gate", null, null));
@@ -46,6 +47,7 @@ public class Game
 		RoomHash.put("21", new Room("21", new Boss(), new Item()));
 		RoomHash.put("22", new Room("22", new Boss(), new Item()));
 		
+		//setup exit for all rooms
 		RoomHash.get("start").setExit("north",RoomHash.get("01"));
 
 		RoomHash.get("00").setExit("north",RoomHash.get("10"));
