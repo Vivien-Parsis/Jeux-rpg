@@ -6,10 +6,9 @@ public class Hero extends Person
 	int maxmana;
 	int manaregen;
 	Weapon HeroWeapon;
-	Spell HeroSpell1;
-	Spell HeroSpell2;
+	Spell[] HeroSpell;
 	
-	public Hero(String name, int HP, int damagePoint, int defensePoint, int currentmana, int maxmana, int manaregen, Weapon HeroWeapon, Spell HeroSpell1, Spell HeroSpell2)
+	public Hero(String name, int HP, int damagePoint, int defensePoint, int currentmana, int maxmana, int manaregen, Weapon HeroWeapon, Spell[] HeroSpell)
 	{
 		this.name = name;
 		this.currentHP = HP;
@@ -20,11 +19,22 @@ public class Hero extends Person
 		this.maxmana = maxmana;
 		this.manaregen = manaregen;
 		this.HeroWeapon = HeroWeapon;
-		this.HeroSpell1 = HeroSpell1;
-		this.HeroSpell2 = HeroSpell2;
+		this.HeroSpell = HeroSpell;
 	}
 	public Hero()
-	{this("Herotest",50,5,5,10,10,2, new Weapon(), new Spell(), new Spell());}
+	{
+		this.name = "Herotest";
+		this.currentHP = 50;
+		this.maxHP = 50;
+		this.damagePoint = 5;
+		this.defensePoint = 5;
+		this.currentmana = 10;
+		this.maxmana = 10;
+		this.manaregen = 2;
+		this.HeroWeapon = new Weapon();
+		Spell[] heroSpell = {new Spell(), new Spell()};
+		this.HeroSpell = heroSpell;
+	}
 
 	public String toString()
 	{return this.name +"(HP:"+this.currentHP+"/"+this.maxHP+", Mana:"+this.currentmana+"/"+this.maxmana+")";}
@@ -37,8 +47,19 @@ public class Hero extends Person
 		return 
 			this.name +"\nHP:"+this.currentHP+"/"+this.maxHP+", damage point:"+this.damagePoint+
 			",\nMana:"+this.currentmana+"/"+this.maxmana+", mana regen:"+this.manaregen+
-			",\nWeapon:"+this.HeroWeapon.info()+
-			",\nSpell 1:"+this.HeroSpell1.info()+
-			",\nSpell 2:"+this.HeroSpell2.info();
+			",\nWeapon:"+this.HeroWeapon.info()+",\n"+
+			StringSpellList();
+	}
+	/**
+ 	* Return all spells of the hero
+ 	*/
+	public String StringSpellList()
+	{
+		String list = "";
+		for(int i = 0; i<this.HeroSpell.length; i++)
+		{
+			list += "Spell "+(i+1)+":"+this.HeroSpell[i].info()+",\n";
+		}
+		return list.substring(0,list.length()-2);
 	}
 }

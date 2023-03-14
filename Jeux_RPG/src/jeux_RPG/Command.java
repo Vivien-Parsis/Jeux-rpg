@@ -12,7 +12,7 @@ public class Command {
 	{"/attack","", "launch attack mode on current boss"},
 	{"/info","{hero/boss/item/none} ","display current info about the current boss, a hero, a item or current situation"},
 	{"/help", "{command} ", "display how work a command"},
-	{"/back", "", "go back"}};
+	{"/back", "", "go to the previous visited room"}};
 	/**
      *	List of all commands in combat phase
      */

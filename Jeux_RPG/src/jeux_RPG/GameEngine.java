@@ -71,13 +71,14 @@ public class GameEngine
                                 if(Rand.randint(1, 3)==1)
                                 {
                                     successfulleave=true;
-                                    System.out.println(":successfull to leave\n");
+                                    this.CurrentRoom.RoomBoss.currentHP = this.CurrentRoom.RoomBoss.maxHP;
+                                    System.out.println(":successfull to leave");
                                     System.out.println(this.info());
                                 }
                                 else
                                 {
                                     successfulleave=false;
-                                    System.out.println(":fail to leave\n");
+                                    System.out.println(":fail to leave");
                                 }
                                 break;
                             }
@@ -98,9 +99,7 @@ public class GameEngine
         }
     }
     public void hurtBoss(int damage)
-    {
-        this.CurrentRoom.RoomBoss.currentHP-=damage;
-    }
+    {this.CurrentRoom.RoomBoss.currentHP-=damage;}
     /**
  	* Return info of the current room of the player and the commands
  	*/
@@ -153,23 +152,23 @@ public class GameEngine
     /**
  	* Return all item of the bag
  	*/
-     public String stringBag()
-     {
+    public String stringBag()
+    {
         if(HeroBag.size()==0)
         {return "empty";}
         String bag = "weight:"+HeroCurrentWeight+"/"+HeroMaxWeight+"\n";
         for(Item item : HeroBag)
         {bag += item + " ";}
         return bag.substring(0,bag.length()-1).replaceAll(" ",", ");
-     }
+    }
 
     /**
  	* calculate the current weight of the player
  	*/
-     public void getCurrentWeight()
-     {
+    public void getCurrentWeight()
+    {
         this.HeroCurrentWeight = 0;
         for(Item e : HeroBag)
         {this.HeroCurrentWeight+=e.weight;}
-     }
+    }
 }
