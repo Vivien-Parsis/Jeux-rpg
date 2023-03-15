@@ -1,7 +1,6 @@
 package game;
 
-public class Weapon extends Item
-{
+public class Weapon extends Item{
 	private int attackpoint;
 	
 	public Weapon(String nameItem, int weight, int attackpoint)
@@ -13,7 +12,6 @@ public class Weapon extends Item
 	}
 	public Weapon()
 	{this("testweapon",1,1);}
-	
 	/**
  	*	return info of the weapon 
  	*/

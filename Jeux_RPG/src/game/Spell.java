@@ -1,7 +1,6 @@
 package game;
 
-public class Spell
-{
+public class Spell implements Info{
 	private String SpellName;
 	private String SpellType;
 	protected final static String[] allSpellType = {"heal", "offensive", "defensive", "stun"};

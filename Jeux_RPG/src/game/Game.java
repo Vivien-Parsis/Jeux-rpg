@@ -4,8 +4,7 @@ import java.util.Scanner;
 /**
 *	Class that create the gameEngine and his config
 */
-public class Game
-{
+public class Game{
 	private GameEngine gameEngine;
 	private Scanner myinput;
 	public Game(Scanner myinput)

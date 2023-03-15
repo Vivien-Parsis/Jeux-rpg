@@ -2,57 +2,16 @@ package game;
 /**
 *	Class that handle command
 */
-public class Command {
-    /**
-     *	List of all commands in explore phase
-     */
-    protected final static String[][] CommandList = 
-	{{"/quit", "", "quit the game"},
-	{"/move", "{direction} ", "move the player into a direction"},
-	{"/attack","", "launch attack mode on current boss"},
-	{"/info","{hero/boss/item/none} ","display current info about the current boss, a hero, a item or current situation"},
-	{"/help", "{command} ", "display how work a command"},
-	{"/back", "", "go to the previous visited room"}};
-	/**
-     *	List of all commands in combat phase
-     */
-	protected final static String[][] AttackCommand = 
-	{{"/help", "{command} ", "display how work a command"},
-	{"/spell", "{spell} ", "use one spell of your current hero"},
-	{"/use", "{item} ", "use one item"},
-	{"/weapon", "", "attack with weapon of your current hero"},
-	{"/leave", "", "leave combat"},
-	{"/info","{hero/boss/item} ","display current info about the current boss, a hero or a item"}};
-	/**
- 	*	return all commands	
- 	*/
-	public static String stringCommandList()
-    {
-    	String list ="~~~~commands~~~~\n";
-    	for(int i = 0; i<CommandList.length;i++)
-    	{list += CommandList[i][0]+" "+CommandList[i][1];}
-    	return list.replaceAll(" /", ", /");
-    }
-	/**
- 	*	return all commands of the combat phase	
- 	*/
-	public static String stringCombatCommandList()
-    {
-    	String list ="~~~~commands~~~~\n";
-    	for(int i = 0; i<AttackCommand.length;i++)
-    	{list += AttackCommand[i][0]+" "+AttackCommand[i][1];}
-    	return list.replaceAll(" /", ", /");
-    }
+public class Command implements CommandList{
 	/**
  	*	read and return command output
  	*/
-	public static String[] ReadCommand(GameEngine myGameEngine)
+	private static String[] ReadCommand(GameEngine myGameEngine)
 	{
 		System.out.print(">");
     	String stringCommand = myGameEngine.command.nextLine();
     	return stringCommand.split(" ");
 	}
-
 	/**
  	*	execute a command
  	*/

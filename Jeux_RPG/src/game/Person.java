@@ -1,7 +1,6 @@
 package game;
 
-public class Person
-{
+public class Person{
 	protected String name;
 	protected int maxHP;
 	protected int currentHP;

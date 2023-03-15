@@ -2,8 +2,7 @@ package game;
 
 import java.util.HashMap;
 
-public class Room
-{
+public class Room implements Info{
 	private String RoomName;
 	private Boss RoomBoss;
 	private Item RoomItem;
@@ -30,6 +29,14 @@ public class Room
 	{
 		if(knownDirection(direction))
 		{this.HashExit.replace(direction, exit);}
+	}
+
+	public String info()
+	{
+		return "~~~~~~room~~~~~~\n"+
+				this+
+    			"\n~~~~~~exit~~~~~~\n"+
+    			this.stringExit();
 	}
 	
 	public String toString() 

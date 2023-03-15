@@ -1,7 +1,6 @@
 package game;
 
-public class Boss extends Person
-{
+public class Boss extends Person implements Info{
 	public Boss(String name, int HP, int damagePoint, int defensePoint)
 	{
 		this.name = name;

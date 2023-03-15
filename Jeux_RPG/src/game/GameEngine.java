@@ -7,8 +7,7 @@ import java.util.ArrayList;
 /**
 *	Class that handle engine of the game
 */
-public class GameEngine
-{
+public class GameEngine implements Info, CommandList{
     private ArrayList<Item> HeroBag = new ArrayList<Item>();
     private Hero[] HeroTab; 
 	public Scanner command = new Scanner(System.in);	
@@ -180,17 +179,14 @@ public class GameEngine
  	* Return info of the current room of the player and the commands
  	*/
 	public String info()
-    {return "\n" + this.stringCurrentSituation() + "\n" + Command.stringCommandList() + "\n";}
+    {return "\n" + this.stringCurrentSituation() + "\n" + stringCommandList() + "\n";}
     /**
  	* Return info of the current room of the player
  	*/
     public String stringCurrentSituation()
     {
     	return
-    			("~~current room~~\n"+
-				this.CurrentRoom+
-    			"\n~~~~~~exit~~~~~~\n"+
-    			this.CurrentRoom.stringExit()+
+				(this.CurrentRoom.info()+
     			"\n~~~~~~boss~~~~~~\n"+
     			this.CurrentRoom.getRoomBoss()+
     			"\n~~~~~heroes~~~~~\n"+
@@ -213,7 +209,7 @@ public class GameEngine
             this.stringHeroList()+
             "\n~~~~~~bag~~~~~~~\n"+
             this.stringBag()+"\n"+
-            Command.stringCombatCommandList()+"\n";
+            stringCombatCommandList()+"\n";
     }
     /**
  	* Return the alive hero list
@@ -240,7 +236,26 @@ public class GameEngine
         {bag += item + " ";}
         return bag.substring(0,bag.length()-1).replaceAll(" ",", ");
     }
-
+    /**
+ 	*	return all commands	
+ 	*/
+	public static String stringCommandList()
+    {
+    	String list ="~~~~commands~~~~\n";
+    	for(int i = 0; i<CommandList.length;i++)
+    	{list += CommandList[i][0]+" "+CommandList[i][1];}
+    	return list.replaceAll(" /", ", /");
+    }
+	/**
+ 	*	return all commands of the combat phase	
+ 	*/
+	public static String stringCombatCommandList()
+    {
+    	String list ="~~~~commands~~~~\n";
+    	for(int i = 0; i<AttackCommand.length;i++)
+    	{list += AttackCommand[i][0]+" "+AttackCommand[i][1];}
+    	return list.replaceAll(" /", ", /");
+    }
     /**
  	* calculate the current weight of the player
  	*/
