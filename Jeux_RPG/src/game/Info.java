@@ -1,5 +1,8 @@
 package game;
 
 public interface Info {
-    public String info(); 
+    /**
+ 	*	Return info about the current object
+ 	*/
+    String info(); 
 }

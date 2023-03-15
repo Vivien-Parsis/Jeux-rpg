@@ -4,7 +4,6 @@ public class Item implements Info{
 	protected String nameItem;
 	protected String description;
 	protected int weight;
-	//must be between 0 and 100
 	protected int chance;
 	
 	public Item(String nameItem, int weight, String description, int chance)

@@ -330,7 +330,6 @@ public class Command implements CommandList{
 				return -1;
 			}
 			System.out.println(":"+info);
-			
 			return 5;
 		}
 		//case of unknown command

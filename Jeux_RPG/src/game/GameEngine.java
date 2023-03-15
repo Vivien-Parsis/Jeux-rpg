@@ -173,7 +173,6 @@ public class GameEngine implements Info, CommandList{
             return true;
         }
         return false;
-
     }   
     /**
  	* Return info of the current room of the player and the commands
