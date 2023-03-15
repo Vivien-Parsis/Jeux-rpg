@@ -11,7 +11,7 @@ public class Boss extends Person
 		this.defensePoint = defensePoint;
 	}
 	public Boss()
-	{this("bosstest",50,5,5);}
+	{this("goblin",50,12,5);}
 	
 	/**
  	*	Return info of the boss	
@@ -26,7 +26,9 @@ public class Boss extends Person
 
 	public String toString()
 	{return this.name + "(HP:"+this.currentHP+"/"+this.maxHP+")";}
-
+	/**
+ 	* hurt the boss
+ 	*/
 	public void hurtBoss(int damage)
     {this.currentHP-=damage;}
 }

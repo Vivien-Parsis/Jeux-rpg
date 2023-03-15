@@ -18,7 +18,7 @@ public class Item
 		this.chance = chance;
 	}
 	public Item()
-	{this("testitem",1, "test item",50);}
+	{this("coin",1, "test item",50);}
 
 	final public String toString()
 	{return this.nameItem;}

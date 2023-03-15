@@ -63,7 +63,9 @@ public class Hero extends Person
 		}
 		return list.substring(0,list.length()-2);
 	}
-
+	/**
+ 	* check if is a known spell for the hero
+ 	*/
 	public boolean knownSpell(String spell)
 	{
 		boolean knownSpell = false;
@@ -77,7 +79,9 @@ public class Hero extends Person
 		}
 		return knownSpell;
 	}
-
+	/**
+ 	* hurt the hero
+ 	*/
 	public void hurtHero(int damage)
 	{this.currentHP-=damage;}
 

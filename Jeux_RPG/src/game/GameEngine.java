@@ -75,9 +75,7 @@ public class GameEngine
                                     winoncurrentboss = true;
                                     this.CurrentRoom.killRoomBoss();
                                     System.out.println("win on the current boss !");
-                                    //
-                                    //drop here
-                                    //
+                                    
                                     if(this.drop())
                                     {
                                         this.calculateCurrentWeight();
@@ -107,7 +105,7 @@ public class GameEngine
                         
                         //boss attack here
                         if(!winoncurrentboss)
-                        {this.hurtHero(1);}
+                        {this.hurtHero(this.CurrentRoom.getRoomBoss().getdamagePoint());}
 
                         //test if dead hero work
                         //if(HeroTab[1]!=null)
@@ -163,13 +161,13 @@ public class GameEngine
             {AliveHero.add(hero);}
         }
         int choose = Rand.randint(0,AliveHero.size());
+        damage-=AliveHero.get(choose).getdefensePoint();
         AliveHero.get(choose).hurtHero(damage);
         this.HeroTab[choose]=AliveHero.get(choose);
     }
     public boolean drop()
     {
         Item CurrentItem = this.CurrentRoom.getRoomItem();
-        System.out.println(CurrentItem.getchance());
         if(Rand.randint(1,101)<=CurrentItem.getchance())
         {
             HeroBag.add(CurrentItem);
