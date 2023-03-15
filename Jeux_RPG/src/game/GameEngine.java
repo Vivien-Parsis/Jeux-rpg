@@ -2,6 +2,9 @@ package game;
 
 import java.util.Scanner;
 import java.util.Stack;
+
+import tool.Rand;
+
 import java.util.ArrayList;
 /**
 *	Class that handle engine of the game

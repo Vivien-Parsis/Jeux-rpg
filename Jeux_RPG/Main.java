@@ -1,5 +1,4 @@
-package game;
-
+import game.Game;
 import java.util.Scanner;
 
 public class Main

@@ -1,4 +1,4 @@
-package game;
+package tool;
 
 public class Rand
 {
