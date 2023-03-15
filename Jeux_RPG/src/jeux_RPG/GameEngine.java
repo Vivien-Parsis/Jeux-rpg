@@ -17,7 +17,7 @@ public class GameEngine
     int HeroCurrentWeight;
     Stack<Room> LastRoom;
  
-    public GameEngine(ArrayList<Hero> HeroList, Donjon GameDonjon, Room CurrentRoom, int HeroMaxWeight, int HeroCurrentWeight) 
+    public GameEngine(ArrayList<Hero> HeroList, Donjon GameDonjon, Room CurrentRoom, int HeroMaxWeight, int HeroCurrentWeight, Scanner command) 
     {
         this.HeroList = HeroList;
         this.GameDonjon = GameDonjon;

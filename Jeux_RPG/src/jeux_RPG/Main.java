@@ -6,9 +6,7 @@ public class Main
 {
 	public static void main(String[] args)
 	{	
-		//
 		//menu
-		//
 		boolean Start = false;
 		Scanner input = new Scanner(System.in);
 		System.out.println("Welcome to the java RPG made by @VivienP !\nStart the game ? (y/n)");
@@ -25,7 +23,7 @@ public class Main
 		if(Start)
 		{
 			System.out.println("\n############\nrunning game\n############\n");
-			Game game = new Game();
+			Game game = new Game(input);
 			game.RunGame();
 			System.out.println("\n#########\ngame stop\n#########");
 		}

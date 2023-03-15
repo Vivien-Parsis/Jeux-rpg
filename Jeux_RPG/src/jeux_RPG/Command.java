@@ -44,14 +44,21 @@ public class Command {
     	return list.replaceAll(" /", ", /");
     }
 	/**
+ 	*	read and return command output
+ 	*/
+	public static String[] ReadCommand(GameEngine myGameEngine)
+	{
+		System.out.print(">");
+    	String stringCommand = myGameEngine.command.nextLine();
+    	return stringCommand.split(" ");
+	}
+
+	/**
  	*	execute a command
  	*/
-	public static int RunCommand(GameEngine mygame)
+	public static int RunCommand(GameEngine myGameEngine)
     {
-        System.out.print(">");
-    	String stringCommand = mygame.command.nextLine();
-    	String[] tabCommand = stringCommand.split(" ");
-        
+    	String[] tabCommand = ReadCommand(myGameEngine);
     	//quit case
     	if(tabCommand[0].equals(CommandList[0][0]))
         {
@@ -62,7 +69,6 @@ public class Command {
 			}
 			return 0;
 		}
-    	
 		//info case
 		if(tabCommand[0].equals(CommandList[3][0]))
         {
@@ -73,22 +79,22 @@ public class Command {
 			}
 			if(tabCommand.length==1)
 			{
-				System.out.println(mygame.info());
+				System.out.println(myGameEngine.info());
 				return 3;
 			}
 			String info = "";
 			boolean isboss = false;
-			if(mygame.CurrentRoom.RoomBoss!=null)
+			if(myGameEngine.CurrentRoom.RoomBoss!=null)
 			{
-				isboss = tabCommand[1].equals("boss") || tabCommand[1].equals(mygame.CurrentRoom.RoomBoss.name);
+				isboss = tabCommand[1].equals("boss") || tabCommand[1].equals(myGameEngine.CurrentRoom.RoomBoss.name);
 			}
 			
 			if(isboss)
 			{
-				info=mygame.CurrentRoom.RoomBoss.info();
+				info=myGameEngine.CurrentRoom.RoomBoss.info();
 			}
 			boolean ishero = false;
-			for(Hero hero : mygame.HeroList)
+			for(Hero hero : myGameEngine.HeroList)
 			{
 				if(hero.name.equals(tabCommand[1]))
 				{
@@ -98,7 +104,7 @@ public class Command {
 				}
 			}
 			boolean isitem = false;
-			for(Item item : mygame.HeroBag)
+			for(Item item : myGameEngine.HeroBag)
 			{
 				if(item.nameItem.equals(tabCommand[1]))
 				{
@@ -168,7 +174,7 @@ public class Command {
         		return -1;
         	}
         	//case of no exit
-        	if(!mygame.CurrentRoom.hasExit(tabCommand[1]))
+        	if(!myGameEngine.CurrentRoom.hasExit(tabCommand[1]))
         	{
         		System.out.println(":can't go that way");
         		return -1;
@@ -176,10 +182,11 @@ public class Command {
         	//case of a successful move
         	else
         	{
-				mygame.LastRoom.push(mygame.CurrentRoom);
-        		mygame.CurrentRoom = mygame.CurrentRoom.getExit(tabCommand[1]);
+				if(!myGameEngine.CurrentRoom.RoomName.equals("gate"))
+				{myGameEngine.LastRoom.push(myGameEngine.CurrentRoom);}
+        		myGameEngine.CurrentRoom = myGameEngine.CurrentRoom.getExit(tabCommand[1]);
         		System.out.println(":moving to "+tabCommand[1]+"\n");
-        		System.out.println(mygame.info());
+        		System.out.println(myGameEngine.info());
         		return 1;
         	}
         }
@@ -191,7 +198,7 @@ public class Command {
 				System.out.println(":must be "+CommandList[2][0]+" "+CommandList[2][1]+"!");
         		return -1;
 			}
-			if(mygame.CurrentRoom.hasBoss())
+			if(myGameEngine.CurrentRoom.hasBoss())
 			{
 				System.out.println(":launch attack on the current boss");
 				return 2;
@@ -210,12 +217,12 @@ public class Command {
 				System.out.println(":must be "+CommandList[5][0]+" "+CommandList[5][1]+"!");
         		return -1;
 			}
-			if(mygame.LastRoom==null)
+			if(myGameEngine.LastRoom==null)
 			{
 				System.out.println(":no previous romm");
 				return -1;
 			}
-			if(mygame.LastRoom.isEmpty())
+			if(myGameEngine.LastRoom.isEmpty())
 			{
 				System.out.println(":no previous romm");
 				return -1;
@@ -223,8 +230,8 @@ public class Command {
 			else
 			{
 				System.out.println(":go back\n");
-				mygame.CurrentRoom = mygame.LastRoom.pop();
-				System.out.println(mygame.info());
+				myGameEngine.CurrentRoom = myGameEngine.LastRoom.pop();
+				System.out.println(myGameEngine.info());
 				return 5;
 			}
 		}
@@ -234,11 +241,9 @@ public class Command {
 	/**
  	*	execute a combat command	
  	*/
-	public static int RunCombatCommand(GameEngine mygame, Hero currentHero)
+	public static int RunCombatCommand(GameEngine myGameEngine, Hero currentHero)
 	{
-		System.out.print(">");
-    	String stringCommand = mygame.command.nextLine();
-    	String[] tabCommand = stringCommand.split(" ");
+		String[] tabCommand = ReadCommand(myGameEngine);
 		//leave case
 		if(tabCommand[0].equals(AttackCommand[4][0]))
 		{
@@ -312,7 +317,7 @@ public class Command {
         		return -1;
 			}
 			System.out.println(":attacking with a weapon");
-			mygame.hurtBoss((currentHero.HeroWeapon.attackpoint*currentHero.damagePoint)-mygame.CurrentRoom.RoomBoss.defensePoint);
+			myGameEngine.hurtBoss((currentHero.HeroWeapon.attackpoint*currentHero.damagePoint)-myGameEngine.CurrentRoom.RoomBoss.defensePoint);
 			return 3;
 		}
 		//info case
@@ -324,13 +329,13 @@ public class Command {
         		return -1;
 			}
 			String info = "";
-			boolean isboss = tabCommand[1].equals("boss") || tabCommand[1].equals(mygame.CurrentRoom.RoomBoss.name);
+			boolean isboss = tabCommand[1].equals("boss") || tabCommand[1].equals(myGameEngine.CurrentRoom.RoomBoss.name);
 			if(isboss)
 			{
-				info=mygame.CurrentRoom.RoomBoss.info();
+				info=myGameEngine.CurrentRoom.RoomBoss.info();
 			}
 			boolean ishero = false;
-			for(Hero hero : mygame.HeroList)
+			for(Hero hero : myGameEngine.HeroList)
 			{
 				if(hero.name.equals(tabCommand[1]))
 				{
@@ -340,7 +345,7 @@ public class Command {
 				}
 			}
 			boolean isitem = false;
-			for(Item item : mygame.HeroBag)
+			for(Item item : myGameEngine.HeroBag)
 			{
 				if(item.nameItem.equals(tabCommand[1]))
 				{
@@ -358,6 +363,7 @@ public class Command {
 			
 			return 5;
 		}
+		//case of unknown command
 		return -2;
 	}
 }

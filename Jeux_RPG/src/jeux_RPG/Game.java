@@ -1,5 +1,6 @@
 package jeux_RPG;
 import java.util.HashMap;
+import java.util.Scanner;
 import java.util.ArrayList;
 /**
 *	Class that create the gameEngine and his config
@@ -7,9 +8,10 @@ import java.util.ArrayList;
 public class Game
 {
 	GameEngine gameEngine;
-
-	public Game()
+	Scanner myinput;
+	public Game(Scanner myinput)
 	{	
+		this.myinput = myinput;
 		ArrayList<Hero> HeroList = new ArrayList<Hero>();
 		//creat all heroes	
 		Weapon staff = new Weapon("staff",1,1);
@@ -87,7 +89,7 @@ public class Game
 		Item mainItem = new Item("emerald",0,"");
 		Donjon GameDonjon = new Donjon("Main",RoomHash,mainItem);
 
-		this.gameEngine = new GameEngine(HeroList,GameDonjon,RoomHash.get("start"),10,0);
+		this.gameEngine = new GameEngine(HeroList,GameDonjon,RoomHash.get("start"),10,0, this.myinput);
 	}
 	/**
  	* Run the game
