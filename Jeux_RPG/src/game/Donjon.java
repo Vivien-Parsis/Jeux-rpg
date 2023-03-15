@@ -31,6 +31,8 @@ public class Donjon
 	}
 	public String getDonjonName()
 	{return this.DonjonName;}
-	public Item DonjonLoot()
+	public Item getDonjonLoot()
 	{return this.DonjonLoot;}
+	public void clearDonjonLoot()
+	{this.DonjonLoot=null;}
 }

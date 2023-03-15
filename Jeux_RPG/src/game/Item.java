@@ -5,19 +5,27 @@ public class Item
 	protected String nameItem;
 	protected String description;
 	protected int weight;
+	//must be between 0 and 100
+	protected int chance;
 	
-	public Item(String nameItem, int weight, String description)
+	public Item(String nameItem, int weight, String description, int chance)
 	{
 		this.nameItem = nameItem;
 		this.description = description;
 		this.weight = weight;
+		if(!(chance>=0 && chance<=100))
+		{chance = 100;}
+		this.chance = chance;
 	}
 	public Item()
-	{this("testitem",1, "test item");}
+	{this("testitem",1, "test item",50);}
 
 	final public String toString()
 	{return this.nameItem;}
 
 	public String info()
 	{return this+"(weight:"+this.weight+". "+description+")";}
+
+	public int getchance()
+	{return this.chance;}
 }

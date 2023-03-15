@@ -77,6 +77,10 @@ public class Hero extends Person
 		}
 		return knownSpell;
 	}
+
+	public void hurtHero(int damage)
+	{this.currentHP-=damage;}
+
 	public int getcurrentmana()
 	{return currentmana;}
 	public void setcurrentmana(int newmana)

@@ -2,9 +2,7 @@ package game;
 
 import java.util.Scanner;
 import java.util.Stack;
-
 import tool.Rand;
-
 import java.util.ArrayList;
 /**
 *	Class that handle engine of the game
@@ -30,8 +28,6 @@ public class GameEngine
         this.HeroMaxWeight = HeroMaxWeight;
         this.HeroBag = new ArrayList<Item>();
         this.LastRoom = new Stack<Room>();
-        //this.HeroBag.add(new Item());
-        //this.HeroBag.add(new Item());
     }
     /**
  	* Run the game
@@ -40,6 +36,7 @@ public class GameEngine
     {
         this.calculateCurrentWeight();
         System.out.println(this.info());
+        boolean win = false;
         while(true)
         {
             this.calculateCurrentWeight();
@@ -74,12 +71,19 @@ public class GameEngine
                             {
                                 if(this.CurrentRoom.getRoomBoss().currentHP<=0)
                                 {
+                                    
                                     winoncurrentboss = true;
                                     this.CurrentRoom.killRoomBoss();
-                                    System.out.println("win on the current boss !\n\n"+this.info());
+                                    System.out.println("win on the current boss !");
                                     //
-                                    //drop
+                                    //drop here
                                     //
+                                    if(this.drop())
+                                    {
+                                        this.calculateCurrentWeight();
+                                        System.out.println(":drop a new item");
+                                    }
+                                    System.out.println("\n"+this.info());
                                 }
                                 break;
                             }
@@ -91,7 +95,6 @@ public class GameEngine
                                     successfulleave=true;
                                     this.CurrentRoom.getRoomBoss().currentHP = this.CurrentRoom.getRoomBoss().maxHP;
                                     System.out.println(":successfull to leave");
-                                    System.out.println(this.info());
                                 }
                                 else
                                 {
@@ -101,14 +104,15 @@ public class GameEngine
                                 break;
                             }
                         }
-                        //
+                        
                         //boss attack here
-                        //
+                        if(!winoncurrentboss)
+                        {this.hurtHero(1);}
 
                         //test if dead hero work
                         //if(HeroTab[1]!=null)
                         //{HeroTab[1].currentHP=0;}
-
+                        
                         //check if an hero is dead
                         for(int i=0; i<HeroTab.length; i++)
                         {
@@ -131,11 +135,49 @@ public class GameEngine
                         {currentHero.setcurrentmana(currentHero.getmaxmana());}
                     }
                 }
+                if(!winoncurrentboss)
+                {System.out.println(this.info());}
+                if(winoncurrentboss && !win)
+                {
+                    win = !this.GameDonjon.checkStillAliveBoss();
+                    if(win)
+                    {
+                        this.HeroBag.add(this.GameDonjon.getDonjonLoot());
+                        this.GameDonjon.clearDonjonLoot();
+                        System.out.println(":YOU WIN !\n");
+                    }
+                }
             }
+            if(win)
+            {break;}
         }
     }
     public void hurtBoss(int damage)
     {this.CurrentRoom.getRoomBoss().hurtBoss(damage);}
+    public void hurtHero(int damage)
+    {
+        ArrayList<Hero> AliveHero = new ArrayList<Hero>();
+        for(Hero hero : HeroTab)
+        {
+            if(hero!=null)
+            {AliveHero.add(hero);}
+        }
+        int choose = Rand.randint(0,AliveHero.size());
+        AliveHero.get(choose).hurtHero(damage);
+        this.HeroTab[choose]=AliveHero.get(choose);
+    }
+    public boolean drop()
+    {
+        Item CurrentItem = this.CurrentRoom.getRoomItem();
+        System.out.println(CurrentItem.getchance());
+        if(Rand.randint(1,101)<=CurrentItem.getchance())
+        {
+            HeroBag.add(CurrentItem);
+            return true;
+        }
+        return false;
+
+    }   
     /**
  	* Return info of the current room of the player and the commands
  	*/
