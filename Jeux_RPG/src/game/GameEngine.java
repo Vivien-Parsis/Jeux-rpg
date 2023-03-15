@@ -1,4 +1,4 @@
-package jeux_RPG;
+package game;
 
 import java.util.Scanner;
 import java.util.Stack;
@@ -8,18 +8,19 @@ import java.util.ArrayList;
 */
 public class GameEngine
 {
-    ArrayList<Item> HeroBag = new ArrayList<Item>();
-    ArrayList<Hero> HeroList = new ArrayList<Hero>();
-	Scanner command = new Scanner(System.in);	
-    Donjon GameDonjon;
-    Room CurrentRoom;
-    int HeroMaxWeight;
-    int HeroCurrentWeight;
-    Stack<Room> LastRoom;
- 
-    public GameEngine(ArrayList<Hero> HeroList, Donjon GameDonjon, Room CurrentRoom, int HeroMaxWeight, int HeroCurrentWeight, Scanner command) 
+    private ArrayList<Item> HeroBag = new ArrayList<Item>();
+    private Hero[] HeroTab; 
+	public Scanner command = new Scanner(System.in);	
+    private Donjon GameDonjon;
+    private Room CurrentRoom;
+    private int HeroMaxWeight;
+    private int HeroCurrentWeight;
+    private Stack<Room> LastRoom;
+    
+    public GameEngine(Hero[] HeroTab, Donjon GameDonjon, Room CurrentRoom, int HeroMaxWeight, int HeroCurrentWeight, Scanner command) 
     {
-        this.HeroList = HeroList;
+        this.HeroTab = new Hero[3];
+        this.HeroTab = HeroTab;
         this.GameDonjon = GameDonjon;
         this.CurrentRoom = CurrentRoom;
         this.HeroCurrentWeight = HeroCurrentWeight;
@@ -34,11 +35,11 @@ public class GameEngine
  	*/
     public void RunGame()
     {
-        this.getCurrentWeight();
+        this.calculateCurrentWeight();
         System.out.println(this.info());
         while(true)
         {
-            this.getCurrentWeight();
+            this.calculateCurrentWeight();
 			int resultcommand = Command.RunCommand(this);
         	if(resultcommand==0)
         	{
@@ -56,8 +57,10 @@ public class GameEngine
                 boolean winoncurrentboss = false;
                 while(true)
                 {
-                    for(Hero currentHero : HeroList)
+                    for(Hero currentHero : HeroTab)
                     {
+                        if(currentHero==null)
+                        {continue;}
                         System.out.println(stringCurrentCombat(currentHero));
                         while(true)
                         {
@@ -66,10 +69,10 @@ public class GameEngine
         	                {System.out.println(":unknown command !");}
                             if(resultFightCommand==1 || resultFightCommand==2 || resultFightCommand==3)
                             {
-                                if(this.CurrentRoom.RoomBoss.currentHP<=0)
+                                if(this.CurrentRoom.getRoomBoss().currentHP<=0)
                                 {
                                     winoncurrentboss = true;
-                                    this.CurrentRoom.RoomBoss = null;
+                                    this.CurrentRoom.killRoomBoss();
                                     System.out.println("win on the current boss !\n\n"+this.info());
                                     //
                                     //drop
@@ -83,7 +86,7 @@ public class GameEngine
                                 if(Rand.randint(1, 3)==1)
                                 {
                                     successfulleave=true;
-                                    this.CurrentRoom.RoomBoss.currentHP = this.CurrentRoom.RoomBoss.maxHP;
+                                    this.CurrentRoom.getRoomBoss().currentHP = this.CurrentRoom.getRoomBoss().maxHP;
                                     System.out.println(":successfull to leave");
                                     System.out.println(this.info());
                                 }
@@ -98,23 +101,38 @@ public class GameEngine
                         //
                         //boss attack here
                         //
+
+                        //test if dead hero work
+                        //if(HeroTab[1]!=null)
+                        //{HeroTab[1].currentHP=0;}
+
+                        //check if an hero is dead
+                        for(int i=0; i<HeroTab.length; i++)
+                        {
+                            if(HeroTab[i]==null)
+                            {continue;}
+                            if(HeroTab[i].currentHP<=0)
+                            {HeroTab[i]=null;}
+                        }
                         if((resultFightCommand==4 && successfulleave) || winoncurrentboss)
                         {break;}
                     }
                     if((resultFightCommand==4 && successfulleave) || winoncurrentboss)
                     {break;}
-                    for(Hero currentHero : HeroList)
+                    for(Hero currentHero : HeroTab)
                     {
-                        currentHero.currentmana+=currentHero.manaregen;
-                        if(currentHero.currentmana>currentHero.maxmana)
-                        {currentHero.currentmana=currentHero.maxmana;}
+                        if(currentHero==null)
+                        {continue;}
+                        currentHero.addcurrentmana(currentHero.getcurrentmana()+currentHero.getmanaregen());
+                        if(currentHero.getcurrentmana()>currentHero.getmaxmana())
+                        {currentHero.setcurrentmana(currentHero.getmaxmana());}
                     }
                 }
             }
         }
     }
     public void hurtBoss(int damage)
-    {this.CurrentRoom.RoomBoss.currentHP-=damage;}
+    {this.CurrentRoom.getRoomBoss().hurtBoss(damage);}
     /**
  	* Return info of the current room of the player and the commands
  	*/
@@ -131,7 +149,7 @@ public class GameEngine
     			"\n~~~~~~exit~~~~~~\n"+
     			this.CurrentRoom.stringExit()+
     			"\n~~~~~~boss~~~~~~\n"+
-    			this.CurrentRoom.RoomBoss+
+    			this.CurrentRoom.getRoomBoss()+
     			"\n~~~~~heroes~~~~~\n"+
     			this.stringHeroList()+
                 "\n~~~~~~bag~~~~~~~\n"+
@@ -147,7 +165,7 @@ public class GameEngine
             "\n~~current hero~~\n"+
             currenthero.info()+
             "\n~~~~~~boss~~~~~~\n"+
-            this.CurrentRoom.RoomBoss+
+            this.CurrentRoom.getRoomBoss()+
             "\n~~~~~heroes~~~~~\n"+
             this.stringHeroList()+
             "\n~~~~~~bag~~~~~~~\n"+
@@ -160,8 +178,11 @@ public class GameEngine
     public String stringHeroList()
     {
     	String herolist = "";
-    	for(Hero hero : HeroList)
-    	{herolist += hero + " \n";}
+    	for(Hero hero : HeroTab)
+    	{
+            if(hero!=null)
+            {herolist += hero + " \n";}
+        }
     	return herolist.substring(0,herolist.length()-1);
     }
     /**
@@ -180,10 +201,37 @@ public class GameEngine
     /**
  	* calculate the current weight of the player
  	*/
-    public void getCurrentWeight()
+    public void calculateCurrentWeight()
     {
         this.HeroCurrentWeight = 0;
         for(Item e : HeroBag)
         {this.HeroCurrentWeight+=e.weight;}
     }
+    public Donjon getDonjon()
+    {return this.GameDonjon;}
+
+    public Stack<Room> getLastRoom()
+    {return this.LastRoom;}
+    public void pushLastRoom(Room room)
+    {this.LastRoom.push(room);}
+    public Room popLastRoom()
+    {return this.LastRoom.pop();}
+
+    public Hero[] getHeroTab()
+    {return this.HeroTab;}
+
+    public Room getCurrentRoom()
+    {return this.CurrentRoom;}
+    public void setCurrentRoom(Room newRoom)
+    {this.CurrentRoom=newRoom;}
+
+    public int getHeroMaxWeight()
+    {return HeroMaxWeight;}
+
+    public int getHeroCurrentWeight()
+    {return HeroCurrentWeight;}
+
+    public ArrayList<Item> getHeroBag()
+    {return this.HeroBag;}
+
 }
