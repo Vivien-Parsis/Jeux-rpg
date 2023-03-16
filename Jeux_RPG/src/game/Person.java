@@ -1,10 +1,10 @@
 package game;
 
 public class Person{
-	protected String name;
-	protected int maxHP;
+	final protected String name;
+	final protected int maxHP;
 	protected int currentHP;
-	protected int damagePoint;
+	final protected int damagePoint;
 	protected int defensePoint;
 	
 	public Person(String name,int HP, int damagePoint, int defensePoint)

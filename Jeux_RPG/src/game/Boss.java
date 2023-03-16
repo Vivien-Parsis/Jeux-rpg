@@ -1,16 +1,12 @@
 package game;
 
 public class Boss extends Person implements Info{
-	public Boss(String name, int HP, int damagePoint, int defensePoint)
+	public Boss(final String name,final int HP,final int damagePoint,final int defensePoint)
 	{
-		this.name = name;
-		this.maxHP = HP;
-		this.currentHP = HP;
-		this.damagePoint = damagePoint;
-		this.defensePoint = defensePoint;
+		super(name, HP, damagePoint, defensePoint);
 	}
 	public Boss()
-	{this("goblin",50,12,5);}
+	{super("goblin",50,12,5);}
 	
 	/**
  	*	Return info of the boss	
@@ -28,6 +24,6 @@ public class Boss extends Person implements Info{
 	/**
  	* hurt the boss
  	*/
-	public void hurtBoss(int damage)
+	public void hurtBoss(final int damage)
     {this.currentHP-=damage;}
 }

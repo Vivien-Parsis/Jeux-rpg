@@ -38,7 +38,7 @@ public class Command implements CommandList{
 			}
 			if(tabCommand.length==1)
 			{
-				System.out.println(myGameEngine.info());
+				System.out.println(myGameEngine.info(myGameEngine.stringCurrentSituation()));
 				return 3;
 			}
 			String info = "";
@@ -149,7 +149,7 @@ public class Command implements CommandList{
 				}
         		myGameEngine.setCurrentRoom(myGameEngine.getCurrentRoom().getExit(tabCommand[1]));
         		System.out.println(":moving to "+tabCommand[1]+"\n");
-        		System.out.println(myGameEngine.info());
+        		System.out.println(myGameEngine.info(myGameEngine.stringCurrentSituation()));
         		return 1;
         	}
         }
@@ -194,7 +194,7 @@ public class Command implements CommandList{
 			{
 				System.out.println(":go back\n");
 				myGameEngine.setCurrentRoom(myGameEngine.popLastRoom());
-				System.out.println(myGameEngine.info());
+				System.out.println(myGameEngine.info(myGameEngine.stringCurrentSituation()));
 				return 5;
 			}
 		}

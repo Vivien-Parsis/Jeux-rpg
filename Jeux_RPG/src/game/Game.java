@@ -5,26 +5,26 @@ import java.util.Scanner;
 *	Class that create the gameEngine and his config
 */
 public class Game{
-	private GameEngine gameEngine;
-	private Scanner myinput;
-	public Game(Scanner myinput)
+	final private GameEngine gameEngine;
+	final private Scanner myinput;
+	public Game(final Scanner myinput)
 	{	
 		this.myinput = myinput;
 		Hero[] HeroTab = new Hero[3];
 		//creat all heroes	
-		Weapon staff = new Weapon("staff",1,1);
+		Weapon staff = new Weapon("staff","",1,1);
 		Spell[] WizardSpell = {
 			new Spell("fire_ball","offensive",5,1),
 			new Spell("heal","heal",10,1)};
 		HeroTab[0] = new Hero("Wizard",80,15,5,10,10,2, staff, WizardSpell);
 		
-		Weapon sword = new Weapon("sword",1,1);
+		Weapon sword = new Weapon("sword","",1,1);
 		Spell[] WarriorSpell = {
 			new Spell("reinforce_weapon","offensive",7,1),
 			new Spell("flash","stun",10,1)};
 		HeroTab[1] = new Hero("Warrior",100,15,7,10,10,1, sword, WarriorSpell);
 		
-		Weapon glaive = new Weapon("glaive",1,1);
+		Weapon glaive = new Weapon("glaive","",1,1);
 		Spell[] TankSpell = {
 			new Spell("shield","defensive",5,1),
 			new Spell("shield_bash","stun",10,1)};

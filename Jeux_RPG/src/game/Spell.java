@@ -1,13 +1,13 @@
 package game;
 
 public class Spell implements Info{
-	private String SpellName;
-	private String SpellType;
+	final private String SpellName;
+	final private String SpellType;
 	protected final static String[] allSpellType = {"heal", "offensive", "defensive", "stun"};
-	private int Manacost;
-	private int SpellValue;			
+	final private int Manacost;
+	final private int SpellValue;			
 	
-	public Spell(String SpellName, String SpellType,int Manacost, int SpellValue)
+	public Spell(final String SpellName,final  String SpellType,final int Manacost,final int SpellValue)
 	{
 		this.SpellName = SpellName;
 		this.SpellType = SpellType;

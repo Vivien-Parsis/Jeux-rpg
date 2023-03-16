@@ -1,10 +1,10 @@
 package game;
 
 public class Item implements Info{
-	protected String nameItem;
-	protected String description;
-	protected int weight;
-	protected int chance;
+	final protected String nameItem;
+	final protected String description;
+	final protected int weight;
+	final protected int chance;
 	
 	public Item(String nameItem, int weight, String description, int chance)
 	{

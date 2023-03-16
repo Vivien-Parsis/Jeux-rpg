@@ -3,7 +3,7 @@ package game;
 import java.util.HashMap;
 
 public class Room implements Info{
-	private String RoomName;
+	final private String RoomName;
 	private Boss RoomBoss;
 	private Item RoomItem;
 	private HashMap<String, Room> HashExit;
@@ -11,7 +11,7 @@ public class Room implements Info{
      *	List of all possible direction
      */
 	final static String[] DirectionList = {"north", "south", "east", "west","up","down"};
-	public Room(String RoomName, Boss RoomBoss, Item RoomItem)
+	public Room(final String RoomName,final Boss RoomBoss,final Item RoomItem)
 	{
 		this.RoomName = RoomName;
 		this.RoomBoss = RoomBoss;
@@ -25,7 +25,7 @@ public class Room implements Info{
 	/**
  	*	Set up exit for a one direction
  	*/
-	public void setExit(String direction, Room exit)
+	public void setExit(final String direction,final Room exit)
 	{
 		if(knownDirection(direction))
 		{this.HashExit.replace(direction, exit);}

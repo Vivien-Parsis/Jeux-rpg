@@ -1,17 +1,15 @@
 package game;
 
 public class Weapon extends Item{
-	private int attackpoint;
+	final private int attackpoint;
 	
-	public Weapon(String nameItem, int weight, int attackpoint)
+	public Weapon(final String nameItem,final String description,final int weight,final int attackpoint)
 	{
-		this.nameItem = nameItem;
-		this.weight = weight;
+		super(nameItem,weight,description,100);
 		this.attackpoint = attackpoint;
-		this.chance = 100;
 	}
 	public Weapon()
-	{this("testweapon",1,1);}
+	{this("testweapon","",1,1);}
 	/**
  	*	return info of the weapon 
  	*/

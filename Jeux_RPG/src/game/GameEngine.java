@@ -7,13 +7,13 @@ import java.util.ArrayList;
 /**
 *	Class that handle engine of the game
 */
-public class GameEngine implements Info, CommandList{
+public class GameEngine implements CommandList{
     private ArrayList<Item> HeroBag = new ArrayList<Item>();
     private Hero[] HeroTab; 
-	public Scanner command = new Scanner(System.in);	
-    private Donjon GameDonjon;
+	final public Scanner command = new Scanner(System.in);	
+    final private Donjon GameDonjon;
     private Room CurrentRoom;
-    private int HeroMaxWeight;
+    final private int HeroMaxWeight;
     private int HeroCurrentWeight;
     private Stack<Room> LastRoom;
     
@@ -34,7 +34,7 @@ public class GameEngine implements Info, CommandList{
     public void RunGame()
     {
         this.calculateCurrentWeight();
-        System.out.println(this.info());
+        System.out.println(this.info(this.stringCurrentSituation()));
         boolean win = false;
         while(true)
         {
@@ -80,22 +80,21 @@ public class GameEngine implements Info, CommandList{
                                         this.calculateCurrentWeight();
                                         System.out.println(":drop a new item");
                                     }
-                                    System.out.println("\n"+this.info());
+                                    System.out.println("\n"+this.info(this.stringCurrentCombat(currentHero)));
                                 }
                                 break;
                             }
                             if(resultFightCommand==4)
                             {
+                                successfulleave = Rand.randint(1, 3)==1;
                                 System.out.println(":attempting to leave the combat");
-                                if(Rand.randint(1, 3)==1)
+                                if(successfulleave)
                                 {
-                                    successfulleave=true;
                                     this.CurrentRoom.getRoomBoss().currentHP = this.CurrentRoom.getRoomBoss().maxHP;
                                     System.out.println(":successfull to leave");
                                 }
                                 else
                                 {
-                                    successfulleave=false;
                                     System.out.println(":fail to leave");
                                 }
                                 break;
@@ -133,7 +132,7 @@ public class GameEngine implements Info, CommandList{
                     }
                 }
                 if(!winoncurrentboss)
-                {System.out.println(this.info());}
+                {System.out.println(this.info(this.stringCurrentSituation()));}
                 if(winoncurrentboss && !win)
                 {
                     win = !this.GameDonjon.checkStillAliveBoss();
@@ -177,22 +176,21 @@ public class GameEngine implements Info, CommandList{
     /**
  	* Return info of the current room of the player and the commands
  	*/
-	public String info()
-    {return "\n" + this.stringCurrentSituation() + "\n" + stringCommandList() + "\n";}
+    public String info(String situation)
+    {return ("\n" + situation + "\n" + stringCommandList() + "\n").replaceAll("null", "none");}
     /**
  	* Return info of the current room of the player
  	*/
     public String stringCurrentSituation()
     {
     	return
-				(this.CurrentRoom.info()+
+				this.CurrentRoom.info()+
     			"\n~~~~~~boss~~~~~~\n"+
     			this.CurrentRoom.getRoomBoss()+
     			"\n~~~~~heroes~~~~~\n"+
     			this.stringHeroList()+
                 "\n~~~~~~bag~~~~~~~\n"+
-                this.stringBag())
-    			.replaceAll("null", "none");
+                this.stringBag();
     }
     /**
  	* Return info of the current combat of the player
@@ -207,8 +205,7 @@ public class GameEngine implements Info, CommandList{
             "\n~~~~~heroes~~~~~\n"+
             this.stringHeroList()+
             "\n~~~~~~bag~~~~~~~\n"+
-            this.stringBag()+"\n"+
-            stringCombatCommandList()+"\n";
+            this.stringBag();
     }
     /**
  	* Return the alive hero list

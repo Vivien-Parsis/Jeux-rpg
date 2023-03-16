@@ -2,18 +2,14 @@ package game;
 
 public class Hero extends Person  implements Info{
 	private int currentmana;
-	private int maxmana;
-	private int manaregen;
-	private Weapon HeroWeapon;
+	final private int maxmana;
+	final private int manaregen;
+	final private Weapon HeroWeapon;
 	private Spell[] HeroSpell;
 	
 	public Hero(String name, int HP, int damagePoint, int defensePoint, int currentmana, int maxmana, int manaregen, Weapon HeroWeapon, Spell[] HeroSpell)
 	{
-		this.name = name;
-		this.currentHP = HP;
-		this.maxHP = HP;
-		this.damagePoint = damagePoint;
-		this.defensePoint = defensePoint;
+		super(name, HP, damagePoint, defensePoint);
 		this.currentmana = currentmana;
 		this.maxmana = maxmana;
 		this.manaregen = manaregen;
@@ -23,11 +19,7 @@ public class Hero extends Person  implements Info{
 	}
 	public Hero()
 	{
-		this.name = "Herotest";
-		this.currentHP = 50;
-		this.maxHP = 50;
-		this.damagePoint = 5;
-		this.defensePoint = 5;
+		super("Herotest", 50, 5, 5);
 		this.currentmana = 10;
 		this.maxmana = 10;
 		this.manaregen = 2;
