@@ -1,6 +1,7 @@
 package game;
 
-public class Hero extends Person  implements Info{
+public class Hero extends Person
+{
 	private int currentmana;
 	final private int maxmana;
 	final private int manaregen;

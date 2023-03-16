@@ -2,7 +2,8 @@ package game;
 
 import java.util.HashMap;
 
-public class Room implements Info{
+public class Room
+{
 	final private String RoomName;
 	private Boss RoomBoss;
 	private Item RoomItem;

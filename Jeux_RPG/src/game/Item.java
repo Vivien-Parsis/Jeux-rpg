@@ -1,6 +1,7 @@
 package game;
 
-public class Item implements Info{
+public class Item
+{
 	final protected String nameItem;
 	final protected String description;
 	final protected int weight;
