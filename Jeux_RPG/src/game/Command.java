@@ -278,15 +278,15 @@ public class Command implements CommandList {
 			return spell;
 		}
 		//use case
-		if(tabCommand[0].equals(AttackCommand[5][0]))
-		{
-			if(tabCommand.length!=2)
-			{
-				System.out.println(":must be "+AttackCommand[5][0]+" "+AttackCommand[5][1]+"!");
-        		return "-1";
-			}
-			return "5";
-		}
+		//if(tabCommand[0].equals(AttackCommand[5][0]))
+		//{
+		//	if(tabCommand.length!=2)
+		//	{
+		//		System.out.println(":must be "+AttackCommand[5][0]+" "+AttackCommand[5][1]+"!");
+        //		return "-1";
+		//	}
+		//	return "5";
+		//}
 		//weapon case
 		if(tabCommand[0].equals(AttackCommand[2][0]))
 		{

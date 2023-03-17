@@ -44,7 +44,6 @@ public class GameEngine implements CommandList{
 			String resultcommand = Command.RunCommand(this);
         	if(resultcommand.equals("0"))
         	{
-        		this.command.close();
         		break;
         	}
         	if(resultcommand.equals("-2"))
@@ -151,17 +150,16 @@ public class GameEngine implements CommandList{
                                     this.CurrentRoom.killRoomBoss();
                                     System.out.println("win on the current boss !");
                                     
-                                    if(this.drop())
-                                    {
-                                        this.calculateCurrentWeight();
-                                        System.out.println(":drop a new item");
-                                    }
-                                    System.out.println("\n"+this.info(stringCurrentCombat(currentHero),stringCombatCommandList()));
+                                    this.drop();
+                                    
+                                    if(!winoncurrentboss)
+                                    {System.out.println("\n"+this.info(stringCurrentCombat(currentHero),stringCombatCommandList()));}
+                                    else
+                                    {System.out.println("\n"+this.info(this.stringCurrentSituation(),stringCommandList()));}
                                 }
                                 break;
                             }
                             enoughmana = true;
-                            
                         }
                         //boss attack here
                         if(!winoncurrentboss && remainStunRound==0)
@@ -173,14 +171,6 @@ public class GameEngine implements CommandList{
                         {remainStunRound=0;}
                         SpellCombatRes = 0;
 
-                        //test if dead hero work
-                        //if(HeroTab[0]!=null)
-                        //{HeroTab[0].currentHP=0;}
-                        //if(HeroTab[1]!=null)
-                        //{HeroTab[1].currentHP=0;}
-                        //if(HeroTab[2]!=null)
-                        //{HeroTab[2].currentHP=0;}
-                        
                         //check if an hero is dead
                         for(int i=0; i<HeroTab.length; i++)
                         {
@@ -233,30 +223,43 @@ public class GameEngine implements CommandList{
         }
         System.out.println("\n#########\ngame stop\n#########");
     }
+
     public void hurtBoss(int damage)
-    {this.CurrentRoom.getRoomBoss().hurtBoss(damage);}
+    {
+        if(damage<0)
+        {damage=0;}
+        this.CurrentRoom.getRoomBoss().hurtBoss(damage);
+    }
     public void hurtHero(int damage)
     {
-        ArrayList<Hero> AliveHero = new ArrayList<Hero>();
-        for(Hero hero : HeroTab)
+        ArrayList<Integer> AliveHero = new ArrayList<Integer>();
+        for(int i = 0; i<this.HeroTab.length; i++)
         {
-            if(hero!=null)
-            {AliveHero.add(hero);}
+            if(this.HeroTab[i]!=null)
+            {
+                AliveHero.add(i);
+            }
         }
         int choose = Rand.randint(0,AliveHero.size());
-        damage-=AliveHero.get(choose).getdefensePoint();
-        AliveHero.get(choose).hurtHero(damage);
-        this.HeroTab[choose]=AliveHero.get(choose);
+        damage-=HeroTab[AliveHero.get(choose)].getdefensePoint();
+        if(damage<0)
+        {damage=0;}
+        HeroTab[AliveHero.get(choose)].hurtHero(damage);
     }
-    public boolean drop()
+
+    public void drop()
     {
         Item CurrentItem = this.CurrentRoom.getRoomItem();
         if(Rand.randint(1,101)<=CurrentItem.getchance())
         {
             HeroBag.add(CurrentItem);
-            return true;
         }
-        return false;
+        else
+        {
+            HeroBag.add(new Item());
+        }
+        this.calculateCurrentWeight();
+        System.out.println(":drop a new item");
     }   
     /**
  	* Return info of the current room of the player and the commands

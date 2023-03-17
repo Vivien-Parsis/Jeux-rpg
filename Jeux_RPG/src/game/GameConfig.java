@@ -29,7 +29,6 @@ public class GameConfig{
 			new Spell("heal","heal",10,5)};
 		HeroTab[2] = new Hero("Wizard",80,15,5,10,10,2, staff, WizardSpell);
 		
-		
 		//create all rooms
 		HashMap<String, Room> RoomHash = new HashMap<String, Room>();
 		
@@ -50,13 +49,12 @@ public class GameConfig{
 		//setup exit for all rooms
 		RoomHash.get("start").setExit("down",RoomHash.get("01"));
 
-		//RoomHash.get("00").setExit("north",RoomHash.get("10"));
+		RoomHash.get("00").setExit("north",RoomHash.get("10"));
 		RoomHash.get("00").setExit("east",RoomHash.get("01"));
 
-		RoomHash.get("01").setExit("south",RoomHash.get("start"));
 		RoomHash.get("01").setExit("north",RoomHash.get("11"));
-		RoomHash.get("01").setExit("east",RoomHash.get("00"));
-		RoomHash.get("01").setExit("west",RoomHash.get("02"));
+		RoomHash.get("01").setExit("east",RoomHash.get("02"));
+		RoomHash.get("01").setExit("west",RoomHash.get("00"));
 
 		RoomHash.get("02").setExit("north",RoomHash.get("12"));
 		RoomHash.get("02").setExit("west",RoomHash.get("01"));
@@ -67,12 +65,12 @@ public class GameConfig{
 
 		RoomHash.get("11").setExit("south",RoomHash.get("01"));
 		RoomHash.get("11").setExit("north",RoomHash.get("21"));
-		RoomHash.get("11").setExit("east",RoomHash.get("10"));
-		RoomHash.get("11").setExit("west",RoomHash.get("12"));
+		RoomHash.get("11").setExit("east",RoomHash.get("12"));
+		RoomHash.get("11").setExit("west",RoomHash.get("10"));
 
 		RoomHash.get("12").setExit("south",RoomHash.get("02"));
 		RoomHash.get("12").setExit("north",RoomHash.get("22"));
-		RoomHash.get("12").setExit("east",RoomHash.get("11"));
+		RoomHash.get("12").setExit("west",RoomHash.get("11"));
 
 		RoomHash.get("20").setExit("south",RoomHash.get("10"));
 		RoomHash.get("20").setExit("east",RoomHash.get("21"));	
