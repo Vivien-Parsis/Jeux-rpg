@@ -1,7 +1,6 @@
 package game;
 
-public class Boss extends Person
-{
+public class Boss extends Person {
 	public Boss(final String name,final int HP,final int damagePoint,final int defensePoint)
 	{
 		super(name, HP, damagePoint, defensePoint);

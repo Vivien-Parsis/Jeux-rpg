@@ -11,23 +11,24 @@ public class GameConfig{
 	{	
 		Hero[] HeroTab = new Hero[3];
 		//creat all heroes	
-		Weapon staff = new Weapon("staff","",1,1);
-		Spell[] WizardSpell = {
-			new Spell("fire_ball","offensive",5,1),
-			new Spell("heal","heal",10,1)};
-		HeroTab[0] = new Hero("Wizard",80,15,5,10,10,2, staff, WizardSpell);
-		
 		Weapon sword = new Weapon("sword","",1,1);
 		Spell[] WarriorSpell = {
-			new Spell("reinforce_weapon","offensive",7,1),
+			new Spell("reinforce_weapon","offensive",7,15),
 			new Spell("flash","stun",10,1)};
-		HeroTab[1] = new Hero("Warrior",100,15,7,10,10,1, sword, WarriorSpell);
+		HeroTab[0] = new Hero("Warrior",100,15,7,10,10,1, sword, WarriorSpell);
 		
 		Weapon glaive = new Weapon("glaive","",1,1);
 		Spell[] TankSpell = {
 			new Spell("shield","defensive",5,1),
-			new Spell("shield_bash","stun",10,1)};
-		HeroTab[2] = new Hero("Tank",125,10,9,10,10,1, glaive, TankSpell);
+			new Spell("shield_bash","stun",10,2)};
+		HeroTab[1] = new Hero("Tank",125,10,9,10,10,1, glaive, TankSpell);
+
+		Weapon staff = new Weapon("staff","",1,1);
+		Spell[] WizardSpell = {
+			new Spell("fire_ball","offensive",5,15),
+			new Spell("heal","heal",10,5)};
+		HeroTab[2] = new Hero("Wizard",80,15,5,10,10,2, staff, WizardSpell);
+		
 		
 		//create all rooms
 		HashMap<String, Room> RoomHash = new HashMap<String, Room>();
@@ -91,7 +92,7 @@ public class GameConfig{
 	/**
  	* Run the game
  	*/
-	public static void RunGame()
+	protected static void RunGame()
 	{
 		System.out.println("\n############\nrunning game\n############\n");
 		GameConfig game = new GameConfig();

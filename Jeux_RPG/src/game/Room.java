@@ -2,8 +2,7 @@ package game;
 
 import java.util.HashMap;
 
-public class Room
-{
+public class Room {
 	final private String RoomName;
 	private Boss RoomBoss;
 	private Item RoomItem;

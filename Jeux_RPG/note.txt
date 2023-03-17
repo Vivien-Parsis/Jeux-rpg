@@ -19,9 +19,13 @@ to do:
     implementer des spells offensive et support
     "heal"(heal someone), "offensive"(damage the boss), "defensive"(reinforce all defense of hero), "stun"(boss cann't attack for x turn)
 
+    switch les String[][] de command list en HashMap<String,String[]>
+
 note:
     donjon plan
     //----20- ----21- ----22-
 	//----10- ----11- ----12-
 	//----00- ----01- ----02-
-	//----xx- -start- ----xx-  	
+	//----xx- -start- ----xx-
+
+nb ligne : 1285

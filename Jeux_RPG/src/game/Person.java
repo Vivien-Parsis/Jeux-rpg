@@ -21,7 +21,9 @@ public class Person{
 	
 	public String toString()
 	{return this.name;}
-
+	
+	public String getname()
+	{return this.name;}
 	public int getmaxHP()
 	{return this.maxHP;}
 
@@ -32,7 +34,7 @@ public class Person{
 
 	public int getdamagePoint()
 	{return this.damagePoint;}
-
+	
 	public int getdefensePoint()
 	{return this.defensePoint;}
 }

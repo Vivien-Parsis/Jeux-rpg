@@ -2,7 +2,7 @@ package game;
 /**
 *	Class that handle command
 */
-public class Command implements CommandList{
+public class Command implements CommandList {
 	/**
  	*	read and return command output
  	*/
@@ -207,14 +207,14 @@ public class Command implements CommandList{
 	{
 		String[] tabCommand = ReadCommand(myGameEngine);
 		//leave case
-		if(tabCommand[0].equals(AttackCommand[4][0]))
+		if(tabCommand[0].equals(AttackCommand[3][0]))
 		{
 			if(tabCommand.length>1)
         	{
-        		System.out.println(":must be "+AttackCommand[4][0]+" "+AttackCommand[4][1]+"!");
+        		System.out.println(":must be "+AttackCommand[3][0]+" "+AttackCommand[3][1]+"!");
         		return "-1";
         	}
-			return "4";
+			return "3";
 		}
 		//help case
 		if(tabCommand[0].equals(AttackCommand[0][0]))
@@ -278,39 +278,39 @@ public class Command implements CommandList{
 			return spell;
 		}
 		//use case
-		if(tabCommand[0].equals(AttackCommand[2][0]))
+		if(tabCommand[0].equals(AttackCommand[5][0]))
 		{
 			if(tabCommand.length!=2)
+			{
+				System.out.println(":must be "+AttackCommand[5][0]+" "+AttackCommand[5][1]+"!");
+        		return "-1";
+			}
+			return "5";
+		}
+		//weapon case
+		if(tabCommand[0].equals(AttackCommand[2][0]))
+		{
+			if(tabCommand.length!=1)
 			{
 				System.out.println(":must be "+AttackCommand[2][0]+" "+AttackCommand[2][1]+"!");
         		return "-1";
 			}
-			return "2";
-		}
-		//weapon case
-		if(tabCommand[0].equals(AttackCommand[3][0]))
-		{
-			if(tabCommand.length!=1)
-			{
-				System.out.println(":must be "+AttackCommand[3][0]+" "+AttackCommand[3][1]+"!");
-        		return "-1";
-			}
 			System.out.println(":attacking with a weapon");
 			myGameEngine.hurtBoss((currentHero.getHeroWeapon().getattackpoint()*currentHero.damagePoint)-myGameEngine.getCurrentRoom().getRoomBoss().defensePoint);
-			return "3";
+			return "2";
 		}
 		//info case
-		if(tabCommand[0].equals(AttackCommand[5][0]))
+		if(tabCommand[0].equals(AttackCommand[4][0]))
 		{
 			if(tabCommand.length>2)
 			{
-				System.out.println(":must be "+AttackCommand[5][0]+" "+AttackCommand[5][1]+"!");
+				System.out.println(":must be "+AttackCommand[4][0]+" "+AttackCommand[4][1]+"!");
         		return "-1";
 			}
 			if(tabCommand.length==1)
 			{
 				System.out.println(myGameEngine.info(myGameEngine.stringCurrentCombat(currentHero),GameEngine.stringCombatCommandList()));
-				return "5";
+				return "4";
 			}
 			String info = "";
 			boolean isboss = tabCommand[1].equals("boss") || tabCommand[1].equals(myGameEngine.getCurrentRoom().getRoomBoss().name);
@@ -333,7 +333,7 @@ public class Command implements CommandList{
 			boolean isitem = false;
 			for(Item item : myGameEngine.getHeroBag())
 			{
-				if(item.nameItem.equals(tabCommand[1]))
+				if(item.nameItem.equals(tabCommand[21]))
 				{
 					isitem = true;
 					info = item.info();
@@ -346,7 +346,7 @@ public class Command implements CommandList{
 				return "-1";
 			}
 			System.out.println(":"+info);
-			return "5";
+			return "4";
 		}
 		//case of unknown command
 		return "-2";

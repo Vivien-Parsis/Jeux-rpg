@@ -1,6 +1,6 @@
 package game;
 
-public class Weapon extends Item{
+public class Weapon extends Item {
 	final private int attackpoint;
 	
 	public Weapon(final String nameItem,final String description,final int weight,final int attackpoint)

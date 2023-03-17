@@ -28,10 +28,11 @@ public class GameEngine implements CommandList{
         this.HeroBag = new ArrayList<Item>();
         this.LastRoom = new Stack<Room>();
     }
+
     /**
  	* Run the game
  	*/
-    public void RunGame()
+    protected void RunGame()
     {
         this.calculateCurrentWeight();
         System.out.println(this.info(this.stringCurrentSituation(),stringCommandList()));
@@ -55,8 +56,9 @@ public class GameEngine implements CommandList{
                 String resultFightCommand = "";
                 boolean successfulleave = false;
                 boolean winoncurrentboss = false;
-                boolean stun = false;
+                int remainStunRound = 0;
                 int SpellCombatRes = 0;
+                boolean enoughmana = true;
                 while(true)
                 {
                     for(Hero currentHero : HeroTab)
@@ -69,30 +71,62 @@ public class GameEngine implements CommandList{
                             resultFightCommand = Command.RunCombatCommand(this, currentHero);
                             if(resultFightCommand.equals("-2"))
         	                {System.out.println(":unknown command !");}
+                            
+                            //spell case (?)
                             if(resultFightCommand.substring(0,1).equals("1"))
-                            {if(resultFightCommand.substring(0,2).equals("1 "))
                             {
-                                System.out.println("spell");
-                            }}
-                            if(resultFightCommand.equals("1") || resultFightCommand.equals("2") || resultFightCommand.equals("3"))
-                            {
-                                if(this.CurrentRoom.getRoomBoss().currentHP<=0)
+                                String[] tabResult = resultFightCommand.split(" ");
+                                //spell case
+                                if(tabResult[0].equals("1"))
                                 {
-                                    
-                                    winoncurrentboss = true;
-                                    this.CurrentRoom.killRoomBoss();
-                                    System.out.println("win on the current boss !");
-                                    
-                                    if(this.drop())
+                                    Spell currentSpell = currentHero.getHeroSpell()[Integer.parseInt(tabResult[1])];
+                                    String spelltype = currentSpell.getSpellType();
+                                    enoughmana = currentHero.getcurrentmana() >= currentSpell.getManacost();
+                                    //spell heal case
+                                    if(spelltype.equals(Spell.allSpellType[0]) && enoughmana)
                                     {
-                                        this.calculateCurrentWeight();
-                                        System.out.println(":drop a new item");
+                                        System.out.println("using a heal spell");
+                                        while(true)
+                                        {
+                                            System.out.println("which hero ?");
+                                            System.out.print(">");
+                                            String herotoheal = command.nextLine();
+                                            if(this.getHero(herotoheal)!=null)
+                                            {
+                                                this.getHero(herotoheal).heal(currentSpell.getSpellValue());
+                                                break;
+                                            }
+                                        }
+                                        currentHero.removecurrentmana(currentSpell.getManacost());
                                     }
-                                    System.out.println("\n"+this.info(stringCurrentCombat(currentHero),stringCombatCommandList()));
+                                    //spell offensive case
+                                    if(spelltype.equals(Spell.allSpellType[1]) && enoughmana)
+                                    {
+                                        System.out.println("using a offensive spell");
+                                        this.hurtBoss(currentSpell.getSpellValue());
+                                        currentHero.removecurrentmana(currentSpell.getManacost());
+                                    }
+                                    //spell defensive case
+                                    if(spelltype.equals(Spell.allSpellType[2]) && enoughmana)
+                                    {
+                                        System.out.println("using a defensive spell");
+                                        SpellCombatRes = currentSpell.getSpellValue();
+                                        currentHero.removecurrentmana(currentSpell.getManacost());
+                                    }
+                                    //spell stun case
+                                    if(spelltype.equals(Spell.allSpellType[3]) && enoughmana)
+                                    {
+                                        System.out.println("using a stun spell");
+                                        remainStunRound = currentSpell.getSpellValue();
+                                        currentHero.removecurrentmana(currentSpell.getManacost());
+                                    }
+                                    if(!enoughmana)
+                                    {
+                                        System.out.println(":Not enough mana to cast the spell !");
+                                    }
                                 }
-                                break;
                             }
-                            if(resultFightCommand.equals("4"))
+                            if(resultFightCommand.equals("3"))
                             {
                                 successfulleave = Rand.randint(1, 3)==1;
                                 System.out.println(":attempting to leave the combat");
@@ -107,15 +141,36 @@ public class GameEngine implements CommandList{
                                 }
                                 break;
                             }
+                            if(enoughmana && (resultFightCommand.substring(0,1).equals("1") || 
+                            resultFightCommand.equals("2") || 
+                            resultFightCommand.equals("3")))
+                            {
+                                if(this.CurrentRoom.getRoomBoss().currentHP<=0)
+                                {
+                                    winoncurrentboss = true;
+                                    this.CurrentRoom.killRoomBoss();
+                                    System.out.println("win on the current boss !");
+                                    
+                                    if(this.drop())
+                                    {
+                                        this.calculateCurrentWeight();
+                                        System.out.println(":drop a new item");
+                                    }
+                                    System.out.println("\n"+this.info(stringCurrentCombat(currentHero),stringCombatCommandList()));
+                                }
+                                break;
+                            }
+                            enoughmana = true;
+                            
                         }
-                        
                         //boss attack here
-                        if(!winoncurrentboss || stun)
+                        if(!winoncurrentboss && remainStunRound==0)
                         {
                             this.hurtHero(this.CurrentRoom.getRoomBoss().getdamagePoint()-SpellCombatRes);
-                            stun = false;
                         }
-                        
+                        remainStunRound-=1;
+                        if(remainStunRound<0)
+                        {remainStunRound=0;}
                         SpellCombatRes = 0;
 
                         //test if dead hero work
@@ -144,10 +199,10 @@ public class GameEngine implements CommandList{
                                 break;
                             }
                         }
-                        if((resultFightCommand.equals("4") && successfulleave) || winoncurrentboss || noAliveHero)
+                        if((resultFightCommand.equals("3") && successfulleave) || winoncurrentboss || noAliveHero)
                         {break;}
                     }
-                    if((resultFightCommand.equals("4") && successfulleave) || winoncurrentboss || noAliveHero)
+                    if((resultFightCommand.equals("3") && successfulleave) || winoncurrentboss || noAliveHero)
                     {break;}
                     for(Hero currentHero : HeroTab)
                     {
@@ -176,7 +231,7 @@ public class GameEngine implements CommandList{
             if(win || noAliveHero)
             {break;}
         }
-        System.out.println("\n############\nrunning game\n############\n");
+        System.out.println("\n#########\ngame stop\n#########");
     }
     public void hurtBoss(int damage)
     {this.CurrentRoom.getRoomBoss().hurtBoss(damage);}
@@ -320,4 +375,20 @@ public class GameEngine implements CommandList{
     public ArrayList<Item> getHeroBag()
     {return this.HeroBag;}
 
+    public Hero getHero(final String name)
+    {
+        Hero hero = null;
+        for(Hero e : HeroTab)
+        {
+            if(e != null)
+            {
+                if(name.equals(e.getname()))
+                {
+                    hero = e;
+                    break;
+                }
+            }
+        }
+        return hero;
+    }
 }

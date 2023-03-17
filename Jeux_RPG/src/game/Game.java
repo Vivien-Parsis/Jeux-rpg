@@ -17,6 +17,8 @@ public class Game {
 			String Stringinput = input.next();
 			if(Stringinput.equals("y"))
 			{Start = true;}
+            if(Stringinput.equals("n"))
+			{Start = false;}
 			if(Stringinput.equals("y") || (Stringinput.equals("n")))
 			{break;}
 			System.out.println("");

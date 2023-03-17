@@ -1,7 +1,6 @@
 package game;
 
-public class Hero extends Person
-{
+public class Hero extends Person {
 	private int currentmana;
 	final private int maxmana;
 	final private int manaregen;
@@ -76,6 +75,12 @@ public class Hero extends Person
  	*/
 	public void hurtHero(int damage)
 	{this.currentHP-=damage;}
+	public void heal(int heal)
+	{
+		this.currentHP+=heal;
+		if(this.currentHP>this.maxHP)
+		{this.currentHP=this.maxHP;}
+	}
 
 	public int getcurrentmana()
 	{return currentmana;}
@@ -83,6 +88,8 @@ public class Hero extends Person
 	{this.currentmana=newmana;}
 	public void addcurrentmana(int plusmana)
 	{this.currentmana+=plusmana;}
+	public void removecurrentmana(int minusmana)
+	{this.currentmana-=minusmana;}
 	
 	public int getmaxmana()
 	{return maxmana;}

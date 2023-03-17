@@ -17,10 +17,12 @@ public interface CommandList {
      *	List of all commands in combat phase
      */
 	String[][] AttackCommand = 
-	{{"/help", "{command} ", "display how work a command"},
-	{"/spell", "{spell} ", "use one spell of your current hero"},
-	{"/use", "{item} ", "use one item"},
-	{"/weapon", "", "attack with weapon of your current hero"},
-	{"/leave", "", "leave combat"},
-	{"/info","{hero/boss/item/none} ","display current info about the current boss, a hero or a item"}};
+	{
+		{"/help", "{command} ", "display how work a command"},
+		{"/spell", "{spell} ", "use one spell of your current hero"},
+		{"/weapon", "", "attack with weapon of your current hero"},
+		{"/leave", "", "leave combat"},
+		{"/info","{hero/boss/item/none} ","display current info about the current boss, a hero or a item"}
+		,{"/use", "{item} ", "use one item"}
+	};
 }
