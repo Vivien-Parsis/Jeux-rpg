@@ -1,5 +1,7 @@
 package game;
-
+/**
+*	Implement multiple lists of commands for the game
+*/
 public interface CommandList {
     /**
      *	List of all commands in explore phase
@@ -20,5 +22,5 @@ public interface CommandList {
 	{"/use", "{item} ", "use one item"},
 	{"/weapon", "", "attack with weapon of your current hero"},
 	{"/leave", "", "leave combat"},
-	{"/info","{hero/boss/item} ","display current info about the current boss, a hero or a item"}};
+	{"/info","{hero/boss/item/none} ","display current info about the current boss, a hero or a item"}};
 }
