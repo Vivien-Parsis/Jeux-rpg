@@ -10,7 +10,7 @@ public class Room {
 	/**
      *	List of all possible direction
      */
-	final static String[] DirectionList = {"north", "south", "east", "west","up","down"};
+	final static String[] DirectionList = {"north", "south", "east", "west", "up", "down"};
 	public Room(final String RoomName,final Boss RoomBoss,final Item RoomItem)
 	{
 		this.RoomName = RoomName;
@@ -25,7 +25,7 @@ public class Room {
 	/**
  	*	Set up exit for a one direction
  	*/
-	public void setExit(final String direction,final Room exit)
+	public void setExit(final String direction, final Room exit)
 	{
 		if(knownDirection(direction))
 		{this.HashExit.replace(direction, exit);}
@@ -42,7 +42,7 @@ public class Room {
 	public String toString() 
 	{return this.RoomName;}
 	/**
- 	*	Return all exits of the room
+ 	*	@return all exits of the room
  	*/
 	public String stringExit()
 	{	
@@ -68,7 +68,7 @@ public class Room {
 		return false;
 	}
 	/**
- 	*	Return if possible, the exit selected by the direction 
+ 	*	@return if possible, the exit selected by the direction 
  	*/
 	public Room getExit(String direction)
 	{
@@ -80,13 +80,13 @@ public class Room {
 		{return this.HashExit.get(direction);}
 	}
 	/**
- 	*	Return if their is an alive boss in the room
+ 	*	@return if their is an alive boss in the room
  	*/
 	public boolean hasBoss()
 	{return this.RoomBoss != null;}
 	
 	/**
- 	*	check is a known direction
+ 	*check is a known direction
  	*/
 	public static boolean knownDirection(String directiontocheck)
 	{

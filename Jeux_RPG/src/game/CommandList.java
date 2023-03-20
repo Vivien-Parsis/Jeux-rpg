@@ -1,6 +1,7 @@
 package game;
 /**
-*	Implement multiple lists of commands for the game
+* Implement multiple lists of commands for the game
+* @author VivienP
 */
 public interface CommandList {
     /**

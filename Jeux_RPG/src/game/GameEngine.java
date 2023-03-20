@@ -5,7 +5,8 @@ import java.util.Stack;
 import tool.Rand;
 import java.util.ArrayList;
 /**
-*	Class that handle engine of the game
+* Class that handle engine of the game
+* @author VivienP
 */
 public class GameEngine implements CommandList{
     private ArrayList<Item> HeroBag = new ArrayList<Item>();
@@ -17,10 +18,13 @@ public class GameEngine implements CommandList{
     private int HeroCurrentWeight;
     private Stack<Room> LastRoom;
     
-    public GameEngine(Hero[] HeroTab, Donjon GameDonjon, Room CurrentRoom, int HeroMaxWeight, int HeroCurrentWeight, Scanner command) 
+    public GameEngine(Hero[] heroTab, Donjon GameDonjon, Room CurrentRoom, int HeroMaxWeight, int HeroCurrentWeight, Scanner command) 
     {
         this.HeroTab = new Hero[3];
-        this.HeroTab = HeroTab;
+        if(heroTab.length!=3)
+        {heroTab[0]=new Hero();heroTab[1]=new Hero();heroTab[2]=new Hero();}
+        else
+        {this.HeroTab = heroTab;}
         this.GameDonjon = GameDonjon;
         this.CurrentRoom = CurrentRoom;
         this.HeroCurrentWeight = HeroCurrentWeight;
@@ -210,8 +214,8 @@ public class GameEngine implements CommandList{
                     win = !this.GameDonjon.checkStillAliveBoss();
                     if(win)
                     {
-                        this.HeroBag.add(this.GameDonjon.getDonjonLoot());
-                        this.GameDonjon.clearDonjonLoot();
+                        //this.HeroBag.add(this.GameDonjon.getDonjonLoot());
+                        //this.GameDonjon.clearDonjonLoot();
                         System.out.println(":YOU WIN !\n");
                     }
                 }
@@ -267,7 +271,7 @@ public class GameEngine implements CommandList{
     public String info(String situation, String command)
     {return ("\n" + situation + "\n" + command + "\n").replaceAll("null", "none");}
     /**
- 	* Return info of the current room of the player
+ 	* @return info of the current room of the player
  	*/
     public String stringCurrentSituation()
     {
@@ -281,7 +285,7 @@ public class GameEngine implements CommandList{
                 this.stringBag();
     }
     /**
- 	* Return info of the current combat of the player
+ 	* @return info of the current combat of the player
  	*/
     public String stringCurrentCombat(Hero currenthero)
     {
@@ -296,7 +300,7 @@ public class GameEngine implements CommandList{
             this.stringBag();
     }
     /**
- 	* Return the alive hero list
+ 	* @return the alive hero list
  	*/
     public String stringHeroList()
     {
@@ -311,7 +315,7 @@ public class GameEngine implements CommandList{
     	return herolist.substring(0,herolist.length()-1);
     }
     /**
- 	* Return all item of the bag
+ 	* @return all item of the bag
  	*/
     public String stringBag()
     {
@@ -323,7 +327,7 @@ public class GameEngine implements CommandList{
         return bag.substring(0,bag.length()-1).replaceAll(" ",", ");
     }
     /**
- 	*	return all commands	
+ 	*	@return all commands	
  	*/
 	public static String stringCommandList()
     {
@@ -333,7 +337,7 @@ public class GameEngine implements CommandList{
     	return list.replaceAll(" /", ", /");
     }
 	/**
- 	*	return all commands of the combat phase	
+ 	*	@return all commands of the combat phase	
  	*/
 	public static String stringCombatCommandList()
     {

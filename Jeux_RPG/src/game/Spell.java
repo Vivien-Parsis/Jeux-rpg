@@ -20,7 +20,7 @@ public class Spell {
 	public String toString()
 	{return this.SpellName;}
 	/**
- 	* 	return info of the spell
+ 	* 	@return info of the spell
  	*/
 	public String info()
 	{return this.SpellName+"(type:"+SpellType+", mana cost:"+this.Manacost+", value:"+this.SpellValue+")";}

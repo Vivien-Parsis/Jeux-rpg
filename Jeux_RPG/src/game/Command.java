@@ -1,6 +1,7 @@
 package game;
 /**
-*	Class that handle command
+* Class that handle command
+* @author VivienP
 */
 public class Command implements CommandList {
 	/**
@@ -272,6 +273,7 @@ public class Command implements CommandList {
 					if(tabCommand[1].equals(currentHero.getHeroSpell()[i].getSpellName()))
 					{
 						spell +=i;
+						return spell;
 					}
 				}
 			}

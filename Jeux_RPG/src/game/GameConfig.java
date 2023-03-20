@@ -2,32 +2,24 @@ package game;
 import java.util.HashMap;
 import java.util.Scanner;
 /**
-*	Class that create the gameEngine and his config
+* Class that create the config of gameEngine
+* @author VivienP
 */
 public class GameConfig{
 	final private GameEngine gameEngine;
 	final static private Scanner myinput = new Scanner(System.in);
-	public GameConfig()
+	private GameConfig()
 	{	
 		Hero[] HeroTab = new Hero[3];
 		//creat all heroes	
-		Weapon sword = new Weapon("sword","",1,1);
-		Spell[] WarriorSpell = {
-			new Spell("reinforce_weapon","offensive",7,15),
-			new Spell("flash","stun",10,1)};
-		HeroTab[0] = new Hero("Warrior",100,15,7,10,10,1, sword, WarriorSpell);
+		Spell[] WarriorSpell = {new Spell("reinforce_weapon","offensive",7,15), new Spell("flash","stun",10,1)};
+		HeroTab[0] = new Hero("Warrior",100,15,7,10,10,1, new Weapon("sword","",1,1), WarriorSpell);
 		
-		Weapon glaive = new Weapon("glaive","",1,1);
-		Spell[] TankSpell = {
-			new Spell("shield","defensive",5,1),
-			new Spell("shield_bash","stun",10,2)};
-		HeroTab[1] = new Hero("Tank",125,10,9,10,10,1, glaive, TankSpell);
+		Spell[] TankSpell = {new Spell("shield","defensive",5,1), new Spell("shield_bash","stun",10,2)};
+		HeroTab[1] = new Hero("Tank",125,10,9,10,10,1, new Weapon("glaive","",1,1), TankSpell);
 
-		Weapon staff = new Weapon("staff","",1,1);
-		Spell[] WizardSpell = {
-			new Spell("fire_ball","offensive",5,15),
-			new Spell("heal","heal",10,5)};
-		HeroTab[2] = new Hero("Wizard",80,15,5,10,10,2, staff, WizardSpell);
+		Spell[] WizardSpell = {new Spell("fire_ball","offensive",5,15), new Spell("heal","heal",10,5)};
+		HeroTab[2] = new Hero("Wizard",80,15,5,10,10,2, new Weapon("staff","",1,1), WizardSpell);
 		
 		//create all rooms
 		HashMap<String, Room> RoomHash = new HashMap<String, Room>();

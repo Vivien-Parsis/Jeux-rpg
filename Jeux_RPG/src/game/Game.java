@@ -1,6 +1,9 @@
 package game;
 import java.util.Scanner;
-
+/**
+* Class that launch the game
+* @author VivienP
+*/
 public class Game {
     /**
     * Launch a game

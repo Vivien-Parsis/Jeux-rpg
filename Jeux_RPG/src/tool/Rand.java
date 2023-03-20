@@ -1,5 +1,8 @@
 package tool;
-
+/**
+* Class of static methods that return random number between choosen numbers and selected type
+* @author VivienP
+*/
 public class Rand
 {
 	/**
