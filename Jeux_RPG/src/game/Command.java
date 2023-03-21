@@ -261,7 +261,7 @@ public class Command implements CommandList {
 				myGameEngine.addGold(myGameEngine.getHeroBag().get(index).getgoldValue());
 				myGameEngine.getCurrentRoom().getRoomMerchant().AddOffer(myGameEngine.getHeroBag().get(index));
 				myGameEngine.getHeroBag().remove(index);
-				System.out.println(myGameEngine.stringBag().substring(1));
+				System.out.println(myGameEngine.info(myGameEngine.stringCurrentSituation(),myGameEngine.stringCommandList()));
 				return "8";
 			}
 		}
