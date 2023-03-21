@@ -14,7 +14,10 @@ public interface CommandList {
 		{"/attack","", "launch attack mode on current boss"},
 		{"/info","{hero/boss/item/none} ","display current info about the current boss, a hero, a item or current situation"},
 		{"/help", "{command} ", "display how work a command"},
-		{"/back", "", "go to the previous visited room"}
+		{"/back", "", "go to the previous visited room"},
+		{"/equip", "{weapon}", "equip choosen weapon on a hero"},
+		{"/buy", "{item} ", "buy a item from a merchant"},
+		{"/sell", "{item} ", "sell a item to a merchant"}
 	};
 	/**
      *	List of all commands in combat phase
@@ -26,6 +29,5 @@ public interface CommandList {
 		{"/weapon", "", "attack with weapon of your current hero"},
 		{"/leave", "", "leave combat"},
 		{"/info","{hero/boss/item/none} ","display current info about the current boss, a hero or a item"}
-		//,{"/use", "{item} ", "use one item"}
 	};
 }

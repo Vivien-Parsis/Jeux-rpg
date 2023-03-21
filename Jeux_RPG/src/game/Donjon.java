@@ -28,6 +28,8 @@ public class Donjon {
 		}
 		return check;
 	}
+	public HashMap<String, Room> getRoomHash()
+	{return this.RoomHash;}
 	public String getDonjonName()
 	{return this.DonjonName;}
 	public Item getDonjonLoot()

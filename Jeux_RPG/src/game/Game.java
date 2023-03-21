@@ -8,7 +8,7 @@ public class Game {
     /**
     * Launch a game
     */
-    public static void LaunchGame()
+    public static void Launch()
 	{	
 		//menu
 		boolean Start = false;
@@ -29,7 +29,7 @@ public class Game {
 		}
 		if(Start)
 		{
-            GameConfig.RunGame();
+            GameConfig.Run();
             while(true)
             {
                 if(!Stringinput.equals("y")||!Stringinput.equals("n"))
@@ -37,7 +37,7 @@ public class Game {
                 System.out.print(">");
                 Stringinput = input.next();
                 if(Stringinput.equals("y"))
-			    {GameConfig.RunGame();}
+			    {GameConfig.Run();}
                 if(Stringinput.equals("n"))
 			    {break;} 
             }

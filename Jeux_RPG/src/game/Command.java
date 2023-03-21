@@ -39,7 +39,7 @@ public class Command implements CommandList {
 			}
 			if(tabCommand.length==1)
 			{
-				System.out.println(myGameEngine.info(myGameEngine.stringCurrentSituation(),GameEngine.stringCommandList()));
+				System.out.println(myGameEngine.info(myGameEngine.stringCurrentSituation(),myGameEngine.stringCommandList()));
 				return "3";
 			}
 			String info = "";
@@ -144,12 +144,10 @@ public class Command implements CommandList {
         	else
         	{
 				if(!myGameEngine.getCurrentRoom().getRoomName().equals("gate"))
-				{
-					myGameEngine.pushLastRoom(myGameEngine.getCurrentRoom());
-				}
+				{myGameEngine.pushLastRoom(myGameEngine.getCurrentRoom());}
         		myGameEngine.setCurrentRoom(myGameEngine.getCurrentRoom().getExit(tabCommand[1]));
         		System.out.println(":moving to "+tabCommand[1]+"\n");
-        		System.out.println(myGameEngine.info(myGameEngine.stringCurrentSituation(),GameEngine.stringCommandList()));
+        		System.out.println(myGameEngine.info(myGameEngine.stringCurrentSituation(),myGameEngine.stringCommandList()));
         		return "1";
         	}
         }
@@ -194,8 +192,77 @@ public class Command implements CommandList {
 			{
 				System.out.println(":go back\n");
 				myGameEngine.setCurrentRoom(myGameEngine.popLastRoom());
-				System.out.println(myGameEngine.info(myGameEngine.stringCurrentSituation(),GameEngine.stringCommandList()));
+				System.out.println(myGameEngine.info(myGameEngine.stringCurrentSituation(),myGameEngine.stringCommandList()));
 				return "5";
+			}
+		}
+		//buy case
+		if(tabCommand[0].equals(CommandList[7][0]))
+		{
+			if(!myGameEngine.getCurrentRoom().hasMerchant())
+			{
+				System.out.println(":No merchant here !");
+        		return "-1";
+			}
+			if(tabCommand.length!=2)
+			{
+				System.out.println(":must be "+CommandList[7][0]+" "+CommandList[7][1]+"!");
+        		return "-1";
+			}
+			if(myGameEngine.getCurrentRoom().getRoomMerchant().getOffer().size()==0)
+			{
+				System.out.println(":Merchant bag is empty");
+        		return "-1";
+			}
+			return "7";
+		}
+		//sell case
+		if(tabCommand[0].equals(CommandList[8][0]))
+		{
+			if(!myGameEngine.getCurrentRoom().hasMerchant())
+			{
+				System.out.println(":No merchant here !");
+        		return "-1";
+			}
+			if(tabCommand.length!=2)
+			{
+				System.out.println(":must be "+CommandList[8][0]+" "+CommandList[8][1]+"!");
+        		return "-1";
+			}
+			if(myGameEngine.getHeroBag().size()==0)
+			{
+				System.out.println(":Your bag is empty");
+        		return "-1";
+			}
+			boolean knowitem = false;
+			int index = -1;
+			for(int i = 0; i<myGameEngine.getHeroBag().size(); i++)
+			{
+				if(tabCommand[1].equals(myGameEngine.getHeroBag().get(i).nameItem))
+				{
+					knowitem = true;
+					index  = i;
+					break;
+				}
+			}
+			if(!knowitem)
+			{
+				System.out.println("Unknown item !");
+        		return "-1";
+			}
+			if(myGameEngine.getHeroBag().get(index).getgoldValue()==0)
+			{
+				System.out.println(":untradeable item");
+        		return "-1";
+			}
+			else
+			{
+				System.out.println(":item sell successfully");
+				myGameEngine.addGold(myGameEngine.getHeroBag().get(index).getgoldValue());
+				myGameEngine.getCurrentRoom().getRoomMerchant().AddOffer(myGameEngine.getHeroBag().get(index));
+				myGameEngine.getHeroBag().remove(index);
+				System.out.println(myGameEngine.stringBag().substring(1));
+				return "8";
 			}
 		}
         //case of unknown command
@@ -279,16 +346,7 @@ public class Command implements CommandList {
 			}
 			return spell;
 		}
-		//use case
-		//if(tabCommand[0].equals(AttackCommand[5][0]))
-		//{
-		//	if(tabCommand.length!=2)
-		//	{
-		//		System.out.println(":must be "+AttackCommand[5][0]+" "+AttackCommand[5][1]+"!");
-        //		return "-1";
-		//	}
-		//	return "5";
-		//}
+		
 		//weapon case
 		if(tabCommand[0].equals(AttackCommand[2][0]))
 		{

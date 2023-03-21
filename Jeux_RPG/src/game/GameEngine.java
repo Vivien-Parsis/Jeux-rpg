@@ -4,21 +4,21 @@ import java.util.Scanner;
 import java.util.Stack;
 import tool.Rand;
 import java.util.ArrayList;
+import java.util.Arrays;
 /**
 * Class that handle engine of the game
 * @author VivienP
 */
 public class GameEngine implements CommandList{
     private ArrayList<Item> HeroBag = new ArrayList<Item>();
-    private Hero[] HeroTab; 
+    private Hero[] HeroTab;
+    private int gold;
 	final public Scanner command = new Scanner(System.in);	
     final private Donjon GameDonjon;
     private Room CurrentRoom;
-    final private int HeroMaxWeight;
-    private int HeroCurrentWeight;
     private Stack<Room> LastRoom;
     
-    public GameEngine(Hero[] heroTab, Donjon GameDonjon, Room CurrentRoom, int HeroMaxWeight, int HeroCurrentWeight, Scanner command) 
+    public GameEngine(Hero[] heroTab, Donjon GameDonjon, Room CurrentRoom, Scanner command) 
     {
         this.HeroTab = new Hero[3];
         if(heroTab.length!=3)
@@ -27,29 +27,25 @@ public class GameEngine implements CommandList{
         {this.HeroTab = heroTab;}
         this.GameDonjon = GameDonjon;
         this.CurrentRoom = CurrentRoom;
-        this.HeroCurrentWeight = HeroCurrentWeight;
-        this.HeroMaxWeight = HeroMaxWeight;
         this.HeroBag = new ArrayList<Item>();
         this.LastRoom = new Stack<Room>();
+        gold = 0;
     }
 
     /**
  	* Run the game
  	*/
-    protected void RunGame()
+    protected void Run()
     {
-        this.calculateCurrentWeight();
+        this.iniative();
         System.out.println(this.info(this.stringCurrentSituation(),stringCommandList()));
         boolean win = false;
         boolean noAliveHero = false;
         while(true)
         {
-            this.calculateCurrentWeight();
 			String resultcommand = Command.RunCommand(this);
         	if(resultcommand.equals("0"))
-        	{
-        		break;
-        	}
+        	{break;}
         	if(resultcommand.equals("-2"))
         	{System.out.println(":unknown command !");}
             
@@ -64,6 +60,7 @@ public class GameEngine implements CommandList{
                 boolean enoughmana = true;
                 while(true)
                 {
+                    this.iniative();
                     for(Hero currentHero : HeroTab)
                     {
                         if(currentHero==null)
@@ -124,9 +121,7 @@ public class GameEngine implements CommandList{
                                         currentHero.removecurrentmana(currentSpell.getManacost());
                                     }
                                     if(!enoughmana)
-                                    {
-                                        System.out.println(":Not enough mana to cast the spell !");
-                                    }
+                                    {System.out.println(":Not enough mana to cast the spell !");}
                                 }
                             }
                             if(resultFightCommand.equals("3"))
@@ -139,9 +134,7 @@ public class GameEngine implements CommandList{
                                     System.out.println(":successfull to leave");
                                 }
                                 else
-                                {
-                                    System.out.println(":fail to leave");
-                                }
+                                {System.out.println(":fail to leave");}
                                 break;
                             }
                             if(enoughmana && (resultFightCommand.substring(0,1).equals("1") || 
@@ -151,11 +144,10 @@ public class GameEngine implements CommandList{
                                 if(this.CurrentRoom.getRoomBoss().currentHP<=0)
                                 {
                                     winoncurrentboss = true;
-                                    this.CurrentRoom.killRoomBoss();
+                                    this.CurrentRoom.kill();
                                     System.out.println("win on the current boss !");
-                                    
                                     this.drop();
-                                    
+                                   this.checkCloseDoor();
                                     if(!winoncurrentboss)
                                     {System.out.println("\n"+this.info(stringCurrentCombat(currentHero),stringCombatCommandList()));}
                                     else
@@ -167,9 +159,7 @@ public class GameEngine implements CommandList{
                         }
                         //boss attack here
                         if(!winoncurrentboss && remainStunRound==0)
-                        {
-                            this.hurtHero(this.CurrentRoom.getRoomBoss().getdamagePoint()-SpellCombatRes);
-                        }
+                        {this.hurtHero(this.CurrentRoom.getRoomBoss().getdamagePoint()-SpellCombatRes);}
                         remainStunRound-=1;
                         if(remainStunRound<0)
                         {remainStunRound=0;}
@@ -183,7 +173,6 @@ public class GameEngine implements CommandList{
                             if(HeroTab[i].currentHP<=0)
                             {HeroTab[i]=null;}
                         }
-                        
                         noAliveHero = true;
                         for(Hero hero : HeroTab)
                         {
@@ -228,6 +217,7 @@ public class GameEngine implements CommandList{
         System.out.println("\n#########\ngame stop\n#########");
     }
 
+
     public void hurtBoss(int damage)
     {
         if(damage<0)
@@ -257,16 +247,33 @@ public class GameEngine implements CommandList{
         if(Rand.randint(1,101)<=CurrentItem.getchance())
         {
             HeroBag.add(CurrentItem);
+            System.out.println(":drop a new item");
         }
-        else
+    } 
+    
+    public void iniative()
+    {
+        Arrays.sort(this.HeroTab);
+        Hero[] reverse = new Hero[3];
+        for(int i = 0; i<3; i++)
+        {reverse[i]=this.HeroTab[2-i];}
+        this.HeroTab = reverse;
+    }
+    public void checkCloseDoor()
+    {
+        for(Item item : this.HeroBag)
         {
-            HeroBag.add(new Item());
+            if(item.toString().equals("key") && this.GameDonjon.getRoomHash().get("12").getExit("down")==null)
+            {
+                System.out.println(":Unlocked a new door !");
+                this.GameDonjon.getRoomHash().get("12").setExit("down", this.GameDonjon.getRoomHash().get("13"));
+                this.GameDonjon.getRoomHash().get("13").setExit("up", this.GameDonjon.getRoomHash().get("12"));
+            }
         }
-        this.calculateCurrentWeight();
-        System.out.println(":drop a new item");
-    }   
+    }
+
     /**
- 	* Return info of the current room of the player and the commands
+ 	* @return info of the current room of the player and the commands
  	*/
     public String info(String situation, String command)
     {return ("\n" + situation + "\n" + command + "\n").replaceAll("null", "none");}
@@ -277,11 +284,8 @@ public class GameEngine implements CommandList{
     {
     	return
 				this.CurrentRoom.info()+
-    			"\n~~~~~~boss~~~~~~\n"+
-    			this.CurrentRoom.getRoomBoss()+
-    			"\n~~~~~heroes~~~~~\n"+
+    			this.stringCharacter()+
     			this.stringHeroList()+
-                "\n~~~~~~bag~~~~~~~\n"+
                 this.stringBag();
     }
     /**
@@ -292,11 +296,8 @@ public class GameEngine implements CommandList{
         return 
             "\n~~current hero~~\n"+
             currenthero.info()+
-            "\n~~~~~~boss~~~~~~\n"+
-            this.CurrentRoom.getRoomBoss()+
-            "\n~~~~~heroes~~~~~\n"+
+            this.stringCharacter()+
             this.stringHeroList()+
-            "\n~~~~~~bag~~~~~~~\n"+
             this.stringBag();
     }
     /**
@@ -304,14 +305,14 @@ public class GameEngine implements CommandList{
  	*/
     public String stringHeroList()
     {
-    	String herolist = "";
+    	String herolist = "\n~~~~~heroes~~~~~\n";
     	for(Hero hero : HeroTab)
     	{
             if(hero!=null)
             {herolist += hero + " \n";}
         }
-        if(herolist=="")
-        {return herolist;}
+        if(herolist.equals("\n~~~~~heroes~~~~~\n"))
+        {return herolist.concat("none");}
     	return herolist.substring(0,herolist.length()-1);
     }
     /**
@@ -320,8 +321,8 @@ public class GameEngine implements CommandList{
     public String stringBag()
     {
         if(HeroBag.size()==0)
-        {return "empty";}
-        String bag = "weight:"+HeroCurrentWeight+"/"+HeroMaxWeight+"\n";
+        {return "\n~~~~~~bag~~~~~~~\n"+"gold:"+this.gold+"\nempty";}
+        String bag =  "\n~~~~~~bag~~~~~~~\n"+"gold:"+this.gold+"\n";
         for(Item item : HeroBag)
         {bag += item + " ";}
         return bag.substring(0,bag.length()-1).replaceAll(" ",", ");
@@ -329,11 +330,15 @@ public class GameEngine implements CommandList{
     /**
  	*	@return all commands	
  	*/
-	public static String stringCommandList()
+	public String stringCommandList()
     {
     	String list ="~~~~commands~~~~\n";
     	for(int i = 0; i<CommandList.length;i++)
-    	{list += CommandList[i][0]+" "+CommandList[i][1];}
+    	{
+            if((i==2 && !this.CurrentRoom.hasBoss()) || ((i==8 || i==7) && !this.CurrentRoom.hasMerchant()))
+            {continue;}
+            list += CommandList[i][0]+" "+CommandList[i][1];
+        }
     	return list.replaceAll(" /", ", /");
     }
 	/**
@@ -346,15 +351,16 @@ public class GameEngine implements CommandList{
     	{list += AttackCommand[i][0]+" "+AttackCommand[i][1];}
     	return list.replaceAll(" /", ", /");
     }
-    /**
- 	* calculate the current weight of the player
- 	*/
-    public void calculateCurrentWeight()
+    public String stringCharacter()
     {
-        this.HeroCurrentWeight = 0;
-        for(Item e : HeroBag)
-        {this.HeroCurrentWeight+=e.weight;}
+        if(this.CurrentRoom.hasBoss())
+        {return "\n~~~~~~boss~~~~~~\n"+this.CurrentRoom.getCharacter();}
+        else if(this.CurrentRoom.hasMerchant())
+        {return "\n~~~~Character~~~~\n"+this.CurrentRoom.getCharacter()+this.CurrentRoom.getRoomMerchant().info();}
+        else
+        {return "";}
     }
+    
     public Donjon getDonjon()
     {return this.GameDonjon;}
 
@@ -372,12 +378,6 @@ public class GameEngine implements CommandList{
     {return this.CurrentRoom;}
     public void setCurrentRoom(Room newRoom)
     {this.CurrentRoom=newRoom;}
-
-    public int getHeroMaxWeight()
-    {return HeroMaxWeight;}
-
-    public int getHeroCurrentWeight()
-    {return HeroCurrentWeight;}
 
     public ArrayList<Item> getHeroBag()
     {return this.HeroBag;}
@@ -398,4 +398,27 @@ public class GameEngine implements CommandList{
         }
         return hero;
     }
+    /**
+     * @param HeroBag the HeroBag to set
+     */
+    public void setHeroBag(ArrayList<Item> HeroBag) {
+        this.HeroBag = HeroBag;
+    }
+    /**
+     * @param HeroTab the HeroTab to set
+     */
+    public void setHeroTab(Hero[] HeroTab) {
+        this.HeroTab = HeroTab;
+    }
+    /**
+     * @param LastRoom the LastRoom to set
+     */
+    public void setLastRoom(Stack<Room> LastRoom) {
+        this.LastRoom = LastRoom;
+    }
+
+    public int getGold()
+    {return this.gold;}
+    public void addGold(int plus)
+    {this.gold+=plus;}
 }

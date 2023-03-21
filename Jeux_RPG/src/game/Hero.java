@@ -1,18 +1,20 @@
 package game;
 
-public class Hero extends Person {
+public class Hero extends Person implements Comparable<Hero>{
 	private int currentmana;
 	final private int maxmana;
 	final private int manaregen;
 	final private Weapon HeroWeapon;
 	private Spell[] HeroSpell;
+	private int iniative;
 	
-	public Hero(String name, int HP, int damagePoint, int defensePoint, int currentmana, int maxmana, int manaregen, Weapon HeroWeapon, Spell[] HeroSpell)
+	public Hero(String name, int HP, int damagePoint, int defensePoint, int currentmana, int maxmana, int manaregen, int iniative, Weapon HeroWeapon, Spell[] HeroSpell)
 	{
 		super(name, HP, damagePoint, defensePoint);
 		this.currentmana = currentmana;
 		this.maxmana = maxmana;
 		this.manaregen = manaregen;
+		this.iniative = iniative;
 		this.HeroWeapon = HeroWeapon;
 		if(HeroSpell.length==2)
 		{this.HeroSpell = HeroSpell;}
@@ -38,8 +40,8 @@ public class Hero extends Person {
 	{
 		return 
 			this.name +"\nHP:"+this.currentHP+"/"+this.maxHP+", damage point:"+this.damagePoint+
-			",\nMana:"+this.currentmana+"/"+this.maxmana+", mana regen:"+this.manaregen+
-			",\nWeapon:"+this.HeroWeapon.info()+",\n"+
+			"\nMana:"+this.currentmana+"/"+this.maxmana+", mana regen:"+this.manaregen+
+			"\nWeapon:"+this.HeroWeapon.info()+"\n"+
 			StringSpellList();
 	}
 	/**
@@ -50,9 +52,9 @@ public class Hero extends Person {
 		String list = "";
 		for(int i = 0; i<this.HeroSpell.length; i++)
 		{
-			list += "Spell "+(i+1)+":"+this.HeroSpell[i].info()+",\n";
+			list += "Spell "+(i+1)+":"+this.HeroSpell[i].info()+"\n";
 		}
-		return list.substring(0,list.length()-2);
+		return list.substring(0,list.length()-1);
 	}
 	/**
  	* check if is a known spell for the hero
@@ -102,4 +104,17 @@ public class Hero extends Person {
 
 	public Spell[] getHeroSpell()
 	{return HeroSpell;}
+
+	public int getiniative()
+	{return iniative;}
+
+	public int compareTo(Hero hero)
+	{
+		int compare=0;
+		if(this.iniative>hero.iniative)
+		{compare = 1;}
+		else
+		{compare = -1;}
+		return compare;
+	}
 }

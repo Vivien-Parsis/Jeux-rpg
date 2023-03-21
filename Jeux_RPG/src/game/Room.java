@@ -4,17 +4,17 @@ import java.util.HashMap;
 
 public class Room {
 	final private String RoomName;
-	private Boss RoomBoss;
+	private Person character;
 	private Item RoomItem;
 	private HashMap<String, Room> HashExit;
 	/**
      *	List of all possible direction
      */
 	final static String[] DirectionList = {"north", "south", "east", "west", "up", "down"};
-	public Room(final String RoomName,final Boss RoomBoss,final Item RoomItem)
+	public Room(final String RoomName,final Person character, final Item RoomItem)
 	{
 		this.RoomName = RoomName;
-		this.RoomBoss = RoomBoss;
+		this.character = character;
 		this.RoomItem = RoomItem;
 		HashExit = new HashMap<String, Room>();
 		for(String Direction : DirectionList)
@@ -83,7 +83,23 @@ public class Room {
  	*	@return if their is an alive boss in the room
  	*/
 	public boolean hasBoss()
-	{return this.RoomBoss != null;}
+	{
+		if(this.character==null)
+		{return false;}
+		if(this.character instanceof Boss)
+		{return true;}
+		else
+		{return false;}
+	}
+	public boolean hasMerchant()
+	{
+		if(this.character==null)
+		{return false;}
+		if(this.character instanceof Merchant)
+		{return true;}
+		else
+		{return false;}
+	}
 	
 	/**
  	*check is a known direction
@@ -103,11 +119,25 @@ public class Room {
 	}
 	public String getRoomName()
 	{return this.RoomName;}
-
+	
+	public Person getCharacter()
+	{return this.character;}
 	public Boss getRoomBoss()
-	{return this.RoomBoss;}
-	public void killRoomBoss()
-	{this.RoomBoss=null;}
+	{
+		if(this.character instanceof Boss)
+		{return (Boss) this.character;}
+		else
+		{return null;}
+	}
+	public Merchant getRoomMerchant()
+	{
+		if(this.character instanceof Merchant)
+		{return (Merchant) this.character;}
+		else
+		{return null;}
+	}
+	public void kill()
+	{this.character=null;}
 
 	public Item getRoomItem()
 	{return this.RoomItem;}

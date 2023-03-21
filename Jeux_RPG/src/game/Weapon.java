@@ -3,13 +3,13 @@ package game;
 public class Weapon extends Item {
 	final private int attackpoint;
 	
-	public Weapon(final String nameItem,final String description,final int weight,final int attackpoint)
+	public Weapon(final String nameItem,final int attackpoint, int goldvalue)
 	{
-		super(nameItem,weight,description,100);
+		super(nameItem,100, goldvalue);
 		this.attackpoint = attackpoint;
 	}
 	public Weapon()
-	{this("testweapon","",1,1);}
+	{this("testweapon",1,0);}
 	/**
  	*	return info of the weapon 
  	*/

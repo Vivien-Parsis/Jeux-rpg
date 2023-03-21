@@ -7,7 +7,7 @@ public class Person{
 	final protected int damagePoint;
 	protected int defensePoint;
 	
-	public Person(String name,int HP, int damagePoint, int defensePoint)
+	public Person(String name, int HP, int damagePoint, int defensePoint)
 	{
 		this.name = name;
 		this.maxHP = HP;
