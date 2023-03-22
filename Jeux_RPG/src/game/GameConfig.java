@@ -36,8 +36,8 @@ public class GameConfig{
 		RoomHash.put("12", new Room("12", new Boss(), new Item()));
 		
 		ArrayList<Item> offer = new ArrayList<Item>();
-		offer.add(new Weapon("gold sword",2,2,"sword"));
-		offer.add(new Weapon("void staff",2,2,"staff"));
+		offer.add(new Weapon("gold_sword",2,2,"sword"));
+		offer.add(new Weapon("void_staff",2,2,"staff"));
 		offer.add(new Item("coin",100,1));
 		RoomHash.put("13", new Room("13", new Merchant("Merchant",  offer), null));
 		

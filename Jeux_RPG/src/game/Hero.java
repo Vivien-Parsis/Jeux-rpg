@@ -4,7 +4,7 @@ public class Hero extends Person implements Comparable<Hero>{
 	private int currentmana;
 	final private int maxmana;
 	final private int manaregen;
-	final private Weapon HeroWeapon;
+	private Weapon HeroWeapon;
 	private Spell[] HeroSpell;
 	private int iniative;
 	private String WeaponType;
@@ -121,4 +121,7 @@ public class Hero extends Person implements Comparable<Hero>{
 		{compare = -1;}
 		return compare;
 	}
+
+	public void setWeapon(Weapon newItem)
+	{this.HeroWeapon = newItem;}
 }

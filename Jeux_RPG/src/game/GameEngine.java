@@ -38,6 +38,7 @@ public class GameEngine implements CommandList{
     protected void Run()
     {
         this.iniative();
+        this.HeroBag.add(new Weapon("test",1,1,"sword"));
         System.out.println(this.info(this.stringCurrentSituation(),stringCommandList()));
         boolean win = false;
         boolean noAliveHero = false;
@@ -261,12 +262,35 @@ public class GameEngine implements CommandList{
     }
     public void checkCloseDoor()
     {
+        //check for merchant room
         for(Item item : this.HeroBag)
         {
             if(item.toString().equals("key") && this.GameDonjon.getRoomHash().get("12").getExit("down")==null)
             {
                 System.out.println(":Unlocked a new door !");
                 this.GameDonjon.getRoomHash().get("12").setExit("down", this.GameDonjon.getRoomHash().get("13"));
+            }
+        }
+        //check for final room
+        if(!this.GameDonjon.getRoomHash().get("11").hasExit("up"))
+       {
+        
+           
+            boolean cleanDungeonExceptFinal = false;
+            for(Room room : GameDonjon.getRoomHash().values())
+            {
+                if(room.toString().equals("final"))
+                {cleanDungeonExceptFinal=true;}
+                if(cleanDungeonExceptFinal && room.hasBoss() && !room.toString().equals("final"))
+                {
+                    cleanDungeonExceptFinal=false;
+                    break;
+                }
+            }
+            if(cleanDungeonExceptFinal)
+            {
+                System.out.println(":Unlocked a new door !");
+                this.GameDonjon.getRoomHash().get("11").setExit("up", this.GameDonjon.getRoomHash().get("final"));
             }
         }
     }

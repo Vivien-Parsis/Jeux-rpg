@@ -15,7 +15,7 @@ public interface CommandList {
 		{"/info","{hero/boss/item/none} ","display current info about the current boss, a hero, a item or current situation"},
 		{"/help", "{command} ", "display how work a command"},
 		{"/back", "", "go to the previous visited room"},
-		{"/equip", "{weapon}", "equip choosen weapon on a hero"},
+		{"/equip", "{weapon} {hero} ", "equip choosen weapon on a hero"},
 		{"/buy", "{item} ", "buy a item from a merchant"},
 		{"/sell", "{item} ", "sell a item to a merchant"}
 	};

@@ -265,6 +265,55 @@ public class Command implements CommandList {
 				return "8";
 			}
 		}
+		//equip case
+		if(tabCommand[0].equals(CommandList[6][0]))
+		{
+			if(tabCommand.length!=3)
+			{
+				System.out.println(":must be "+CommandList[6][0]+" "+CommandList[6][1]+"!");
+        		return "-1";
+			}
+			if(myGameEngine.getHeroBag().size()==0)
+			{
+				System.out.println(":empty bag");
+        		return "-1";
+			}
+			int indexBag = -1;
+			for(int i =0; i<myGameEngine.getHeroBag().size();i++)
+			{
+				if(tabCommand[1].equals(myGameEngine.getHeroBag().get(i).toString()))
+				{indexBag=i;break;}
+			}
+			int indexHero = -1;
+			for(int i =0; i<myGameEngine.getHeroTab().length;i++)
+			{
+				if(myGameEngine.getHeroTab()[i]!=null)
+				{
+					if(tabCommand[2].equals(myGameEngine.getHeroTab()[i].getname()))
+					{indexHero=i;break;}
+				}
+			}
+			if(indexHero==-1 || indexBag==-1)
+			{
+				System.out.println(":unknown");
+        		return "-1";
+			}
+			if(!(myGameEngine.getHeroBag().get(indexBag) instanceof Weapon))
+			{
+				System.out.println(":not a weapon");
+        		return "-1";
+			}
+			if(!myGameEngine.getHeroTab()[indexHero].getWeaponType().equals(((Weapon) (myGameEngine.getHeroBag().get(indexBag))).getWeaponType()))
+			{
+				System.out.println(":incompatible weapon type");
+        		return "-1";
+			}
+			Weapon switchweapon = (Weapon) myGameEngine.getHeroBag().remove(indexBag);
+			myGameEngine.getHeroBag().add(myGameEngine.getHeroTab()[indexHero].getHeroWeapon());
+			myGameEngine.getHeroTab()[indexHero].setWeapon(switchweapon);
+			System.out.println(":successfully equip weapon");
+			return "6";
+		}
         //case of unknown command
         return "-2";
     }
