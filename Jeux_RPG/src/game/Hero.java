@@ -40,10 +40,11 @@ public class Hero extends Person implements Comparable<Hero>{
 	public String info()
 	{
 		return 
-			this.name +"\nHP:"+this.currentHP+"/"+this.maxHP+", damage point:"+this.damagePoint+
+			"~~"+this.name+"~~"+
+			"\nHP:"+this.currentHP+"/"+this.maxHP+", damage point:"+this.damagePoint+
 			"\nMana:"+this.currentmana+"/"+this.maxmana+", mana regen:"+this.manaregen+
-			"\nWeapon:"+this.HeroWeapon.info()+"\n"+
-			StringSpellList();
+			"\nWeapon type:"+this.WeaponType+", weapon:"+this.HeroWeapon.info()+
+			"\n"+StringSpellList();
 	}
 	/**
  	* Return all spells of the hero

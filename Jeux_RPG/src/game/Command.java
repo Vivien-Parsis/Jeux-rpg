@@ -10,7 +10,7 @@ public class Command implements CommandList {
 	private static String[] ReadCommand(GameEngine myGameEngine)
 	{
 		System.out.print(">");
-    	String stringCommand = myGameEngine.command.nextLine();
+    	String stringCommand = myGameEngine.command.nextLine().toLowerCase();
     	return stringCommand.split(" ");
 	}
 	/**
@@ -45,14 +45,10 @@ public class Command implements CommandList {
 			String info = "";
 			boolean isboss = false;
 			if(myGameEngine.getCurrentRoom().getRoomBoss()!=null)
-			{
-				isboss = tabCommand[1].equals("boss") || tabCommand[1].equals(myGameEngine.getCurrentRoom().getRoomBoss().name);
-			}
+			{isboss = tabCommand[1].equals("boss") || tabCommand[1].equals(myGameEngine.getCurrentRoom().getRoomBoss().getname());}
 			
 			if(isboss)
-			{
-				info=myGameEngine.getCurrentRoom().getRoomBoss().info();
-			}
+			{info=myGameEngine.getCurrentRoom().getRoomBoss().info();}
 			boolean ishero = false;
 			for(Hero hero : myGameEngine.getHeroTab())
 			{
@@ -98,14 +94,13 @@ public class Command implements CommandList {
 			}
 			else
 			{
-				boolean knowncommand = false;
-				int index = 0;
+				int index = -1;
 				for(int i = 0; i<CommandList.length;i++)
 				{
 					if(tabCommand[1].equals(CommandList[i][0]) || tabCommand[1].equals(CommandList[i][0].substring(1)))
-					{index=i;knowncommand=true;break;}
+					{index=i;break;}
 				}
-				if(!knowncommand)
+				if(index==-1)
 				{
 					System.out.println(":must be "+CommandList[4][0]+" "+CommandList[4][1]+"!");
         			return "-1";
@@ -214,6 +209,30 @@ public class Command implements CommandList {
 				System.out.println(":Merchant bag is empty");
         		return "-1";
 			}
+			int indexoffer = -1;
+			for(int i = 0;  i<myGameEngine.getCurrentRoom().getRoomMerchant().getOffer().size(); i++)
+			{
+				if(tabCommand[1].equals(myGameEngine.getCurrentRoom().getRoomMerchant().getOffer().get(i).toString()))
+				{
+					indexoffer = i;
+					break;
+				}
+			}
+			if(indexoffer==-1)
+			{
+				System.out.println(":unknown item");
+        		return "-1";
+			}
+			if(myGameEngine.getGold()<myGameEngine.getCurrentRoom().getRoomMerchant().getOffer().get(indexoffer).getgoldValue())
+			{
+				System.out.println(":not enought gold");
+        		return "-1";
+			}
+			myGameEngine.addGold(-myGameEngine.getCurrentRoom().getRoomMerchant().getOffer().get(indexoffer).getgoldValue());
+			myGameEngine.getHeroBag().add(myGameEngine.getCurrentRoom().getRoomMerchant().getOffer().get(indexoffer));
+			myGameEngine.getCurrentRoom().getRoomMerchant().RemoveItem(indexoffer);
+			System.out.println(myGameEngine.info(myGameEngine.stringCurrentSituation(),myGameEngine.stringCommandList()));
+			System.out.println(":item bought successfully");
 			return "7";
 		}
 		//sell case
@@ -255,15 +274,12 @@ public class Command implements CommandList {
 				System.out.println(":untradeable item");
         		return "-1";
 			}
-			else
-			{
-				System.out.println(":item sell successfully");
-				myGameEngine.addGold(myGameEngine.getHeroBag().get(index).getgoldValue());
-				myGameEngine.getCurrentRoom().getRoomMerchant().AddOffer(myGameEngine.getHeroBag().get(index));
-				myGameEngine.getHeroBag().remove(index);
-				System.out.println(myGameEngine.info(myGameEngine.stringCurrentSituation(),myGameEngine.stringCommandList()));
-				return "8";
-			}
+			System.out.println(":item sell successfully");
+			myGameEngine.addGold(myGameEngine.getHeroBag().get(index).getgoldValue());
+			myGameEngine.getCurrentRoom().getRoomMerchant().AddOffer(myGameEngine.getHeroBag().get(index));
+			myGameEngine.getHeroBag().remove(index);
+			System.out.println(myGameEngine.info(myGameEngine.stringCurrentSituation(),myGameEngine.stringCommandList()));
+			return "8";
 		}
 		//equip case
 		if(tabCommand[0].equals(CommandList[6][0]))
@@ -348,14 +364,13 @@ public class Command implements CommandList {
 			}
 			else
 			{
-				boolean knowncommand = false;
-				int index = 0;
+				int index = -1;
 				for(int i = 0; i<AttackCommand.length;i++)
 				{
 					if(tabCommand[1].equals(AttackCommand[i][0]) || tabCommand[1].equals(AttackCommand[i][0].substring(1)))
-					{index=i;knowncommand=true;break;}
+					{index=i;break;}
 				}
-				if(!knowncommand)
+				if(index==-1)
 				{
 					System.out.println(":must be "+AttackCommand[0][0]+" "+AttackCommand[0][1]+"!");
         			return "-1";
@@ -424,9 +439,7 @@ public class Command implements CommandList {
 			String info = "";
 			boolean isboss = tabCommand[1].equals("boss") || tabCommand[1].equals(myGameEngine.getCurrentRoom().getRoomBoss().name);
 			if(isboss)
-			{
-				info=myGameEngine.getCurrentRoom().getRoomBoss().info();
-			}
+			{info=myGameEngine.getCurrentRoom().getRoomBoss().info();}
 			boolean ishero = false;
 			for(Hero hero : myGameEngine.getHeroTab())
 			{

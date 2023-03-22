@@ -231,9 +231,7 @@ public class GameEngine implements CommandList{
         for(int i = 0; i<this.HeroTab.length; i++)
         {
             if(this.HeroTab[i]!=null)
-            {
-                AliveHero.add(i);
-            }
+            {AliveHero.add(i);}
         }
         int choose = Rand.randint(0,AliveHero.size());
         damage-=HeroTab[AliveHero.get(choose)].getdefensePoint();
@@ -268,14 +266,12 @@ public class GameEngine implements CommandList{
             if(item.toString().equals("key") && this.GameDonjon.getRoomHash().get("12").getExit("down")==null)
             {
                 System.out.println(":Unlocked a new door !");
-                this.GameDonjon.getRoomHash().get("12").setExit("down", this.GameDonjon.getRoomHash().get("13"));
+                this.GameDonjon.getRoomHash().get("12").setExit("down", this.GameDonjon.getRoomHash().get("cave"));
             }
         }
         //check for final room
         if(!this.GameDonjon.getRoomHash().get("11").hasExit("up"))
        {
-        
-           
             boolean cleanDungeonExceptFinal = false;
             for(Room room : GameDonjon.getRoomHash().values())
             {
@@ -424,21 +420,19 @@ public class GameEngine implements CommandList{
     /**
      * @param HeroBag the HeroBag to set
      */
-    public void setHeroBag(ArrayList<Item> HeroBag) {
-        this.HeroBag = HeroBag;
-    }
+    public void setHeroBag(ArrayList<Item> HeroBag)
+    {this.HeroBag = HeroBag;}
     /**
      * @param HeroTab the HeroTab to set
      */
-    public void setHeroTab(Hero[] HeroTab) {
-        this.HeroTab = HeroTab;
-    }
+    public void setHeroTab(Hero[] HeroTab)
+    {this.HeroTab = HeroTab;}
+    
     /**
      * @param LastRoom the LastRoom to set
      */
-    public void setLastRoom(Stack<Room> LastRoom) {
-        this.LastRoom = LastRoom;
-    }
+    public void setLastRoom(Stack<Room> LastRoom) 
+    {this.LastRoom = LastRoom;}
 
     public int getGold()
     {return this.gold;}

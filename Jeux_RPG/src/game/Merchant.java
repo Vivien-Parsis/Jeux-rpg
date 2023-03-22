@@ -23,7 +23,7 @@ public class Merchant extends Person{
 
     public void AddOffer(Item item)
     {Offer.add(item);}
-    public void RemoveOffer(int index)
+    public void RemoveItem(int index)
     {Offer.remove(index);}
 
     public ArrayList<Item> getOffer()
