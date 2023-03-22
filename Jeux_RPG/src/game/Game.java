@@ -7,6 +7,7 @@ import java.util.Scanner;
 public class Game {
     /**
     * Launch a game
+	* @author VivienP
     */
     public static void Launch()
 	{	

@@ -7,8 +7,8 @@ public class Hero extends Person implements Comparable<Hero>{
 	final private Weapon HeroWeapon;
 	private Spell[] HeroSpell;
 	private int iniative;
-	
-	public Hero(String name, int HP, int damagePoint, int defensePoint, int currentmana, int maxmana, int manaregen, int iniative, Weapon HeroWeapon, Spell[] HeroSpell)
+	private String WeaponType;
+	public Hero(String name, int HP, int damagePoint, int defensePoint, int currentmana, int maxmana, int manaregen, int iniative, Weapon HeroWeapon, Spell[] HeroSpell, String WeaponType)
 	{
 		super(name, HP, damagePoint, defensePoint);
 		this.currentmana = currentmana;
@@ -18,6 +18,7 @@ public class Hero extends Person implements Comparable<Hero>{
 		this.HeroWeapon = HeroWeapon;
 		if(HeroSpell.length==2)
 		{this.HeroSpell = HeroSpell;}
+		this.WeaponType = WeaponType;
 	}
 	public Hero()
 	{
@@ -101,6 +102,9 @@ public class Hero extends Person implements Comparable<Hero>{
 
 	public Weapon getHeroWeapon()
 	{return HeroWeapon;}
+
+	public String getWeaponType()
+	{return WeaponType;}
 
 	public Spell[] getHeroSpell()
 	{return HeroSpell;}

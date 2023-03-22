@@ -14,11 +14,11 @@ public class GameEngine implements CommandList{
     private Hero[] HeroTab;
     private int gold;
 	final public Scanner command = new Scanner(System.in);	
-    final private Donjon GameDonjon;
+    final private Dungeon GameDonjon;
     private Room CurrentRoom;
     private Stack<Room> LastRoom;
     
-    public GameEngine(Hero[] heroTab, Donjon GameDonjon, Room CurrentRoom, Scanner command) 
+    public GameEngine(Hero[] heroTab, Dungeon GameDonjon, Room CurrentRoom, Scanner command) 
     {
         this.HeroTab = new Hero[3];
         if(heroTab.length!=3)
@@ -267,7 +267,6 @@ public class GameEngine implements CommandList{
             {
                 System.out.println(":Unlocked a new door !");
                 this.GameDonjon.getRoomHash().get("12").setExit("down", this.GameDonjon.getRoomHash().get("13"));
-                this.GameDonjon.getRoomHash().get("13").setExit("up", this.GameDonjon.getRoomHash().get("12"));
             }
         }
     }
@@ -361,7 +360,7 @@ public class GameEngine implements CommandList{
         {return "";}
     }
     
-    public Donjon getDonjon()
+    public Dungeon getDonjon()
     {return this.GameDonjon;}
 
     public Stack<Room> getLastRoom()

@@ -14,13 +14,13 @@ public class GameConfig{
 		Hero[] HeroTab = new Hero[3];
 		//creat all heroes	
 		Spell[] WarriorSpell = {new Spell("reinforce_weapon","offensive",7,15), new Spell("flash","stun",10,1)};
-		HeroTab[0] = new Hero("Warrior",100,15,7,10,10,1, 100,new Weapon("sword",1,0), WarriorSpell);
+		HeroTab[0] = new Hero("Warrior",100,15,7,10,10,1, 100,new Weapon("sword",1,0,"sword"), WarriorSpell,"sword");
 		
 		Spell[] TankSpell = {new Spell("shield","defensive",5,1), new Spell("shield_bash","stun",10,2)};
-		HeroTab[1] = new Hero("Tank",125,10,9,10,10,1, 25,new Weapon("glaive",1,0), TankSpell);
+		HeroTab[1] = new Hero("Tank",125,10,9,10,10,1, 25,new Weapon("glaive",1,0,"glaive"), TankSpell,"glaive");
 
 		Spell[] WizardSpell = {new Spell("fire_ball","offensive",5,15), new Spell("heal","heal",10,15)};
-		HeroTab[2] = new Hero("Wizard",80,15,5,10,10,2, 50,new Weapon("staff",1,0), WizardSpell);
+		HeroTab[2] = new Hero("Wizard",80,15,5,10,10,2, 50,new Weapon("staff",1,0,"staff"), WizardSpell,"staff");
 		
 		//create all rooms
 		HashMap<String, Room> RoomHash = new HashMap<String, Room>();
@@ -34,17 +34,23 @@ public class GameConfig{
 		RoomHash.put("10", new Room("10", new Boss(), new Item()));
 		RoomHash.put("11", new Room("11", new Boss(), new Item()));
 		RoomHash.put("12", new Room("12", new Boss(), new Item()));
+		
 		ArrayList<Item> offer = new ArrayList<Item>();
-		offer.add(new Weapon("gold sword",2,2));
-		offer.add(new Weapon("void staff",2,2));
+		offer.add(new Weapon("gold sword",2,2,"sword"));
+		offer.add(new Weapon("void staff",2,2,"staff"));
 		offer.add(new Item("coin",100,1));
 		RoomHash.put("13", new Room("13", new Merchant("Merchant",  offer), null));
-	
+		
 		RoomHash.put("20", new Room("20", new Boss(), new Item()));
 		RoomHash.put("21", new Room("21", new Boss(), new Item()));
 		RoomHash.put("22", new Room("22", new Boss(), new Item()));
+
+		RoomHash.put("final", new Room("final", new Boss(), new Item()));
 		
 		//setup exit for all rooms
+		RoomHash.get("13").setExit("up", RoomHash.get("12"));
+		RoomHash.get("final").setExit("down", RoomHash.get("11"));
+
 		RoomHash.get("start").setExit("down",RoomHash.get("01"));
 
 		RoomHash.get("00").setExit("north",RoomHash.get("10"));
@@ -81,7 +87,7 @@ public class GameConfig{
 		RoomHash.get("22").setExit("east",RoomHash.get("21"));
 
 		Item mainItem = new Item("emerald",100, 0);
-		Donjon GameDonjon = new Donjon("Main",RoomHash,mainItem);
+		Dungeon GameDonjon = new Dungeon("Main",RoomHash,mainItem);
 
 		this.gameEngine = new GameEngine(HeroTab,GameDonjon,RoomHash.get("start"), myinput);
 	}

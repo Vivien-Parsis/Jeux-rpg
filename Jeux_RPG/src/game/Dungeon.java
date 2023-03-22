@@ -1,12 +1,12 @@
 package game;
 import java.util.HashMap;
 
-public class Donjon {
+public class Dungeon {
 	final private String DonjonName;
 	private HashMap<String, Room> RoomHash = new HashMap<String, Room>();
 	private Item DonjonLoot;
 	
-	public Donjon(final String DonjonName,final HashMap<String, Room> RoomHash,final Item DonjonLoot)
+	public Dungeon(final String DonjonName,final HashMap<String, Room> RoomHash,final Item DonjonLoot)
 	{
 		this.DonjonName = DonjonName;
 		this.RoomHash = RoomHash;
