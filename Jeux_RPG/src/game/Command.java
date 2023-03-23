@@ -35,7 +35,7 @@ public class Command {
 				System.out.println(":must be "+tabCommand[0]+" "+infoCommand[0]+"!");
         		return "-1";
 			}
-			return "0";
+			return "/quit";
 		}
 		//info case
 		if(tabCommand[0].equals("/info"))
@@ -48,7 +48,7 @@ public class Command {
 			if(tabCommand.length==1)
 			{
 				System.out.println(myGameEngine.info(myGameEngine.stringCurrentSituation(),myGameEngine.stringCommandList()));
-				return "3";
+				return "/info";
 			}
 			String info = "";
 			boolean isboss = false;
@@ -85,7 +85,7 @@ public class Command {
 				return "-1";
 			}
 			System.out.println(":"+info);
-			return "3";
+			return "/info";
 		}	
 		//help case
 		if(tabCommand[0].equals("/help"))
@@ -98,12 +98,11 @@ public class Command {
 			if(tabCommand.length==1)
 			{
 				System.out.println(":"+infoCommand[1]);
-				return "4";
+				return "/help";
 			}
 			else
 			{
 				String infoHelp = "";
-				
 				for(String command : CommandList.commandHash.keySet())
 				{
 					if(tabCommand[1].equals(command) || tabCommand[1].equals(command.substring(1)))
@@ -120,7 +119,7 @@ public class Command {
 				else
 				{
 					System.out.println(":"+infoHelp);
-					return "4";
+					return "/help";
 				}
 			}
 		}
@@ -155,7 +154,7 @@ public class Command {
         		myGameEngine.setCurrentRoom(myGameEngine.getCurrentRoom().getExit(tabCommand[1]));
         		System.out.println(":moving to "+tabCommand[1]+"\n");
         		System.out.println(myGameEngine.info(myGameEngine.stringCurrentSituation(),myGameEngine.stringCommandList()));
-        		return "1";
+        		return "/move";
         	}
         }
 		//attack case
@@ -169,7 +168,7 @@ public class Command {
 			if(myGameEngine.getCurrentRoom().hasBoss())
 			{
 				System.out.println(":launch attack on the current boss");
-				return "2";
+				return "/attack";
 			}
 			else
 			{
@@ -200,7 +199,7 @@ public class Command {
 				System.out.println(":go back\n");
 				myGameEngine.setCurrentRoom(myGameEngine.popLastRoom());
 				System.out.println(myGameEngine.info(myGameEngine.stringCurrentSituation(),myGameEngine.stringCommandList()));
-				return "5";
+				return "/back";
 			}
 		}
 		//buy case
@@ -245,7 +244,7 @@ public class Command {
 			myGameEngine.getCurrentRoom().getRoomMerchant().RemoveItem(indexoffer);
 			System.out.println(myGameEngine.info(myGameEngine.stringCurrentSituation(),myGameEngine.stringCommandList()));
 			System.out.println(":item bought successfully");
-			return "7";
+			return "/buy";
 		}
 		//sell case
 		if(tabCommand[0].equals("/sell"))
@@ -291,7 +290,7 @@ public class Command {
 			myGameEngine.getCurrentRoom().getRoomMerchant().AddOffer(myGameEngine.getHeroBag().get(index));
 			myGameEngine.getHeroBag().remove(index);
 			System.out.println(myGameEngine.info(myGameEngine.stringCurrentSituation(),myGameEngine.stringCommandList()));
-			return "8";
+			return "/sell";
 		}
 		//equip case
 		if(tabCommand[0].equals("/equip"))
@@ -340,7 +339,7 @@ public class Command {
 			myGameEngine.getHeroBag().add(myGameEngine.getHeroTab()[indexHero].getHeroWeapon());
 			myGameEngine.getHeroTab()[indexHero].setWeapon(switchweapon);
 			System.out.println(":successfully equip weapon");
-			return "6";
+			return "/equip";
 		}
         //case of unknown command
         return "-2";
@@ -364,7 +363,7 @@ public class Command {
         		System.out.println(":must be "+tabCommand[0]+" "+infoAttackCommand[0]+"!");
         		return "-1";
         	}
-			return "3";
+			return "/leave";
 		}
 		//help case
 		if(tabCommand[0].equals("/help"))
@@ -377,7 +376,7 @@ public class Command {
 			if(tabCommand.length==1)
 			{
 				System.out.println(":"+infoAttackCommand[1]);
-				return "0";
+				return "/help";
 			}
 			else
 			{
@@ -399,7 +398,7 @@ public class Command {
 				else
 				{
 					System.out.println(":"+infoHelp);
-					return "4";
+					return "/help";
 				}
 			}
 		}
@@ -419,7 +418,7 @@ public class Command {
 			}
 			else
 			{
-				spell+="1 ";
+				spell+="/spell ";
 				for(int i = 0; i<currentHero.getHeroSpell().length; i++)
 				{
 					if(tabCommand[1].equals(currentHero.getHeroSpell()[i].getSpellName()))
@@ -431,7 +430,6 @@ public class Command {
 			}
 			return spell;
 		}
-		
 		//weapon case
 		if(tabCommand[0].equals("/weapon"))
 		{
@@ -442,7 +440,7 @@ public class Command {
 			}
 			System.out.println(":attacking with a weapon");
 			myGameEngine.hurtBoss((currentHero.getHeroWeapon().getattackpoint()*currentHero.damagePoint)-myGameEngine.getCurrentRoom().getRoomBoss().defensePoint);
-			return "2";
+			return "/weapon";
 		}
 		//info case
 		if(tabCommand[0].equals("/info"))
@@ -455,7 +453,7 @@ public class Command {
 			if(tabCommand.length==1)
 			{
 				System.out.println(myGameEngine.info(myGameEngine.stringCurrentCombat(currentHero),GameEngine.stringCombatCommandList()));
-				return "4";
+				return "/info";
 			}
 			String info = "";
 			boolean isboss = tabCommand[1].equals("boss") || tabCommand[1].equals(myGameEngine.getCurrentRoom().getRoomBoss().name);
@@ -489,7 +487,7 @@ public class Command {
 				return "-1";
 			}
 			System.out.println(":"+info);
-			return "4";
+			return "/info";
 		}
 		//case of unknown command
 		return "-2";

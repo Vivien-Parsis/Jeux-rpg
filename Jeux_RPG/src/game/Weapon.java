@@ -29,5 +29,5 @@ public class Weapon extends Item {
 	{return this.attackpoint;}
 	
 	public String getWeaponType()
-		{return this.WeaponType;}
+	{return this.WeaponType;}
 }

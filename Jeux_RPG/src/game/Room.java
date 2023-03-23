@@ -100,7 +100,6 @@ public class Room {
 		else
 		{return false;}
 	}
-	
 	/**
  	*check is a known direction
  	*/

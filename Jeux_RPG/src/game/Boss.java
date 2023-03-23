@@ -7,7 +7,6 @@ public class Boss extends Person {
 	}
 	public Boss()
 	{super("goblin",50,12,5);}
-	
 	/**
  	*	Return info of the boss	
  	*/

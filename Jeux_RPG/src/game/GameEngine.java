@@ -31,7 +31,6 @@ public class GameEngine{
         this.LastRoom = new Stack<Room>();
         gold = 0;
     }
-
     /**
  	* Run the game
  	*/
@@ -44,13 +43,13 @@ public class GameEngine{
         while(true)
         {
 			String resultcommand = Command.RunCommand(this);
-        	if(resultcommand.equals("0"))
+        	if(resultcommand.equals("/quit"))
         	{break;}
         	if(resultcommand.equals("-2"))
         	{System.out.println(":unknown command !");}
             
             //combat mod
-            if(resultcommand.equals("2"))
+            if(resultcommand.equals("/attack"))
             {
                 String resultFightCommand = "";
                 boolean successfulleave = false;
@@ -74,60 +73,56 @@ public class GameEngine{
         	                {System.out.println(":unknown command !");}
                             
                             //spell case (?)
-                            if(resultFightCommand.substring(0,1).equals("1"))
+                            if(resultFightCommand.split(" ")[0].equals("/spell"))
                             {
                                 String[] tabResult = resultFightCommand.split(" ");
-                                //spell case
-                                if(tabResult[0].equals("1"))
+                                Spell currentSpell = currentHero.getHeroSpell()[Integer.parseInt(tabResult[1])];
+                                String spelltype = currentSpell.getSpellType();
+                                enoughmana = currentHero.getcurrentmana() >= currentSpell.getManacost();
+                                //spell heal case
+                                if(spelltype.equals(Spell.allSpellType[0]) && enoughmana)
                                 {
-                                    Spell currentSpell = currentHero.getHeroSpell()[Integer.parseInt(tabResult[1])];
-                                    String spelltype = currentSpell.getSpellType();
-                                    enoughmana = currentHero.getcurrentmana() >= currentSpell.getManacost();
-                                    //spell heal case
-                                    if(spelltype.equals(Spell.allSpellType[0]) && enoughmana)
+                                    System.out.println("using a heal spell");
+                                    while(true)
                                     {
-                                        System.out.println("using a heal spell");
-                                        while(true)
+                                        System.out.println("which hero ?");
+                                        System.out.print(">");
+                                        String herotoheal = command.nextLine();
+                                        if(this.getHero(herotoheal)!=null)
                                         {
-                                            System.out.println("which hero ?");
-                                            System.out.print(">");
-                                            String herotoheal = command.nextLine();
-                                            if(this.getHero(herotoheal)!=null)
-                                            {
-                                                this.getHero(herotoheal).heal(currentSpell.getSpellValue());
-                                                break;
-                                            }
+                                            this.getHero(herotoheal).heal(currentSpell.getSpellValue());
+                                            break;
                                         }
-                                        currentHero.removecurrentmana(currentSpell.getManacost());
                                     }
-                                    //spell offensive case
-                                    if(spelltype.equals(Spell.allSpellType[1]) && enoughmana)
-                                    {
-                                        System.out.println("using a offensive spell");
-                                        this.hurtBoss(currentSpell.getSpellValue());
-                                        currentHero.removecurrentmana(currentSpell.getManacost());
-                                    }
-                                    //spell defensive case
-                                    if(spelltype.equals(Spell.allSpellType[2]) && enoughmana)
-                                    {
-                                        System.out.println("using a defensive spell");
-                                        SpellCombatRes = currentSpell.getSpellValue();
-                                        currentHero.removecurrentmana(currentSpell.getManacost());
-                                    }
-                                    //spell stun case
-                                    if(spelltype.equals(Spell.allSpellType[3]) && enoughmana)
-                                    {
-                                        System.out.println("using a stun spell");
-                                        remainStunRound = currentSpell.getSpellValue();
-                                        currentHero.removecurrentmana(currentSpell.getManacost());
-                                    }
-                                    //case of not enough mana for casting choosen spell
-                                    if(!enoughmana)
-                                    {System.out.println(":Not enough mana to cast the spell !");}
+                                    currentHero.removecurrentmana(currentSpell.getManacost());
                                 }
+                                //spell offensive case
+                                if(spelltype.equals(Spell.allSpellType[1]) && enoughmana)
+                                {
+                                    System.out.println("using a offensive spell");
+                                    this.hurtBoss(currentSpell.getSpellValue());
+                                    currentHero.removecurrentmana(currentSpell.getManacost());
+                                }
+                                //spell defensive case
+                                if(spelltype.equals(Spell.allSpellType[2]) && enoughmana)
+                                {
+                                    System.out.println("using a defensive spell");
+                                    SpellCombatRes = currentSpell.getSpellValue();
+                                    currentHero.removecurrentmana(currentSpell.getManacost());
+                                }
+                                //spell stun case
+                                if(spelltype.equals(Spell.allSpellType[3]) && enoughmana)
+                                {
+                                    System.out.println("using a stun spell");
+                                    remainStunRound = currentSpell.getSpellValue();
+                                    currentHero.removecurrentmana(currentSpell.getManacost());
+                                }
+                                //case of not enough mana for casting choosen spell
+                                if(!enoughmana)
+                                {System.out.println(":Not enough mana to cast the spell !");}
                             }
                             //leave case
-                            if(resultFightCommand.equals("3"))
+                            if(resultFightCommand.equals("/leave"))
                             {
                                 //successfull leave (?)
                                 successfulleave = Rand.randint(1, 3)==1;
@@ -144,8 +139,8 @@ public class GameEngine{
                                 break;
                             }
                             //case of successfull spell or weapon
-                            if((enoughmana && (resultFightCommand.substring(0,1).equals("1")) || 
-                            resultFightCommand.equals("2")))
+                            if((enoughmana && (resultFightCommand.split(" ")[0].equals("/spell")) || 
+                            resultFightCommand.equals("/weapon")))
                             {
                                 //defeat on current boss case
                                 if(this.CurrentRoom.getRoomBoss().currentHP<=0)
@@ -172,7 +167,6 @@ public class GameEngine{
                         if(remainStunRound<0)
                         {remainStunRound=0;}
                         SpellCombatRes = 0;
-
                         //check if an hero is dead
                         for(int i=0; i<HeroTab.length; i++)
                         {
@@ -192,11 +186,11 @@ public class GameEngine{
                             }
                         }
                         //stop combat in case of successfull leave or win on boss or no alive hero
-                        if((resultFightCommand.equals("3") && successfulleave) || winoncurrentboss || noAliveHero)
+                        if((resultFightCommand.equals("/leave") && successfulleave) || winoncurrentboss || noAliveHero)
                         {break;}
                     }
                     //stop combat in case of successfull leave or win on boss or no alive hero
-                    if((resultFightCommand.equals("3") && successfulleave) || winoncurrentboss || noAliveHero)
+                    if((resultFightCommand.equals("/leave") && successfulleave) || winoncurrentboss || noAliveHero)
                     {break;}
                     for(Hero currentHero : HeroTab)
                     {
@@ -216,11 +210,7 @@ public class GameEngine{
                     win = !this.GameDonjon.checkStillAliveBoss();
                     //win
                     if(win)
-                    {
-                        //this.HeroBag.add(this.GameDonjon.getDonjonLoot());
-                        //this.GameDonjon.clearDonjonLoot();
-                        System.out.println(":YOU WIN !\n");
-                    }
+                    {System.out.println(":YOU WIN !\n");}
                 }
                 //lose
                 if(noAliveHero)
@@ -232,8 +222,6 @@ public class GameEngine{
         }
         System.out.println("\n#########\ngame stop\n#########");
     }
-
-
     /**
      * damage current boss
      */
@@ -318,7 +306,6 @@ public class GameEngine{
             }
         }
     }
-
     /**
  	* @return info of the current room of the player and the commands
  	*/

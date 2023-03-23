@@ -33,7 +33,6 @@ public class Hero extends Person implements Comparable<Hero>{
 
 	public String toString()
 	{return this.name +"(HP:"+this.currentHP+"/"+this.maxHP+", Mana:"+this.currentmana+"/"+this.maxmana+")";}
-
 	/**
  	* Return all info of the hero 
  	*/
