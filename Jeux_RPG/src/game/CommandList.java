@@ -34,6 +34,9 @@ public class CommandList {
 		AttackcommandHash.put("/info",   new String[]{"{hero/boss/item/none} ","display current info about the current boss, a hero or a item"});
 	}
 
+	/**
+	 * check is a known command for explore phase
+	 */
 	public static boolean knownCommand(String commandtocheck)
 	{
 		boolean check = false;
@@ -44,6 +47,9 @@ public class CommandList {
 		}
 		return check;
 	}
+	/**
+	 * check is a known command for combat phase
+	 */
 	public static boolean knownAttackCommand(String commandtocheck)
 	{
 		boolean check = false;

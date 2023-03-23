@@ -382,8 +382,9 @@ public class GameEngine{
     	String list ="~~~~commands~~~~\n";
     	for(String command : CommandList.commandHash.keySet())
         {
-            if(!CurrentRoom.hasBoss() && command.equals("/attack"))
-            list+=command+" "+CommandList.commandHash.get(command)[0];
+            if((!CurrentRoom.hasBoss() && command.equals("/attack")) ||
+            !CurrentRoom.hasMerchant() && (command.equals("/sell") || command.equals("/buy")))
+            {list+=command+" "+CommandList.commandHash.get(command)[0];}
         }
     	return list.replaceAll(" /", ", /");
     }
