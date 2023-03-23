@@ -9,7 +9,7 @@ import java.util.Arrays;
 * Class that handle engine of the game
 * @author VivienP
 */
-public class GameEngine implements CommandList{
+public class GameEngine{
     private ArrayList<Item> HeroBag = new ArrayList<Item>();
     private Hero[] HeroTab;
     private int gold;
@@ -38,7 +38,6 @@ public class GameEngine implements CommandList{
     protected void Run()
     {
         this.iniative();
-        this.HeroBag.add(new Weapon("test",1,1,"sword"));
         System.out.println(this.info(this.stringCurrentSituation(),stringCommandList()));
         boolean win = false;
         boolean noAliveHero = false;
@@ -64,6 +63,7 @@ public class GameEngine implements CommandList{
                     this.iniative();
                     for(Hero currentHero : HeroTab)
                     {
+                        //skip death hero
                         if(currentHero==null)
                         {continue;}
                         System.out.println(info(stringCurrentCombat(currentHero),stringCombatCommandList()));
@@ -121,27 +121,33 @@ public class GameEngine implements CommandList{
                                         remainStunRound = currentSpell.getSpellValue();
                                         currentHero.removecurrentmana(currentSpell.getManacost());
                                     }
+                                    //case of not enough mana for casting choosen spell
                                     if(!enoughmana)
                                     {System.out.println(":Not enough mana to cast the spell !");}
                                 }
                             }
+                            //leave case
                             if(resultFightCommand.equals("3"))
                             {
+                                //successfull leave (?)
                                 successfulleave = Rand.randint(1, 3)==1;
                                 System.out.println(":attempting to leave the combat");
+                                //successfull leave
                                 if(successfulleave)
                                 {
                                     this.CurrentRoom.getRoomBoss().currentHP = this.CurrentRoom.getRoomBoss().maxHP;
                                     System.out.println(":successfull to leave");
                                 }
+                                //not successfull leave
                                 else
                                 {System.out.println(":fail to leave");}
                                 break;
                             }
-                            if(enoughmana && (resultFightCommand.substring(0,1).equals("1") || 
-                            resultFightCommand.equals("2") || 
-                            resultFightCommand.equals("3")))
+                            //case of successfull spell or weapon
+                            if((enoughmana && (resultFightCommand.substring(0,1).equals("1")) || 
+                            resultFightCommand.equals("2")))
                             {
+                                //defeat on current boss case
                                 if(this.CurrentRoom.getRoomBoss().currentHP<=0)
                                 {
                                     winoncurrentboss = true;
@@ -158,9 +164,10 @@ public class GameEngine implements CommandList{
                             }
                             enoughmana = true;
                         }
-                        //boss attack here
+                        //boss attack here only if not stun
                         if(!winoncurrentboss && remainStunRound==0)
                         {this.hurtHero(this.CurrentRoom.getRoomBoss().getdamagePoint()-SpellCombatRes);}
+                        //calculate remeain stun round of the boss
                         remainStunRound-=1;
                         if(remainStunRound<0)
                         {remainStunRound=0;}
@@ -174,6 +181,7 @@ public class GameEngine implements CommandList{
                             if(HeroTab[i].currentHP<=0)
                             {HeroTab[i]=null;}
                         }
+                        //check if all hero are dead
                         noAliveHero = true;
                         for(Hero hero : HeroTab)
                         {
@@ -183,9 +191,11 @@ public class GameEngine implements CommandList{
                                 break;
                             }
                         }
+                        //stop combat in case of successfull leave or win on boss or no alive hero
                         if((resultFightCommand.equals("3") && successfulleave) || winoncurrentboss || noAliveHero)
                         {break;}
                     }
+                    //stop combat in case of successfull leave or win on boss or no alive hero
                     if((resultFightCommand.equals("3") && successfulleave) || winoncurrentboss || noAliveHero)
                     {break;}
                     for(Hero currentHero : HeroTab)
@@ -197,11 +207,14 @@ public class GameEngine implements CommandList{
                         {currentHero.setcurrentmana(currentHero.getmaxmana());}
                     }
                 }
+                //display info in case of leave of lose
                 if(!winoncurrentboss)
                 {System.out.println(this.info(this.stringCurrentSituation(),stringCommandList()));}
+                //win (?)
                 if(winoncurrentboss && !win)
                 {
                     win = !this.GameDonjon.checkStillAliveBoss();
+                    //win
                     if(win)
                     {
                         //this.HeroBag.add(this.GameDonjon.getDonjonLoot());
@@ -209,9 +222,11 @@ public class GameEngine implements CommandList{
                         System.out.println(":YOU WIN !\n");
                     }
                 }
+                //lose
                 if(noAliveHero)
                 {System.out.println(":You lose...");}
             }
+            //end the game
             if(win || noAliveHero)
             {break;}
         }
@@ -219,12 +234,18 @@ public class GameEngine implements CommandList{
     }
 
 
+    /**
+     * damage current boss
+     */
     public void hurtBoss(int damage)
     {
         if(damage<0)
         {damage=0;}
         this.CurrentRoom.getRoomBoss().hurtBoss(damage);
     }
+    /**
+     * damage one hero, random choose
+     */
     public void hurtHero(int damage)
     {
         ArrayList<Integer> AliveHero = new ArrayList<Integer>();
@@ -239,7 +260,9 @@ public class GameEngine implements CommandList{
         {damage=0;}
         HeroTab[AliveHero.get(choose)].hurtHero(damage);
     }
-
+    /**
+     * launch drop of the item of the current room
+     */
     public void drop()
     {
         Item CurrentItem = this.CurrentRoom.getRoomItem();
@@ -249,7 +272,9 @@ public class GameEngine implements CommandList{
             System.out.println(":drop a new item");
         }
     } 
-    
+    /**
+    * calculate iniative between heros
+    */
     public void iniative()
     {
         Arrays.sort(this.HeroTab);
@@ -258,6 +283,9 @@ public class GameEngine implements CommandList{
         {reverse[i]=this.HeroTab[2-i];}
         this.HeroTab = reverse;
     }
+    /**
+    * open closed rooms only in certain condition
+    */
     public void checkCloseDoor()
     {
         //check for merchant room
@@ -352,11 +380,10 @@ public class GameEngine implements CommandList{
 	public String stringCommandList()
     {
     	String list ="~~~~commands~~~~\n";
-    	for(int i = 0; i<CommandList.length;i++)
-    	{
-            if((i==2 && !this.CurrentRoom.hasBoss()) || ((i==8 || i==7) && !this.CurrentRoom.hasMerchant()))
-            {continue;}
-            list += CommandList[i][0]+" "+CommandList[i][1];
+    	for(String command : CommandList.commandHash.keySet())
+        {
+            if(!CurrentRoom.hasBoss() && command.equals("/attack"))
+            list+=command+" "+CommandList.commandHash.get(command)[0];
         }
     	return list.replaceAll(" /", ", /");
     }
@@ -366,8 +393,10 @@ public class GameEngine implements CommandList{
 	public static String stringCombatCommandList()
     {
     	String list ="~~~~commands~~~~\n";
-    	for(int i = 0; i<AttackCommand.length;i++)
-    	{list += AttackCommand[i][0]+" "+AttackCommand[i][1];}
+    	for(String command : CommandList.AttackcommandHash.keySet())
+        {
+            list+=command+" "+CommandList.AttackcommandHash.get(command)[0];
+        }
     	return list.replaceAll(" /", ", /");
     }
     public String stringCharacter()
@@ -436,6 +465,7 @@ public class GameEngine implements CommandList{
 
     public int getGold()
     {return this.gold;}
+
     public void addGold(int plus)
     {this.gold+=plus;}
 }

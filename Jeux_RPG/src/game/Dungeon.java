@@ -2,13 +2,11 @@ package game;
 import java.util.HashMap;
 
 public class Dungeon {
-	final private String DonjonName;
 	private HashMap<String, Room> RoomHash = new HashMap<String, Room>();
 	private Item DonjonLoot;
-	
-	public Dungeon(final String DonjonName,final HashMap<String, Room> RoomHash,final Item DonjonLoot)
+	//private String getDonjonName;
+	public Dungeon(final HashMap<String, Room> RoomHash,final Item DonjonLoot)
 	{
-		this.DonjonName = DonjonName;
 		this.RoomHash = RoomHash;
 		this.DonjonLoot = DonjonLoot;
 	}
@@ -20,7 +18,7 @@ public class Dungeon {
 		boolean check = false;
 		for(Room room : RoomHash.values())
 		{
-			if(room.getRoomBoss() != null)
+			if(room.getRoomBoss()!=null)
 			{
 				check = true;
 				break;
@@ -30,8 +28,6 @@ public class Dungeon {
 	}
 	public HashMap<String, Room> getRoomHash()
 	{return this.RoomHash;}
-	public String getDonjonName()
-	{return this.DonjonName;}
 	public Item getDonjonLoot()
 	{return this.DonjonLoot;}
 	public void clearDonjonLoot()

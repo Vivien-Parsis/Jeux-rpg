@@ -10,7 +10,7 @@ public class Game {
 	* @author VivienP
     */
     public static void Launch()
-	{	
+	{
 		//menu
 		boolean Start = false;
 		Scanner input = new Scanner(System.in);

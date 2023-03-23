@@ -39,7 +39,7 @@ public class GameConfig{
 		offer.add(new Weapon("gold_sword",2,2,"sword"));
 		offer.add(new Weapon("void_staff",2,2,"staff"));
 		offer.add(new Item("coin",100,1));
-		RoomHash.put("13", new Room("13", new Merchant("Merchant",  offer), null));
+		RoomHash.put("cave", new Room("cave", new Merchant("Merchant",  offer), null));
 		
 		RoomHash.put("20", new Room("20", new Boss("wolf",50,7,5), new Item()));
 		RoomHash.put("21", new Room("21", new Boss("skeleton",65,9,5), new Item()));
@@ -87,7 +87,7 @@ public class GameConfig{
 		RoomHash.get("22").setExit("east",RoomHash.get("21"));
 
 		Item mainItem = new Item("emerald",100, 0);
-		Dungeon GameDonjon = new Dungeon("Main",RoomHash,mainItem);
+		Dungeon GameDonjon = new Dungeon(RoomHash,mainItem);
 
 		this.gameEngine = new GameEngine(HeroTab,GameDonjon,RoomHash.get("start"), myinput);
 	}

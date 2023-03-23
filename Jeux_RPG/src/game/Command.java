@@ -3,7 +3,8 @@ package game;
 * Class that handle command
 * @author VivienP
 */
-public class Command implements CommandList {
+
+public class Command {
 	/**
  	*	read and return command output
  	*/
@@ -19,22 +20,29 @@ public class Command implements CommandList {
 	public static String RunCommand(GameEngine myGameEngine)
     {
     	String[] tabCommand = ReadCommand(myGameEngine);
-    	//quit case
-    	if(tabCommand[0].equals(CommandList[0][0]))
+		String[] infoCommand;
+    	
+		if(CommandList.knownCommand(tabCommand[0]))
+		{infoCommand = CommandList.commandHash.get(tabCommand[0]);}
+		else
+		{return "-2";}
+
+		//quit case
+    	if(tabCommand[0].equals("/quit"))
         {
 			if(tabCommand.length>1)
 			{
-				System.out.println(":must be "+CommandList[0][0]+" "+CommandList[0][1]+"!");
+				System.out.println(":must be "+tabCommand[0]+" "+infoCommand[0]+"!");
         		return "-1";
 			}
 			return "0";
 		}
 		//info case
-		if(tabCommand[0].equals(CommandList[3][0]))
+		if(tabCommand[0].equals("/info"))
         {
     		if(tabCommand.length>2)
 			{
-				System.out.println(":must be "+CommandList[3][0]+" "+CommandList[3][1]+"!");
+				System.out.println(":must be "+tabCommand[0]+" "+infoCommand[0]+"!");
 				return "-1";
 			}
 			if(tabCommand.length==1)
@@ -80,45 +88,49 @@ public class Command implements CommandList {
 			return "3";
 		}	
 		//help case
-		if(tabCommand[0].equals(CommandList[4][0]))
+		if(tabCommand[0].equals("/help"))
         {
 			if(tabCommand.length>2)
 			{
-				System.out.println(":must be "+CommandList[4][0]+" "+CommandList[4][1]+"!");
+				System.out.println(":must be "+tabCommand[0]+" "+infoCommand[0]+"!");
         		return "-1";
 			}
 			if(tabCommand.length==1)
 			{
-				System.out.println(":"+CommandList[4][2]);
+				System.out.println(":"+infoCommand[1]);
 				return "4";
 			}
 			else
 			{
-				int index = -1;
-				for(int i = 0; i<CommandList.length;i++)
+				String infoHelp = "";
+				
+				for(String command : CommandList.commandHash.keySet())
 				{
-					if(tabCommand[1].equals(CommandList[i][0]) || tabCommand[1].equals(CommandList[i][0].substring(1)))
-					{index=i;break;}
+					if(tabCommand[1].equals(command) || tabCommand[1].equals(command.substring(1)))
+					{
+						infoHelp = CommandList.commandHash.get(command)[1];
+						break;
+					}
 				}
-				if(index==-1)
+				if(infoHelp.equals(""))
 				{
-					System.out.println(":must be "+CommandList[4][0]+" "+CommandList[4][1]+"!");
+					System.out.println(":must be "+tabCommand[0]+" "+infoCommand[0]+"!");
         			return "-1";
 				}
 				else
 				{
-					System.out.println(":"+CommandList[index][2]);
+					System.out.println(":"+infoHelp);
 					return "4";
 				}
 			}
 		}
         //move case
-        if(tabCommand[0].equals(CommandList[1][0]))
+        if(tabCommand[0].equals("/move"))
         {
         	//case of wrong format
         	if(tabCommand.length!=2)
         	{
-        		System.out.println(":must be "+CommandList[1][0]+" "+CommandList[1][1]+"!");
+        		System.out.println(":must be "+tabCommand[0]+" "+infoCommand[0]+"!");
         		return "-1";
         	}
         	boolean knowdirection = Room.knownDirection(tabCommand[1]);
@@ -147,11 +159,11 @@ public class Command implements CommandList {
         	}
         }
 		//attack case
-		if(tabCommand[0].equals(CommandList[2][0]))
+		if(tabCommand[0].equals("/attack"))
 		{
 			if(tabCommand.length>1)
 			{
-				System.out.println(":must be "+CommandList[2][0]+" "+CommandList[2][1]+"!");
+				System.out.println(":must be "+tabCommand[0]+" "+infoCommand[0]+"!");
         		return "-1";
 			}
 			if(myGameEngine.getCurrentRoom().hasBoss())
@@ -166,11 +178,11 @@ public class Command implements CommandList {
 			}
 		}
 		//back case
-		if(tabCommand[0].equals(CommandList[5][0]))
+		if(tabCommand[0].equals("/back"))
 		{
 			if(tabCommand.length>1)
 			{
-				System.out.println(":must be "+CommandList[5][0]+" "+CommandList[5][1]+"!");
+				System.out.println(":must be "+tabCommand[0]+" "+infoCommand[0]+"!");
         		return "-1";
 			}
 			if(myGameEngine.getLastRoom()==null)
@@ -192,7 +204,7 @@ public class Command implements CommandList {
 			}
 		}
 		//buy case
-		if(tabCommand[0].equals(CommandList[7][0]))
+		if(tabCommand[0].equals("/buy"))
 		{
 			if(!myGameEngine.getCurrentRoom().hasMerchant())
 			{
@@ -201,7 +213,7 @@ public class Command implements CommandList {
 			}
 			if(tabCommand.length!=2)
 			{
-				System.out.println(":must be "+CommandList[7][0]+" "+CommandList[7][1]+"!");
+				System.out.println(":must be "+tabCommand[0]+" "+infoCommand[0]+"!");
         		return "-1";
 			}
 			if(myGameEngine.getCurrentRoom().getRoomMerchant().getOffer().size()==0)
@@ -236,7 +248,7 @@ public class Command implements CommandList {
 			return "7";
 		}
 		//sell case
-		if(tabCommand[0].equals(CommandList[8][0]))
+		if(tabCommand[0].equals("/sell"))
 		{
 			if(!myGameEngine.getCurrentRoom().hasMerchant())
 			{
@@ -245,7 +257,7 @@ public class Command implements CommandList {
 			}
 			if(tabCommand.length!=2)
 			{
-				System.out.println(":must be "+CommandList[8][0]+" "+CommandList[8][1]+"!");
+				System.out.println(":must be "+tabCommand[0]+" "+infoCommand[0]+"!");
         		return "-1";
 			}
 			if(myGameEngine.getHeroBag().size()==0)
@@ -282,11 +294,11 @@ public class Command implements CommandList {
 			return "8";
 		}
 		//equip case
-		if(tabCommand[0].equals(CommandList[6][0]))
+		if(tabCommand[0].equals("/equip"))
 		{
 			if(tabCommand.length!=3)
 			{
-				System.out.println(":must be "+CommandList[6][0]+" "+CommandList[6][1]+"!");
+				System.out.println(":must be "+tabCommand[0]+" "+infoCommand[0]+"!");
         		return "-1";
 			}
 			if(myGameEngine.getHeroBag().size()==0)
@@ -339,55 +351,64 @@ public class Command implements CommandList {
 	public static String RunCombatCommand(GameEngine myGameEngine, Hero currentHero)
 	{
 		String[] tabCommand = ReadCommand(myGameEngine);
+		String[] infoAttackCommand;
+		if(CommandList.knownAttackCommand(tabCommand[0]))
+		{infoAttackCommand = CommandList.AttackcommandHash.get(tabCommand[0]);}
+		else
+		{return "-2";}
 		//leave case
-		if(tabCommand[0].equals(AttackCommand[3][0]))
+		if(tabCommand[0].equals("/leave"))
 		{
 			if(tabCommand.length>1)
         	{
-        		System.out.println(":must be "+AttackCommand[3][0]+" "+AttackCommand[3][1]+"!");
+        		System.out.println(":must be "+tabCommand[0]+" "+infoAttackCommand[0]+"!");
         		return "-1";
         	}
 			return "3";
 		}
 		//help case
-		if(tabCommand[0].equals(AttackCommand[0][0]))
+		if(tabCommand[0].equals("/help"))
         {
 			if(tabCommand.length>2)
 			{
-				System.out.println(":must be "+AttackCommand[0][0]+" "+AttackCommand[0][1]+"!");
+				System.out.println(":must be "+tabCommand[0]+" "+infoAttackCommand[0]+"!");
         		return "-1";
 			}
 			if(tabCommand.length==1)
 			{
-				System.out.println(":"+AttackCommand[0][2]);
+				System.out.println(":"+infoAttackCommand[1]);
 				return "0";
 			}
 			else
 			{
-				int index = -1;
-				for(int i = 0; i<AttackCommand.length;i++)
+				String infoHelp = "";
+				
+				for(String command : CommandList.AttackcommandHash.keySet())
 				{
-					if(tabCommand[1].equals(AttackCommand[i][0]) || tabCommand[1].equals(AttackCommand[i][0].substring(1)))
-					{index=i;break;}
+					if(tabCommand[1].equals(command) || tabCommand[1].equals(command.substring(1)))
+					{
+						infoHelp = CommandList.AttackcommandHash.get(command)[1];
+						break;
+					}
 				}
-				if(index==-1)
+				if(infoHelp.equals(""))
 				{
-					System.out.println(":must be "+AttackCommand[0][0]+" "+AttackCommand[0][1]+"!");
+					System.out.println(":must be "+tabCommand[0]+" "+infoAttackCommand[0]+"!");
         			return "-1";
 				}
 				else
 				{
-					System.out.println(":"+AttackCommand[index][2]);
-					return "0";
+					System.out.println(":"+infoHelp);
+					return "4";
 				}
 			}
 		}
 		//spell case
-		if(tabCommand[0].equals(AttackCommand[1][0]))
+		if(tabCommand[0].equals("/spell"))
 		{
 			if(tabCommand.length!=2)
 			{
-				System.out.println(":must be "+AttackCommand[1][0]+" "+AttackCommand[1][1]+"!");
+				System.out.println(":must be "+tabCommand[0]+" "+infoAttackCommand[0]+"!");
         		return "-1";
 			}
 			String spell = "";
@@ -412,11 +433,11 @@ public class Command implements CommandList {
 		}
 		
 		//weapon case
-		if(tabCommand[0].equals(AttackCommand[2][0]))
+		if(tabCommand[0].equals("/weapon"))
 		{
 			if(tabCommand.length!=1)
 			{
-				System.out.println(":must be "+AttackCommand[2][0]+" "+AttackCommand[2][1]+"!");
+				System.out.println(":must be "+tabCommand[0]+" "+infoAttackCommand[0]+"!");
         		return "-1";
 			}
 			System.out.println(":attacking with a weapon");
@@ -424,11 +445,11 @@ public class Command implements CommandList {
 			return "2";
 		}
 		//info case
-		if(tabCommand[0].equals(AttackCommand[4][0]))
+		if(tabCommand[0].equals("/info"))
 		{
 			if(tabCommand.length>2)
 			{
-				System.out.println(":must be "+AttackCommand[4][0]+" "+AttackCommand[4][1]+"!");
+				System.out.println(":must be "+tabCommand[0]+" "+infoAttackCommand[0]+"!");
         		return "-1";
 			}
 			if(tabCommand.length==1)
@@ -455,7 +476,7 @@ public class Command implements CommandList {
 			boolean isitem = false;
 			for(Item item : myGameEngine.getHeroBag())
 			{
-				if(item.nameItem.equals(tabCommand[21]))
+				if(item.nameItem.equals(tabCommand[1]))
 				{
 					isitem = true;
 					info = item.info();
