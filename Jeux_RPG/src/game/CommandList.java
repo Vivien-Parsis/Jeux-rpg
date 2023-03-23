@@ -19,6 +19,7 @@ public class CommandList {
 	static
 	{
 		commandHash.put("/quit",  new String[]{"", "quit the game"});
+		commandHash.put("/attack",  new String[]{"", "launch combat on current boss"});
 		commandHash.put("/move",  new String[]{"{direction} ", "move the player into a direction"});
 		commandHash.put("/info",  new String[]{"{hero/boss/item/none} ","display current info about the current boss, a hero, a item or current situation"});
 		commandHash.put("/help",  new String[]{"{command} ", "display how work a command"});
