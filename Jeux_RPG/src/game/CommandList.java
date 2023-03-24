@@ -27,11 +27,13 @@ public class CommandList {
 		commandHash.put("/equip",  new String[]{"{weapon} {hero} ", "equip choosen weapon on a hero"});
 		commandHash.put("/buy",    new String[]{"{item} ", "buy a item from a merchant"});
 		commandHash.put("/sell",   new String[]{"{item} ", "sell a item to a merchant"});
+		commandHash.put("/show",   new String[]{"", "show all command"});
 
 		AttackcommandHash.put("/help",   new String[]{"{command} ", "display how work a command"});
 		AttackcommandHash.put("/spell",  new String[]{"{spell} ", "use one spell of your current hero"});
 		AttackcommandHash.put("/weapon", new String[]{"", "attack with weapon of your current hero"});
 		AttackcommandHash.put("/leave",  new String[]{"", "leave combat"});
+		AttackcommandHash.put("/show",   new String[]{"", "show all command"});
 		AttackcommandHash.put("/info",   new String[]{"{hero/boss/item/none} ","display current info about the current boss, a hero or a item"});
 	}
 	/**

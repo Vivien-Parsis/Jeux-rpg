@@ -152,7 +152,7 @@ public class Command {
 				if(!myGameEngine.getCurrentRoom().getRoomName().equals("gate"))
 				{myGameEngine.pushLastRoom(myGameEngine.getCurrentRoom());}
         		myGameEngine.setCurrentRoom(myGameEngine.getCurrentRoom().getExit(tabCommand[1]));
-        		System.out.println(":moving to "+tabCommand[1]+"\n");
+        		System.out.println(":moving "+tabCommand[1]+"\n");
         		System.out.println(myGameEngine.info(myGameEngine.stringCurrentSituation(),myGameEngine.stringCommandList()));
         		return "/move";
         	}
@@ -174,6 +174,20 @@ public class Command {
 			{
 				System.out.println(":no boss in here !");
 				return "-1";
+			}
+		}
+		//show case
+		if(tabCommand[0].equals("/show"))
+		{
+			if(tabCommand.length!=1)
+			{
+				System.out.println(":must be "+tabCommand[0]+" "+infoCommand[0]+"!");
+        		return "-1";
+			}
+			else
+			{
+				System.out.println(myGameEngine.stringCommandList()+"\n");
+				return "/show";
 			}
 		}
 		//back case
@@ -488,6 +502,19 @@ public class Command {
 			}
 			System.out.println(":"+info);
 			return "/info";
+		}
+		if(tabCommand[0].equals("/show"))
+		{
+			if(tabCommand.length!=1)
+			{
+				System.out.println(":must be "+tabCommand[0]+" "+infoAttackCommand[0]+"!");
+        		return "-1";
+			}
+			else
+			{
+				System.out.println(GameEngine.stringCombatCommandList()+"\n");
+				return "/show";
+			}
 		}
 		//case of unknown command
 		return "-2";

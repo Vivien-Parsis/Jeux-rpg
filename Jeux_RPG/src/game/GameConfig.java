@@ -86,8 +86,7 @@ public class GameConfig{
 		RoomHash.get("22").setExit("south",RoomHash.get("12"));
 		RoomHash.get("22").setExit("east",RoomHash.get("21"));
 
-		Item mainItem = new Item("emerald",100, 0);
-		Dungeon GameDonjon = new Dungeon(RoomHash,mainItem);
+		Dungeon GameDonjon = new Dungeon(RoomHash);
 
 		this.gameEngine = new GameEngine(HeroTab,GameDonjon,RoomHash.get("start"), myinput);
 	}

@@ -3,12 +3,9 @@ import java.util.HashMap;
 
 public class Dungeon {
 	private HashMap<String, Room> RoomHash = new HashMap<String, Room>();
-	private Item DonjonLoot;
-	//private String getDonjonName;
-	public Dungeon(final HashMap<String, Room> RoomHash,final Item DonjonLoot)
+	public Dungeon(final HashMap<String, Room> RoomHash)
 	{
 		this.RoomHash = RoomHash;
-		this.DonjonLoot = DonjonLoot;
 	}
 	/**
  	* check if their still at least one alive boss
@@ -28,8 +25,4 @@ public class Dungeon {
 	}
 	public HashMap<String, Room> getRoomHash()
 	{return this.RoomHash;}
-	public Item getDonjonLoot()
-	{return this.DonjonLoot;}
-	public void clearDonjonLoot()
-	{this.DonjonLoot=null;}
 }

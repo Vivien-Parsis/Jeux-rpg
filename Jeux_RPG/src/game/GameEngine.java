@@ -364,7 +364,7 @@ public class GameEngine{
     /**
  	*	@return all commands	
  	*/
-	public String stringCommandList()
+	public  String stringCommandList()
     {
     	String list ="~~~~commands~~~~\n";
     	for(String command : CommandList.commandHash.keySet())
