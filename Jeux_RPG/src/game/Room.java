@@ -4,24 +4,33 @@ import java.util.HashMap;
 
 public class Room {
 	final private String RoomName;
-	private Person character;
+	private Person RoomPerson;
 	private Item RoomItem;
 	private HashMap<String, Room> HashExit;
+	private final boolean canGoBack;
 	/**
      *	List of all possible direction
      */
 	final static String[] DirectionList = {"north", "south", "east", "west", "up", "down"};
-	public Room(final String RoomName,final Person character, final Item RoomItem)
+
+	public Room(final String RoomName,final Person RoomPerson, final Item RoomItem,final boolean canGoBack)
 	{
 		this.RoomName = RoomName;
-		this.character = character;
+		//person must a merchant or a boss
+		if(RoomPerson instanceof Boss || RoomPerson instanceof Merchant)
+		{this.RoomPerson = RoomPerson;}
+		else
+		{this.RoomPerson=null;}
 		this.RoomItem = RoomItem;
 		HashExit = new HashMap<String, Room>();
 		for(String Direction : DirectionList)
 		{this.HashExit.put(Direction, null);}
+		this.canGoBack = canGoBack;
 	}
+	public Room(final String RoomName,final Person RoomPerson, final Item RoomItem)
+	{this(RoomName, RoomPerson, RoomItem, true);}
 	public Room()
-	{this("RoomTest", new Boss(), new Item());}
+	{this("RoomTest", new Boss(), new Item(), true);}
 	/**
  	*	Set up exit for a one direction
  	*/
@@ -29,6 +38,8 @@ public class Room {
 	{
 		if(knownDirection(direction))
 		{this.HashExit.replace(direction, exit);}
+		else
+		{System.out.println("!unknown direction : "+direction);}
 	}
 
 	public String info()
@@ -84,18 +95,18 @@ public class Room {
  	*/
 	public boolean hasBoss()
 	{
-		if(this.character==null)
+		if(this.RoomPerson==null)
 		{return false;}
-		if(this.character instanceof Boss)
+		if(this.RoomPerson instanceof Boss)
 		{return true;}
 		else
 		{return false;}
 	}
 	public boolean hasMerchant()
 	{
-		if(this.character==null)
+		if(this.RoomPerson==null)
 		{return false;}
-		if(this.character instanceof Merchant)
+		if(this.RoomPerson instanceof Merchant)
 		{return true;}
 		else
 		{return false;}
@@ -119,28 +130,30 @@ public class Room {
 	public String getRoomName()
 	{return this.RoomName;}
 	
-	public Person getCharacter()
-	{return this.character;}
+	public Person getRoomPerson()
+	{return this.RoomPerson;}
 	public Boss getRoomBoss()
 	{
-		if(this.character instanceof Boss)
-		{return (Boss) this.character;}
+		if(this.RoomPerson instanceof Boss)
+		{return (Boss) this.RoomPerson;}
 		else
 		{return null;}
 	}
 	public Merchant getRoomMerchant()
 	{
-		if(this.character instanceof Merchant)
-		{return (Merchant) this.character;}
+		if(this.RoomPerson instanceof Merchant)
+		{return (Merchant) this.RoomPerson;}
 		else
 		{return null;}
 	}
 	public void kill()
-	{this.character=null;}
+	{this.RoomPerson=null;}
 
 	public Item getRoomItem()
 	{return this.RoomItem;}
 
 	public HashMap<String, Room> getHashExit()
 	{return this.HashExit;}
+	public boolean getcanGoBack()
+	{return this.canGoBack;}
 }

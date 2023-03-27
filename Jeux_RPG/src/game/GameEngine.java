@@ -14,18 +14,18 @@ public class GameEngine{
     private Hero[] HeroTab;
     private int gold;
 	final public Scanner command = new Scanner(System.in);	
-    final private Dungeon GameDonjon;
+    final private Dungeon GameDungeon;
     private Room CurrentRoom;
     private Stack<Room> LastRoom;
     
-    public GameEngine(Hero[] heroTab, Dungeon GameDonjon, Room CurrentRoom, Scanner command) 
+    public GameEngine(Hero[] heroTab, Dungeon GameDungeon, Room CurrentRoom, Scanner command) 
     {
         this.HeroTab = new Hero[3];
         if(heroTab.length!=3)
-        {heroTab[0]=new Hero();heroTab[1]=new Hero();heroTab[2]=new Hero();}
+        {heroTab=new Hero[]{new Hero(),new Hero(),new Hero()};}
         else
         {this.HeroTab = heroTab;}
-        this.GameDonjon = GameDonjon;
+        this.GameDungeon = GameDungeon;
         this.CurrentRoom = CurrentRoom;
         this.HeroBag = new ArrayList<Item>();
         this.LastRoom = new Stack<Room>();
@@ -36,6 +36,7 @@ public class GameEngine{
  	*/
     protected void Run()
     {
+		System.out.println("\n############\nrunning game\n############\n");
         this.iniative();
         System.out.println(this.info(this.stringCurrentSituation(),stringCommandList()));
         boolean win = false;
@@ -79,10 +80,13 @@ public class GameEngine{
                                 Spell currentSpell = currentHero.getHeroSpell()[Integer.parseInt(tabResult[1])];
                                 String spelltype = currentSpell.getSpellType();
                                 enoughmana = currentHero.getcurrentmana() >= currentSpell.getManacost();
+                                //case of not enough mana for casting choosen spell
+                                if(!enoughmana)
+                                {System.out.println(":Not enough mana to cast the spell !");}
                                 //spell heal case
                                 if(spelltype.equals(Spell.allSpellType[0]) && enoughmana)
                                 {
-                                    System.out.println("using a heal spell");
+                                    System.out.println(":using a heal spell");
                                     while(true)
                                     {
                                         System.out.println("which hero ?");
@@ -99,27 +103,24 @@ public class GameEngine{
                                 //spell offensive case
                                 if(spelltype.equals(Spell.allSpellType[1]) && enoughmana)
                                 {
-                                    System.out.println("using a offensive spell");
+                                    System.out.println(":using a offensive spell");
                                     this.hurtBoss(currentSpell.getSpellValue());
                                     currentHero.removecurrentmana(currentSpell.getManacost());
                                 }
                                 //spell defensive case
                                 if(spelltype.equals(Spell.allSpellType[2]) && enoughmana)
                                 {
-                                    System.out.println("using a defensive spell");
+                                    System.out.println(":using a defensive spell");
                                     SpellCombatRes = currentSpell.getSpellValue();
                                     currentHero.removecurrentmana(currentSpell.getManacost());
                                 }
                                 //spell stun case
                                 if(spelltype.equals(Spell.allSpellType[3]) && enoughmana)
                                 {
-                                    System.out.println("using a stun spell");
+                                    System.out.println(":using a stun spell");
                                     remainStunRound = currentSpell.getSpellValue();
                                     currentHero.removecurrentmana(currentSpell.getManacost());
                                 }
-                                //case of not enough mana for casting choosen spell
-                                if(!enoughmana)
-                                {System.out.println(":Not enough mana to cast the spell !");}
                             }
                             //leave case
                             if(resultFightCommand.equals("/leave"))
@@ -180,10 +181,7 @@ public class GameEngine{
                         for(Hero hero : HeroTab)
                         {
                             if(hero!=null)
-                            {
-                                noAliveHero=false;
-                                break;
-                            }
+                            {noAliveHero=false;break;}
                         }
                         //stop combat in case of successfull leave or win on boss or no alive hero
                         if((resultFightCommand.equals("/leave") && successfulleave) || winoncurrentboss || noAliveHero)
@@ -207,7 +205,7 @@ public class GameEngine{
                 //win (?)
                 if(winoncurrentboss && !win)
                 {
-                    win = !this.GameDonjon.checkStillAliveBoss();
+                    win = !this.GameDungeon.checkStillAliveBoss();
                     //win
                     if(win)
                     {System.out.println(":YOU WIN !\n");}
@@ -259,9 +257,32 @@ public class GameEngine{
             HeroBag.add(CurrentItem);
             System.out.println(":drop a new item");
         }
+        //Drop final key
+        if(GameDungeon.getFinalKey()!=null)
+        {
+            boolean cleanDungeonExceptFinal = false;
+            for(Room room : GameDungeon.getRoomHash().values())
+            {
+                if(!room.hasBoss())
+                {continue;}
+                if(room.getRoomBoss().getfinalBoss())
+                {cleanDungeonExceptFinal=true;}
+                if(cleanDungeonExceptFinal && room.hasBoss() && !room.getRoomBoss().getfinalBoss())
+                {
+                    cleanDungeonExceptFinal=false;
+                    break;
+                }
+            }
+            if(cleanDungeonExceptFinal)
+            {
+                System.out.println(":drop a new item");
+                this.HeroBag.add(GameDungeon.getFinalKey());
+                GameDungeon.setFinalKey(null);
+            }
+        }
     } 
     /**
-    * calculate iniative between heros
+    * calculate iniative between heroes
     */
     public void iniative()
     {
@@ -272,37 +293,31 @@ public class GameEngine{
         this.HeroTab = reverse;
     }
     /**
-    * open closed rooms only in certain condition
+    * open locked rooms
     */
     public void checkCloseDoor()
     {
-        //check for merchant room
-        for(Item item : this.HeroBag)
+        if(HeroBag.size()==0)
+        {return;}
+        for(Room lockedRoom : GameDungeon.getRoomHash().values())
         {
-            if(item.toString().equals("key") && this.GameDonjon.getRoomHash().get("12").getExit("down")==null)
+            if(lockedRoom instanceof LockedRoom)
             {
-                System.out.println(":Unlocked a new door !");
-                this.GameDonjon.getRoomHash().get("12").setExit("down", this.GameDonjon.getRoomHash().get("cave"));
-            }
-        }
-        //check for final room
-        if(!this.GameDonjon.getRoomHash().get("11").hasExit("up"))
-       {
-            boolean cleanDungeonExceptFinal = false;
-            for(Room room : GameDonjon.getRoomHash().values())
-            {
-                if(room.toString().equals("final"))
-                {cleanDungeonExceptFinal=true;}
-                if(cleanDungeonExceptFinal && room.hasBoss() && !room.toString().equals("final"))
+                if(((LockedRoom) lockedRoom).getKeyItem()==null)
+                {continue;}
+                for(Item item : HeroBag)
                 {
-                    cleanDungeonExceptFinal=false;
-                    break;
+                    if(item.equals(((LockedRoom) lockedRoom).getKeyItem()))
+                    {
+                        ((LockedRoom) lockedRoom).setKeyItem(null);
+                        try{
+                            GameDungeon.getRoomHash().get(((LockedRoom) lockedRoom).getExitName()).setExit(((LockedRoom) lockedRoom).getExitDirection(), lockedRoom);
+                            System.out.println(":unlocked a new room");
+                        }catch (NullPointerException e){
+                            System.out.println("!cannot asign exit for a locked room");
+                        }finally{}
+                    }
                 }
-            }
-            if(cleanDungeonExceptFinal)
-            {
-                System.out.println(":Unlocked a new door !");
-                this.GameDonjon.getRoomHash().get("11").setExit("up", this.GameDonjon.getRoomHash().get("final"));
             }
         }
     }
@@ -318,7 +333,7 @@ public class GameEngine{
     {
     	return
 				this.CurrentRoom.info()+
-    			this.stringCharacter()+
+    			this.stringRoomPerson()+
     			this.stringHeroList()+
                 this.stringBag();
     }
@@ -330,7 +345,7 @@ public class GameEngine{
         return 
             "\n~~current hero~~\n"+
             currenthero.info()+
-            this.stringCharacter()+
+            this.stringRoomPerson()+
             this.stringHeroList()+
             this.stringBag();
     }
@@ -362,7 +377,7 @@ public class GameEngine{
         return bag.substring(0,bag.length()-1).replaceAll(" ",", ");
     }
     /**
- 	*	@return all commands	
+ 	* @return all commands	
  	*/
 	public  String stringCommandList()
     {
@@ -388,18 +403,18 @@ public class GameEngine{
         }
     	return list.replaceAll(" /", ", /");
     }
-    public String stringCharacter()
+    public String stringRoomPerson()
     {
         if(this.CurrentRoom.hasBoss())
-        {return "\n~~~~~~boss~~~~~~\n"+this.CurrentRoom.getCharacter();}
+        {return "\n~~~~~~boss~~~~~~\n"+this.CurrentRoom.getRoomPerson();}
         else if(this.CurrentRoom.hasMerchant())
-        {return "\n~~~~Character~~~~\n"+this.CurrentRoom.getCharacter()+this.CurrentRoom.getRoomMerchant().info();}
+        {return "\n~~~~RoomPerson~~~~\n"+this.CurrentRoom.getRoomPerson()+this.CurrentRoom.getRoomMerchant().info();}
         else
         {return "";}
     }
     
     public Dungeon getDonjon()
-    {return this.GameDonjon;}
+    {return this.GameDungeon;}
 
     public Stack<Room> getLastRoom()
     {return this.LastRoom;}
@@ -415,6 +430,9 @@ public class GameEngine{
     {return this.CurrentRoom;}
     public void setCurrentRoom(Room newRoom)
     {this.CurrentRoom=newRoom;}
+    
+    public int getGold()
+    {return this.gold;}
 
     public ArrayList<Item> getHeroBag()
     {return this.HeroBag;}
@@ -435,26 +453,7 @@ public class GameEngine{
         }
         return hero;
     }
-    /**
-     * @param HeroBag the HeroBag to set
-     */
-    public void setHeroBag(ArrayList<Item> HeroBag)
-    {this.HeroBag = HeroBag;}
-    /**
-     * @param HeroTab the HeroTab to set
-     */
-    public void setHeroTab(Hero[] HeroTab)
-    {this.HeroTab = HeroTab;}
     
-    /**
-     * @param LastRoom the LastRoom to set
-     */
-    public void setLastRoom(Stack<Room> LastRoom) 
-    {this.LastRoom = LastRoom;}
-
-    public int getGold()
-    {return this.gold;}
-
     public void addGold(int plus)
     {this.gold+=plus;}
 }

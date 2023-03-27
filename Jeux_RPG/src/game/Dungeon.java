@@ -3,9 +3,12 @@ import java.util.HashMap;
 
 public class Dungeon {
 	private HashMap<String, Room> RoomHash = new HashMap<String, Room>();
+	private Item finalKey; 
+	
 	public Dungeon(final HashMap<String, Room> RoomHash)
 	{
 		this.RoomHash = RoomHash;
+		finalKey = new Item("final key",0);
 	}
 	/**
  	* check if their still at least one alive boss
@@ -25,4 +28,8 @@ public class Dungeon {
 	}
 	public HashMap<String, Room> getRoomHash()
 	{return this.RoomHash;}
+	public Item getFinalKey()
+	{return finalKey;}
+	public void setFinalKey(Item finalKey)
+	{this.finalKey = finalKey;}
 }

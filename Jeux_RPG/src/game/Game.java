@@ -12,37 +12,22 @@ public class Game {
     public static void Launch()
 	{
 		//menu
-		boolean Start = false;
 		Scanner input = new Scanner(System.in);
         String Stringinput;
 		System.out.println("Welcome to the java RPG made by @VivienP !\nStart the game ? (y/n)");
+		//ask if the player want to (re)run the game
+		//y for yes and n for no, else unknown and ask again
 		while(true)
 		{
 			System.out.print(">");
 			Stringinput = input.next();
 			if(Stringinput.equals("y"))
-			{Start = true;}
+			{GameConfig.Run();System.out.println("\n:Do you want to restart the game ? (y/n)");}
             if(Stringinput.equals("n"))
-			{Start = false;}
-			if(Stringinput.equals("y") || (Stringinput.equals("n")))
 			{break;}
-			System.out.println("");
+			if(!Stringinput.equals("n") && !Stringinput.equals("y"))
+			{System.out.println("!unknown");}
 		}
-		if(Start)
-		{
-            GameConfig.Run();
-            while(true)
-            {
-                if(!Stringinput.equals("y")||!Stringinput.equals("n"))
-                {System.out.println("Restart the game ? (y/n)");}
-                System.out.print(">");
-                Stringinput = input.next();
-                if(Stringinput.equals("y"))
-			    {GameConfig.Run();}
-                if(Stringinput.equals("n"))
-			    {break;} 
-            }
-        }
 		input.close();
 	}
 }

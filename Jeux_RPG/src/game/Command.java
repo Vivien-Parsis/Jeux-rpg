@@ -1,9 +1,8 @@
 package game;
 /**
-* Class that handle command
+* Class that handle command for game engine. List of command are define inside CommandList.java
 * @author VivienP
 */
-
 public class Command {
 	/**
  	*	read and return command output
@@ -17,7 +16,7 @@ public class Command {
 	/**
  	*	execute a command
  	*/
-	public static String RunCommand(GameEngine myGameEngine)
+	protected static String RunCommand(GameEngine myGameEngine)
     {
     	String[] tabCommand = ReadCommand(myGameEngine);
 		String[] infoCommand;
@@ -149,8 +148,10 @@ public class Command {
         	//case of a successful move
         	else
         	{
-				if(!myGameEngine.getCurrentRoom().getRoomName().equals("gate"))
+				if(myGameEngine.getCurrentRoom().getcanGoBack())
 				{myGameEngine.pushLastRoom(myGameEngine.getCurrentRoom());}
+				else
+				{myGameEngine.getLastRoom().clear();}
         		myGameEngine.setCurrentRoom(myGameEngine.getCurrentRoom().getExit(tabCommand[1]));
         		System.out.println(":moving "+tabCommand[1]+"\n");
         		System.out.println(myGameEngine.info(myGameEngine.stringCurrentSituation(),myGameEngine.stringCommandList()));
@@ -255,7 +256,7 @@ public class Command {
 			}
 			myGameEngine.addGold(-myGameEngine.getCurrentRoom().getRoomMerchant().getOffer().get(indexoffer).getgoldValue());
 			myGameEngine.getHeroBag().add(myGameEngine.getCurrentRoom().getRoomMerchant().getOffer().get(indexoffer));
-			myGameEngine.getCurrentRoom().getRoomMerchant().RemoveItem(indexoffer);
+			myGameEngine.getCurrentRoom().getRoomMerchant().RemoveaOffer(indexoffer);
 			System.out.println(myGameEngine.info(myGameEngine.stringCurrentSituation(),myGameEngine.stringCommandList()));
 			System.out.println(":item bought successfully");
 			return "/buy";
@@ -301,7 +302,7 @@ public class Command {
 			}
 			System.out.println(":item sell successfully");
 			myGameEngine.addGold(myGameEngine.getHeroBag().get(index).getgoldValue());
-			myGameEngine.getCurrentRoom().getRoomMerchant().AddOffer(myGameEngine.getHeroBag().get(index));
+			myGameEngine.getCurrentRoom().getRoomMerchant().AddaOffer(myGameEngine.getHeroBag().get(index));
 			myGameEngine.getHeroBag().remove(index);
 			System.out.println(myGameEngine.info(myGameEngine.stringCurrentSituation(),myGameEngine.stringCommandList()));
 			return "/sell";

@@ -21,9 +21,9 @@ public class Merchant extends Person{
         return offerString.substring(0, offerString.length()-1);
     }
 
-    public void AddOffer(Item item)
+    public void AddaOffer(Item item)
     {Offer.add(item);}
-    public void RemoveItem(int index)
+    public void RemoveaOffer(int index)
     {Offer.remove(index);}
 
     public ArrayList<Item> getOffer()

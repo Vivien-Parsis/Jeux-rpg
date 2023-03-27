@@ -8,10 +8,10 @@ public class Hero extends Person implements Comparable<Hero>{
 	private Spell[] HeroSpell;
 	private int iniative;
 	private String WeaponType;
-	public Hero(String name, int HP, int damagePoint, int defensePoint, int currentmana, int maxmana, int manaregen, int iniative, Weapon HeroWeapon, Spell[] HeroSpell, String WeaponType)
+	public Hero(String name, int HP, int damagePoint, int defensePoint, int maxmana, int manaregen, int iniative, Weapon HeroWeapon, Spell[] HeroSpell, String WeaponType)
 	{
 		super(name, HP, damagePoint, defensePoint);
-		this.currentmana = currentmana;
+		this.currentmana = maxmana;
 		this.maxmana = maxmana;
 		this.manaregen = manaregen;
 		this.iniative = iniative;
@@ -39,7 +39,7 @@ public class Hero extends Person implements Comparable<Hero>{
 	public String info()
 	{
 		return 
-			"~~"+this.name+"~~"+
+			this.name+
 			"\nHP:"+this.currentHP+"/"+this.maxHP+", damage point:"+this.damagePoint+
 			"\nMana:"+this.currentmana+"/"+this.maxmana+", mana regen:"+this.manaregen+
 			"\nWeapon type:"+this.WeaponType+", weapon:"+this.HeroWeapon.info()+
@@ -52,9 +52,7 @@ public class Hero extends Person implements Comparable<Hero>{
 	{
 		String list = "";
 		for(int i = 0; i<this.HeroSpell.length; i++)
-		{
-			list += "Spell "+(i+1)+":"+this.HeroSpell[i].info()+"\n";
-		}
+		{list += "Spell "+(i+1)+":"+this.HeroSpell[i].info()+"\n";}
 		return list.substring(0,list.length()-1);
 	}
 	/**

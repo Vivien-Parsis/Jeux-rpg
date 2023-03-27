@@ -30,4 +30,11 @@ public class Weapon extends Item {
 	
 	public String getWeaponType()
 	{return this.WeaponType;}
+	public boolean equals(Weapon toCompare){
+		return 
+			this.nameItem.equals(toCompare.nameItem)&&
+			this.WeaponType.equals(toCompare.WeaponType)&&
+			this.attackpoint==toCompare.attackpoint&&
+			this.goldvalue==toCompare.goldvalue;
+	}
 }

@@ -15,6 +15,8 @@ public class Item {
 	}
 	public Item()
 	{this("coin",50, 1);}
+	public Item(String nameItem, int goldvalue)
+	{this(nameItem, 100, goldvalue);}
 
 	final public String toString()
 	{return this.nameItem;}
@@ -26,4 +28,11 @@ public class Item {
 	{return this.chance;}
 	public int getgoldValue()
 	{return this.goldvalue;}
+
+	public boolean equals(Item toCompare)
+	{
+		return 
+			nameItem.equals(toCompare.nameItem)&&
+			this.goldvalue==toCompare.goldvalue;
+	}
 }

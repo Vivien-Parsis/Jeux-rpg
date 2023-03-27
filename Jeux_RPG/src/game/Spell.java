@@ -7,7 +7,7 @@ public class Spell {
 	final private int Manacost;
 	final private int SpellValue;			
 	
-	public Spell(final String SpellName,final  String SpellType,final int Manacost,final int SpellValue)
+	public Spell(final String SpellName,final String SpellType,final int Manacost,final int SpellValue)
 	{
 		this.SpellName = SpellName;
 		this.SpellType = SpellType;
