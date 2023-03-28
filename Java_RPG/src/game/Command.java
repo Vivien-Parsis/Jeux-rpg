@@ -467,7 +467,7 @@ public class Command {
 			}
 			if(tabCommand.length==1)
 			{
-				System.out.println(myGameEngine.info(myGameEngine.stringCurrentCombat(currentHero),GameEngine.stringCombatCommandList()));
+				System.out.println(myGameEngine.info(myGameEngine.stringCurrentCombat(currentHero),myGameEngine.stringCombatCommandList()));
 				return "/info";
 			}
 			String info = "";
@@ -513,7 +513,7 @@ public class Command {
 			}
 			else
 			{
-				System.out.println(GameEngine.stringCombatCommandList()+"\n");
+				System.out.println(myGameEngine.stringCombatCommandList()+"\n");
 				return "/show";
 			}
 		}

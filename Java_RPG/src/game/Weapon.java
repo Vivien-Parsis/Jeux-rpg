@@ -2,13 +2,13 @@ package game;
 
 public class Weapon extends Item {
 	final private int attackpoint;
-	final protected static String[] ListWeaponType = {"glaive", "staff", "sword"};
-	String WeaponType;
+	final protected static String[] ListWeaponType = {"spear", "staff", "sword"};
+	private String WeaponType;
 	public Weapon(final String nameItem,final int attackpoint, int goldvalue, String WeaponType)
 	{
-		super(nameItem,100, goldvalue);
+		super(nameItem,100,goldvalue);
 		this.attackpoint = attackpoint;
-		
+		//check if the weaponType in parameter is good or not
 		boolean knownWeaponType = false;
 		for(String type : ListWeaponType)
 		{if(type.equals(WeaponType)){knownWeaponType=true;break;}}
@@ -30,9 +30,10 @@ public class Weapon extends Item {
 	
 	public String getWeaponType()
 	{return this.WeaponType;}
-	public boolean equals(Weapon toCompare){
-		return 
-			this.nameItem.equals(toCompare.nameItem)&&
+	
+	public boolean equals(Weapon toCompare)
+	{
+		return this.nameItem.equals(toCompare.nameItem)&&
 			this.WeaponType.equals(toCompare.WeaponType)&&
 			this.attackpoint==toCompare.attackpoint&&
 			this.goldvalue==toCompare.goldvalue;

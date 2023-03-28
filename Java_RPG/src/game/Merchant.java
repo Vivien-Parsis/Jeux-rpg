@@ -13,9 +13,7 @@ public class Merchant extends Person{
     {
         String offerString = "\n~~~~~offer~~~~~~\n";
         for(Item item : Offer)
-        {
-            offerString += item + " -> " + item.getgoldValue() +" gold\n";
-        }
+        {offerString += item + " -> " + item.getgoldValue() +" gold\n";}
         if(offerString.equals("\n~~~~~offer~~~~~~\n"))
         {return "";}
         return offerString.substring(0, offerString.length()-1);

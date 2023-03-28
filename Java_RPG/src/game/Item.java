@@ -30,9 +30,5 @@ public class Item {
 	{return this.goldvalue;}
 
 	public boolean equals(Item toCompare)
-	{
-		return 
-			nameItem.equals(toCompare.nameItem)&&
-			this.goldvalue==toCompare.goldvalue;
-	}
+	{return nameItem.equals(toCompare.nameItem)&&this.goldvalue==toCompare.goldvalue;}
 }

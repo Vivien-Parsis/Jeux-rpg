@@ -1,11 +1,11 @@
 package game;
 
 public class Boss extends Person {
-	private final boolean finalBoss;
-	public Boss(final String name,final int HP,final int damagePoint,final int defensePoint, boolean finalBoss)
+	private final boolean isFinalBoss;
+	public Boss(final String name,final int HP,final int damagePoint,final int defensePoint, boolean isFinalBoss)
 	{
 		super(name, HP, damagePoint, defensePoint);
-		this.finalBoss = finalBoss;
+		this.isFinalBoss = isFinalBoss;
 	}
 	public Boss(final String name,final int HP,final int damagePoint,final int defensePoint)
 	{this(name,HP,damagePoint,defensePoint,false);}
@@ -30,6 +30,6 @@ public class Boss extends Person {
 	public void hurtBoss(final int damage)
     {this.currentHP-=damage;}
 
-	public boolean getfinalBoss()
-	{return this.finalBoss;}
+	public boolean getisFinalBoss()
+	{return this.isFinalBoss;}
 }

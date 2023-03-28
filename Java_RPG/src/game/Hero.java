@@ -8,28 +8,20 @@ public class Hero extends Person implements Comparable<Hero>{
 	private Spell[] HeroSpell;
 	private int iniative;
 	private String WeaponType;
-	public Hero(String name, int HP, int damagePoint, int defensePoint, int maxmana, int manaregen, int iniative, Weapon HeroWeapon, Spell[] HeroSpell, String WeaponType)
+
+	public Hero(String name, int HP, int damagePoint, int defensePoint, int maxmana, int manaregen, Weapon HeroWeapon, Spell[] HeroSpell)
 	{
 		super(name, HP, damagePoint, defensePoint);
 		this.currentmana = maxmana;
 		this.maxmana = maxmana;
 		this.manaregen = manaregen;
-		this.iniative = iniative;
 		this.HeroWeapon = HeroWeapon;
 		if(HeroSpell.length==2)
 		{this.HeroSpell = HeroSpell;}
-		this.WeaponType = WeaponType;
+		this.WeaponType = HeroWeapon.getWeaponType();
 	}
 	public Hero()
-	{
-		super("Herotest", 50, 5, 5);
-		this.currentmana = 10;
-		this.maxmana = 10;
-		this.manaregen = 2;
-		this.HeroWeapon = new Weapon();
-		Spell[] heroSpell = {new Spell(), new Spell()};
-		this.HeroSpell = heroSpell;
-	}
+	{this("DefaultHero",50,5,5,10,1,new Weapon(),new Spell[]{new Spell(), new Spell()});}
 
 	public String toString()
 	{return this.name +"(HP:"+this.currentHP+"/"+this.maxHP+", Mana:"+this.currentmana+"/"+this.maxmana+")";}
