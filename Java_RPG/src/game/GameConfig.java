@@ -10,7 +10,11 @@ import java.util.Scanner;
 public class GameConfig{
 	final private GameEngine gameEngine;
 	final static private Scanner myinput = new Scanner(System.in);
-	private GameConfig()
+
+	public GameConfig(GameEngine mygame)
+	{this.gameEngine=mygame;}
+
+	protected static GameEngine defaultGameConfig()
 	{	
 		//creat all heroes	
 		Hero[] HeroTab = new Hero[]{
@@ -79,14 +83,21 @@ public class GameConfig{
 		RoomHash.get("22").setExit("south",RoomHash.get("12"));
 		RoomHash.get("22").setExit("east",RoomHash.get("21"));
 
-		this.gameEngine = new GameEngine(HeroTab,new Dungeon(RoomHash),RoomHash.get("start"),myinput);
+		return new GameEngine(HeroTab,new Dungeon(RoomHash),RoomHash.get("start"),myinput);
 	}
+	protected static GameEngine saveGameConfig(int SaveNumber)
+	{
+		ArrayList<String>  SaveData = Save.ReadSave(SaveNumber);
+		
+		return new GameEngine(null, null, null, myinput);
+	}
+	
 	/**
  	* Run the game
  	*/
-	protected static void Run()
+	protected static void Run(GameEngine myGameEngine)
 	{
-		GameConfig game = new GameConfig();
+		GameConfig game = new GameConfig(myGameEngine);
 		game.gameEngine.Run();
 	}
 }

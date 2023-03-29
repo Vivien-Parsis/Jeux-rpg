@@ -52,7 +52,7 @@ public class Room {
 	public String save()
 	{
 		String content ="";
-		content +=this.RoomName+";"+this.canGoBack+"|";
+		content +=this.RoomName+"|"+this.canGoBack+"|";
 		if(this.RoomPerson!=null)
 		{content +=this.RoomPerson.save()+"|";}
 		else
@@ -66,7 +66,7 @@ public class Room {
 			if(this.hasExit(direction))
 			{content+=direction+":"+this.getExit(direction).getRoomName()+";";}
 		}
-		return content;
+		return content.substring(0,content.length()-1);
 	}
 	public String toString() 
 	{return this.RoomName;}

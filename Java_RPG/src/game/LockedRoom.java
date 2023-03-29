@@ -22,4 +22,7 @@ public class LockedRoom extends Room{
     {return ExitDirection;}
     public void setKeyItem(Item keyItem) 
     {KeyItem = keyItem;}
+
+    public String save()
+    {return super.save()+"|"+this.KeyItem.save()+"|"+this.ExitName+"|"+this.ExitDirection+"|LOCKED";}
 }

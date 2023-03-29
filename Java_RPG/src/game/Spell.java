@@ -36,7 +36,7 @@ public class Spell {
 	{return this.SpellName+"(type:"+SpellType+", mana cost:"+this.Manacost+", value:"+this.SpellValue+")";}
 
 	public String save()
-	{return "name:"+this.SpellName+";type:"+this.SpellType+";cost:"+this.Manacost+";value:"+this.SpellValue;}
+	{return this.SpellName+";"+this.SpellType+";"+this.Manacost+";"+this.SpellValue;}
 
 	public static boolean isKnownSpellType(String type)
 	{

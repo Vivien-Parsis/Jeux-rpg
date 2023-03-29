@@ -3,7 +3,7 @@ package tool;
 * Class of static methods that return random number between choosen numbers and selected type
 * @author VivienP
 */
-public class Rand
+public abstract class Rand
 {
 	/**
  	* generate a random integer between [min(number1, number2), max(number1, number2)[

@@ -25,12 +25,12 @@ public class Merchant extends Person{
     {Offer.remove(index);}
     public String save()
     {
-        String offer="|";
+        String offer="$";
         if(this.Offer.size()>0)
         {
             for(int i = 0; i<this.Offer.size();i++)
             {
-                offer+=this.Offer.get(i).save()+"|";
+                offer+=this.Offer.get(i).save()+"$";
             }
             offer = offer.substring(0,offer.length()-1);
         }

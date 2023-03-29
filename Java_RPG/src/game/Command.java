@@ -3,7 +3,7 @@ package game;
 * Class that handle command for game engine. List of command are define inside CommandList.java
 * @author VivienP
 */
-public class Command {
+public abstract class Command {
 	/**
  	*	read and return command output
  	*/

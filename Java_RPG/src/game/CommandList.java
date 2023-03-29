@@ -6,7 +6,7 @@ import java.util.LinkedHashMap;
 * Implement multiple lists of commands for the game
 * @author VivienP
 */
-public class CommandList {
+public abstract class CommandList {
     /**
     * List of all commands in explore phase
     */

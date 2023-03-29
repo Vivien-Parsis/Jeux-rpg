@@ -4,7 +4,7 @@ import java.util.Scanner;
 * Class that launch the game
 * @author VivienP
 */
-public class Game {
+public abstract class Game {
     /**
     * Launch a game
 	* @author VivienP
@@ -14,19 +14,34 @@ public class Game {
 		//menu
 		Scanner input = new Scanner(System.in);
         String Stringinput;
-		System.out.println("Welcome to the java RPG made by @VivienP !\nStart the game ? (y/n)");
-		//ask if the player want to (re)run the game
-		//y for yes and n for no, else unknown and ask again
+		System.out.println("Welcome to the java RPG made by @VivienP !");
 		while(true)
 		{
+			System.out.println("~~choose an option~~\n1.Launch a new game\n2.Load a save\n3.quit");
 			System.out.print(">");
 			Stringinput = input.next();
-			if(Stringinput.equals("y"))
-			{GameConfig.Run();System.out.println("\n:Do you want to restart the game ? (y/n)");}
-            if(Stringinput.equals("n"))
+			if(Stringinput.equals("1"))
+			{
+				GameConfig.Run(GameConfig.defaultGameConfig());
+			}
+			if(Stringinput.equals("2"))
+			{
+				int savefile = 0;
+				while(true)
+				{
+					System.out.println("choose a save\n1.Save1\n2.Save2\n3.Save3");
+					System.out.print(">");
+					Stringinput = input.next();
+					if(Stringinput.equals("1") || Stringinput.equals("2") || Stringinput.equals("3"))
+					{
+						savefile = Integer.parseInt(Stringinput);
+						break;
+					}
+				}
+				GameConfig.Run(GameConfig.saveGameConfig(savefile));
+			}
+			if(Stringinput.equals("3"))
 			{break;}
-			if(!Stringinput.equals("n") && !Stringinput.equals("y"))
-			{System.out.println("!unknown");}
 		}
 		input.close();
 	}
