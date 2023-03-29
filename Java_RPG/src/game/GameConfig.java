@@ -24,21 +24,21 @@ public class GameConfig{
 		//start room
 		RoomHash.put("start",new Room("gate",null,null,false));
 		//final room
-		RoomHash.put("final",new LockedRoom("final",new Boss("demon",100,14,5,true),null,true,new Item("final_key",0),"11","up"));
+		RoomHash.put("final",new LockedRoom("final",new Boss("demon",100,14,5,true),null,true,new Item("final key",0),"11","up"));
 		//merchant room
 		RoomHash.put("cave",new LockedRoom("cave",new Merchant("Merchant",
-		new ArrayList<Item>(Arrays.asList(new Item[]{new Weapon("gold_sword",2,2,"sword"),new Weapon("void_staff",2,2,"staff"),new Item("coin",1)}))),
+		new ArrayList<Item>(Arrays.asList(new Item[]{new Weapon("gold sword",2,2,"sword"),new Weapon("void staff",2,2,"staff"),new Item("coin",1)}))),
 		null,true,new Item("key",0),"12","down"));
 		
 		RoomHash.put("00",new Room("00",new Boss("goblin",60,7,5),new Item("key",0)));
 		RoomHash.put("01",new Room("01",new Boss("spider",40,6,5),new Item()));
-		RoomHash.put("02",new Room("02",new Boss("skeleton",60,9,5),new Item()));
+		RoomHash.put("02",new Room("02",new Boss("skeleton",60,9,5),new UsableItem("blue flask", 100, 0, 10, "mana_potion")));
 		
 		RoomHash.put("10",new Room("10",new Boss("goblin",60,10,5),new Item()));
-		RoomHash.put("11",new Room("11",new Boss("wolf",50,6,5),new Item()));
+		RoomHash.put("11",new Room("11",new Boss("wolf",50,6,5),new UsableItem("red flask", 100, 0, 10, "heal_potion")));
 		RoomHash.put("12",new Room("12",new Boss("goblin",65,8,5),new Item()));
 		
-		RoomHash.put("20",new Room("20",new Boss("wolf",50,7,5),new Item(),true));
+		RoomHash.put("20",new Room("20",new Boss("wolf",50,7,5),new UsableItem("black flask", 75, 0, 10, "damage_potion"),true));
 		RoomHash.put("21",new Room("21",new Boss("skeleton",65,9,5),new Item()));
 		RoomHash.put("22",new Room("22",new Boss("spider",45,8,5),new Item()));
 		

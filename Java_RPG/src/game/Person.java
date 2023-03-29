@@ -9,7 +9,7 @@ public class Person{
 	
 	public Person(String name, int HP, int damagePoint, int defensePoint)
 	{
-		this.name = name;
+		this.name = name.replaceAll(" ","_");
 		this.maxHP = HP;
 		this.currentHP = HP;
 		this.damagePoint = damagePoint;

@@ -22,6 +22,7 @@ public class CommandList {
 		commandHash.put("/move",   new String[]{"{direction} ", "move the player into a direction"});
 		commandHash.put("/back",   new String[]{"", "go to the previous visited room"});
 		commandHash.put("/equip",  new String[]{"{weapon} {hero} ", "equip choosen weapon on a hero"});
+		commandHash.put("/use",    new String[]{"{Usable item} {target} ", "consume a usable item"});
 		commandHash.put("/buy",    new String[]{"{item} ", "buy a item from a merchant"});
 		commandHash.put("/sell",   new String[]{"{item} ", "sell a item to a merchant"});
 		commandHash.put("/info",   new String[]{"{hero/boss/item/none} ","display current info about the current boss, a hero, a item or current situation"});
@@ -31,11 +32,12 @@ public class CommandList {
 
 		AttackcommandHash.put("/weapon", new String[]{"", "attack with weapon of your current hero"});
 		AttackcommandHash.put("/spell",  new String[]{"{spell} ", "use one spell of your current hero"});
+		AttackcommandHash.put("/use",    new String[]{"{Usable item} {target} ", "consume a usable item"});
 		AttackcommandHash.put("/info",   new String[]{"{hero/boss/item/none} ", "display current info about the current boss, a hero or a item"});
 		AttackcommandHash.put("/help",   new String[]{"{command} ", "display how work a command"});
 		AttackcommandHash.put("/show",   new String[]{"", "show all command"});
 		AttackcommandHash.put("/leave",  new String[]{"", "leave combat"});
-	}
+	}	
 	/**
 	 * check is a known command for explore phase
 	 */

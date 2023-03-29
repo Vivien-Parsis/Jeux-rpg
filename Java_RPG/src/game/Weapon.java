@@ -8,12 +8,8 @@ public class Weapon extends Item {
 	{
 		super(nameItem,100,goldvalue);
 		this.attackpoint = attackpoint;
-		//check if the weaponType in parameter is good or not
-		boolean knownWeaponType = false;
-		for(String type : ListWeaponType)
-		{if(type.equals(WeaponType)){knownWeaponType=true;break;}}
-		if(knownWeaponType)
-		{this.WeaponType = WeaponType;}
+		if(isKnownWeaponType(WeaponType))
+		{this.WeaponType=WeaponType;}
 		else
 		{this.WeaponType=ListWeaponType[0];}
 	}
@@ -31,6 +27,17 @@ public class Weapon extends Item {
 	public String getWeaponType()
 	{return this.WeaponType;}
 	
+	public static boolean isKnownWeaponType(String type)
+    {
+        boolean check = false;
+        for(String knowType : ListWeaponType)
+        {
+            if(knowType.equals(type))
+            {check=true;break;}
+        }
+        return check;
+    }
+
 	public boolean equals(Weapon toCompare)
 	{
 		return this.nameItem.equals(toCompare.nameItem)&&

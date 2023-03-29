@@ -8,7 +8,7 @@ public class Dungeon {
 	public Dungeon(final HashMap<String, Room> RoomHash)
 	{
 		this.RoomHash = RoomHash;
-		finalKey = new Item("final_key",0);
+		finalKey = new Item("final key",0);
 	}
 	/**
  	* check if their still at least one alive boss

@@ -36,18 +36,51 @@ public class GameEngine{
     protected void Run()
     {
 		System.out.println("\n############\nrunning game\n############\n");
+        this.HeroBag.add(new UsableItem("red flask", 100, 0, 10, "heal_potion"));
+        this.HeroBag.add(new Item());
         System.out.println(this.info(this.stringCurrentSituation(),stringCommandList()));
-        boolean stopTheGame = false;
+        this.Explore();
+    }
 
+    private void Explore()
+    {
+        boolean stopTheGame = false;
         while(true)
         {
             //execute a command for the explore phase
 			String resultcommand = Command.RunCommand(this);
         	if(resultcommand.equals("/quit"))
-        	{stopTheGame=true;}
+        	{
+                System.out.println("\n#########\ngame stop\n#########");
+                break;
+            }
         	if(resultcommand.equals("-2"))
         	{System.out.println(":unknown command !");}
-            
+            //use case
+            if(resultcommand.split(" ")[0].equals("/use"))
+            {
+                String[] tabResult = resultcommand.split(" ");
+                Item currentItem = this.HeroBag.get(Integer.parseInt(tabResult[1]));
+                String currentItemType = ((UsableItem) currentItem).getItemType();
+                if(currentItemType.equals("damage_potion"))
+                {System.out.println(":cannot use this type of item in explore phase");}
+                if((currentItemType.equals("heal_potion") || currentItemType.equals("mana_potion")) && tabResult[2].equals("boss"))
+                {System.out.println(":cannot use this item on the boss");}
+                if(currentItemType.equals("heal_potion") && tabResult[2].substring(0,4).equals("hero"))
+                {
+                    System.out.println(":using a healing potion");
+                    this.HeroTab[Integer.parseInt(tabResult[2].substring(4))].heal(((UsableItem) this.HeroBag.get(Integer.parseInt(tabResult[1]))).getItemvalue());
+                    this.HeroBag.remove(Integer.parseInt(tabResult[1]));
+                    System.out.println(this.info(this.stringCurrentSituation(),stringCommandList()));
+                }
+                if(currentItemType.equals("mana_potion") && tabResult[2].substring(0,4).equals("hero"))
+                {
+                    System.out.println(":using a mana potion");
+                    this.HeroTab[Integer.parseInt(tabResult[2].substring(4))].addcurrentmana(((UsableItem) this.HeroBag.get(Integer.parseInt(tabResult[1]))).getItemvalue());
+                    this.HeroBag.remove(Integer.parseInt(tabResult[1]));
+                    System.out.println(this.info(this.stringCurrentSituation(),stringCommandList()));
+                }
+            }
             //combat mod
             if(resultcommand.equals("/attack"))
             {stopTheGame = this.Combat();}
@@ -70,6 +103,7 @@ public class GameEngine{
         int remainStunRound = 0;
         //temporary resistance of heroes grant by defensive spell
         int SpellCombatRes = 0;
+        boolean useDamagePotion = false;
         boolean enoughmana = true;
         while(true)
         {
@@ -133,6 +167,35 @@ public class GameEngine{
                             currentHero.removecurrentmana(currentSpell.getManacost());
                         }
                     }
+                    //use case
+                    if(resultFightCommand.split(" ")[0].equals("/use"))
+                    {
+                        String[] tabResult = resultFightCommand.split(" ");
+                        Item currentItem = this.HeroBag.get(Integer.parseInt(tabResult[1]));
+                        String currentItemType = ((UsableItem) currentItem).getItemType();
+                        
+                        if((currentItemType.equals("heal_potion") || currentItemType.equals("mana_potion")) && tabResult[2].equals("boss"))
+                        {System.out.println(":cannot use this item on the boss");}
+                        if(currentItemType.equals("heal_potion") && tabResult[2].substring(0,4).equals("hero"))
+                        {
+                            System.out.println(":using a healing potion");
+                            this.HeroTab[Integer.parseInt(tabResult[2].substring(4))].heal(((UsableItem) this.HeroBag.get(Integer.parseInt(tabResult[1]))).getItemvalue());
+                            this.HeroBag.remove(Integer.parseInt(tabResult[1]));
+                        }
+                        if(currentItemType.equals("mana_potion") && tabResult[2].substring(0,4).equals("hero"))
+                        {
+                            System.out.println(":using a mana potion");
+                            this.HeroTab[Integer.parseInt(tabResult[2].substring(4))].addcurrentmana(((UsableItem) this.HeroBag.get(Integer.parseInt(tabResult[1]))).getItemvalue());
+                            this.HeroBag.remove(Integer.parseInt(tabResult[1]));
+                        }
+                        if(currentItemType.equals("damage_potion") && tabResult[2].equals("boss"))
+                        {
+                            System.out.println(":using a damage potion");
+                            this.CurrentRoom.getRoomBoss().hurtBoss(((UsableItem) this.HeroBag.get(Integer.parseInt(tabResult[1]))).getItemvalue());
+                            this.HeroBag.remove(Integer.parseInt(tabResult[1]));
+                            useDamagePotion = true;
+                        }
+                    }
                     //leave case
                     if(resultFightCommand.equals("/leave"))
                     {
@@ -140,7 +203,7 @@ public class GameEngine{
                         break;
                     }
                     //case of successfull spell or weapon
-                    if((enoughmana && (resultFightCommand.split(" ")[0].equals("/spell")) || resultFightCommand.equals("/weapon")))
+                    if((enoughmana && (resultFightCommand.split(" ")[0].equals("/spell")) || resultFightCommand.equals("/weapon") || (useDamagePotion && resultFightCommand.split(" ")[0].equals("/use"))))
                     {
                         //defeat on current boss case
                         if(this.CurrentRoom.getRoomBoss().currentHP<=0)
@@ -158,6 +221,7 @@ public class GameEngine{
                         break;
                     }
                     enoughmana = true;
+                    useDamagePotion = false;
                 }
                 //boss attack here only if not stun
                 if(!winoncurrentboss && remainStunRound==0)
@@ -271,7 +335,6 @@ public class GameEngine{
             }
         }
     } 
-    
     /**
     * regenerate mana of all alive heroes
     */
@@ -335,7 +398,6 @@ public class GameEngine{
             }
         }
     }
-
     /**
      * @return true if all heroes are dead, false if still remain alive hero
      */

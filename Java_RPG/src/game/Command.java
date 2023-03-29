@@ -356,6 +356,59 @@ public class Command {
 			System.out.println(":successfully equip weapon");
 			return "/equip";
 		}
+		//use case
+		if(tabCommand[0].equals("/use"))
+		{
+			if(tabCommand.length!=3)
+			{
+				System.out.println(":must be "+tabCommand[0]+" "+infoCommand[0]+"!");
+        		return "-1";
+			}
+			if(myGameEngine.getHeroBag().size()==0)
+			{
+				System.out.println(":empty bag");
+        		return "-1";
+			}
+			int indexBag = -1;
+			for(int i =0; i<myGameEngine.getHeroBag().size();i++)
+			{
+				if(tabCommand[1].equals(myGameEngine.getHeroBag().get(i).toString()))
+				{indexBag=i;break;}
+			}
+			if(indexBag==-1)
+			{
+				System.out.println(":unknown item");
+        		return "-1";
+			}
+			if(!(myGameEngine.getHeroBag().get(indexBag) instanceof UsableItem))
+			{
+				System.out.println(":unusable item");
+        		return "-1";
+			}
+			String indextarget = "-1";
+			for(int i =0; i<myGameEngine.getHeroTab().length;i++)
+			{
+				if(myGameEngine.getHeroTab()[i]!=null)
+				{if(tabCommand[2].equals(myGameEngine.getHeroTab()[i].getname()))
+					{
+						indextarget ="hero"+i;
+						break;
+					}
+				}
+			}
+			if(myGameEngine.getCurrentRoom().getRoomBoss()!=null)
+			{
+				if(indextarget.equals("-1")&&(tabCommand[2].equals(myGameEngine.getCurrentRoom().getRoomBoss().getname())||tabCommand[2].equals("boss")))
+				{
+					indextarget="boss";
+				}
+			}
+
+			if(indextarget.equals("-1"))
+			{System.out.println(":unknown target");}
+			
+			return "/use "+indexBag+" "+indextarget;
+		}
         //case of unknown command
         return "-2";
     }
@@ -504,6 +557,7 @@ public class Command {
 			System.out.println(":"+info);
 			return "/info";
 		}
+		//show case
 		if(tabCommand[0].equals("/show"))
 		{
 			if(tabCommand.length!=1)
@@ -516,6 +570,59 @@ public class Command {
 				System.out.println(myGameEngine.stringCombatCommandList()+"\n");
 				return "/show";
 			}
+		}
+		//use case
+		if(tabCommand[0].equals("/use"))
+		{
+			if(tabCommand.length!=3)
+			{
+				System.out.println(":must be "+tabCommand[0]+" "+infoAttackCommand[0]+"!");
+        		return "-1";
+			}
+			if(myGameEngine.getHeroBag().size()==0)
+			{
+				System.out.println(":empty bag");
+        		return "-1";
+			}
+			int indexBag = -1;
+			for(int i =0; i<myGameEngine.getHeroBag().size();i++)
+			{
+				if(tabCommand[1].equals(myGameEngine.getHeroBag().get(i).toString()))
+				{indexBag=i;break;}
+			}
+			if(indexBag==-1)
+			{
+				System.out.println(":unknown item");
+        		return "-1";
+			}
+			if(!(myGameEngine.getHeroBag().get(indexBag) instanceof UsableItem))
+			{
+				System.out.println(":unusable item");
+        		return "-1";
+			}
+			String indextarget = "-1";
+			for(int i =0; i<myGameEngine.getHeroTab().length;i++)
+			{
+				if(myGameEngine.getHeroTab()[i]!=null)
+				{if(tabCommand[2].equals(myGameEngine.getHeroTab()[i].getname()))
+					{
+						indextarget ="hero"+i;
+						break;
+					}
+				}
+			}
+			if(myGameEngine.getCurrentRoom().getRoomBoss()!=null)
+			{
+				if(indextarget.equals("-1")&&(tabCommand[2].equals(myGameEngine.getCurrentRoom().getRoomBoss().getname())||tabCommand[2].equals("boss")))
+				{
+					indextarget="boss";
+				}
+			}
+
+			if(indextarget.equals("-1"))
+			{System.out.println(":unknown target");}
+			
+			return "/use "+indexBag+" "+indextarget;
 		}
 		//case of unknown command
 		return "-2";

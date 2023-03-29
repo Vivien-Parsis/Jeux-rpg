@@ -15,7 +15,7 @@ public class Room {
 
 	public Room(final String RoomName,final Person RoomPerson, final Item RoomItem,final boolean canGoBack)
 	{
-		this.RoomName = RoomName;
+		this.RoomName = RoomName.replaceAll(" ","_");
 		//person must a merchant or a boss
 		if(RoomPerson instanceof Boss || RoomPerson instanceof Merchant)
 		{this.RoomPerson = RoomPerson;}

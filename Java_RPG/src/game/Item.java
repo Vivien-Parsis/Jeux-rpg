@@ -7,7 +7,7 @@ public class Item {
 	
 	public Item(String nameItem, int chance, int goldvalue)
 	{
-		this.nameItem = nameItem;
+		this.nameItem = nameItem.replaceAll(" ","_");
 		this.goldvalue = goldvalue;
 		if(!(chance>=0 && chance<=100))
 		{chance = 100;}
