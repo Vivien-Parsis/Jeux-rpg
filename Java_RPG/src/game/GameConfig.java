@@ -41,7 +41,6 @@ public class GameConfig{
 		RoomHash.put("20",new Room("20",new Boss("wolf",50,7,5),new UsableItem("black flask", 75, 0, 10, "damage_potion"),false));
 		RoomHash.put("21",new Room("21",new Boss("skeleton",65,9,5),new Item()));
 		RoomHash.put("22",new Room("22",new Boss("spider",45,8,5),new Item()));
-		
 		//setup exit for all rooms
 		RoomHash.get("cave").setExit("up",RoomHash.get("12"));
 		RoomHash.get("final").setExit("down",RoomHash.get("11"));

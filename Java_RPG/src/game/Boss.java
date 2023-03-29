@@ -21,7 +21,10 @@ public class Boss extends Person {
 			", damage point:"+this.damagePoint+
 			", defense point:"+this.defensePoint+")";
 	}
-
+	public String save()
+	{
+		return "boss;"+super.save()+";"+isFinalBoss;
+	}
 	public String toString()
 	{return this.name + "(HP:"+this.currentHP+"/"+this.maxHP+")";}
 	/**

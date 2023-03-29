@@ -1,6 +1,0 @@
-#Hero0
-name:warrior;mhp:160;chp:160;dmg:15;def:5;mmana:10;cmana:10|weapon;nameI:sword;gold:0;chance:100;atk:1;type:sword|spell1;name:reinforce_weapon;type:offensive;cost:7;value:15|spell2;name:flash;type:stun;cost:10;value:2
-#Hero1
-name:tank;mhp:190;chp:190;dmg:10;def:6;mmana:10;cmana:10|weapon;nameI:spear;gold:0;chance:100;atk:1;type:spear|spell1;name:shield;type:defensive;cost:5;value:1|spell2;name:shield_bash;type:stun;cost:10;value:2
-#Hero2
-name:wizard;mhp:135;chp:135;dmg:15;def:4;mmana:10;cmana:10|weapon;nameI:staff;gold:0;chance:100;atk:1;type:staff|spell1;name:fire_ball;type:offensive;cost:5;value:15|spell2;name:heal;type:heal;cost:10;value:15

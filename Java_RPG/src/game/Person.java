@@ -1,6 +1,6 @@
 package game;
 
-public class Person{
+public abstract class Person{
 	final protected String name;
 	final protected int maxHP;
 	protected int currentHP;
@@ -20,7 +20,7 @@ public class Person{
 	{this("test",50,5,5);}
 
 	public String save()
-	{return "name:"+this.name+";mhp:"+this.maxHP+";chp:"+this.currentHP+";dmg:"+this.damagePoint+";def:"+this.defensePoint;}
+	{return name+";"+this.maxHP+";"+this.currentHP+";"+this.damagePoint+";"+this.defensePoint;}
 	
 	public String toString()
 	{return this.name;}

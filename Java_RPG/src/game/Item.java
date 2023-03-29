@@ -25,7 +25,7 @@ public class Item {
 	{return this+"(gold value:"+goldvalue+")";}
 
 	public String save()
-	{return "nameI:"+this.nameItem+";gold:"+this.goldvalue+";chance:"+this.chance;}
+	{return this.nameItem+";"+this.goldvalue+";"+this.chance;}
 	public int getchance()
 	{return this.chance;}
 	public int getgoldValue()

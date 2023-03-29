@@ -420,7 +420,21 @@ public class Command {
 				System.out.println(":unknown save number");
 				return "-1";
 			}
-			Save.CreateSave(myGameEngine, Integer.parseInt(tabCommand[1]));
+			boolean wantToSave = false;
+			while(true)
+			{
+				System.out.println(":do you want to overwrite the choosen save file ? (y/n)");
+				System.out.print(">");
+    			String stringCommand = myGameEngine.command.nextLine().toLowerCase();
+				if(stringCommand.equals("y"))
+				{wantToSave=true;break;}
+				if(stringCommand.equals("n"))
+				{break;}
+			}
+			if(wantToSave)
+			{
+				Save.CreateSave(myGameEngine, Integer.parseInt(tabCommand[1]));
+			}
 			return "/save";
 		}
         //case of unknown command
