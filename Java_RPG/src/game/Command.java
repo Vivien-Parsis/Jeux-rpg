@@ -403,11 +403,25 @@ public class Command {
 					indextarget="boss";
 				}
 			}
-
 			if(indextarget.equals("-1"))
 			{System.out.println(":unknown target");}
-			
 			return "/use "+indexBag+" "+indextarget;
+		}
+		//save case
+		if(tabCommand[0].equals("/save"))
+		{
+			if(tabCommand.length!=2)
+			{
+				System.out.println(":must be "+tabCommand[0]+" "+infoCommand[0]+"!");
+        		return "-1";
+			}
+			if(!tabCommand[1].equals("1")&&!tabCommand[1].equals("2")&&!tabCommand[1].equals("3"))
+			{
+				System.out.println(":unknown save number");
+				return "-1";
+			}
+			Save.CreateSave(myGameEngine, Integer.parseInt(tabCommand[1]));
+			return "/save";
 		}
         //case of unknown command
         return "-2";

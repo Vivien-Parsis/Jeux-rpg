@@ -28,7 +28,9 @@ public class CommandList {
 		commandHash.put("/info",   new String[]{"{hero/boss/item/none} ","display current info about the current boss, a hero, a item or current situation"});
 		commandHash.put("/help",   new String[]{"{command} ", "display how work a command"});
 		commandHash.put("/show",   new String[]{"", "show all command"});
+		commandHash.put("/save",   new String[]{"{save number} ", "save the current game. The save number must be integer between 1 and 3"});
 		commandHash.put("/quit",   new String[]{"", "quit the game"});
+
 
 		AttackcommandHash.put("/weapon", new String[]{"", "attack with weapon of your current hero"});
 		AttackcommandHash.put("/spell",  new String[]{"{spell} ", "use one spell of your current hero"});

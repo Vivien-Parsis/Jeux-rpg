@@ -34,6 +34,9 @@ public class UsableItem extends Item{
     public String info()
     {return this+"(gold value:"+goldvalue+", usable type:"+this.ItemType+", value:"+this.Itemvalue+")";}
 
+    public String save()
+    {return super.save()+";Itype:"+this.ItemType+";Ivalue:"+this.Itemvalue;}
+
     public String getItemType() 
     {return ItemType;}
     public int getItemvalue() 

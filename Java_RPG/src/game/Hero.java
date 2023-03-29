@@ -1,12 +1,11 @@
 package game;
 
-public class Hero extends Person implements Comparable<Hero>{
+public class Hero extends Person{
 	private int currentmana;
 	final private int maxmana;
 	final private int manaregen;
 	private Weapon HeroWeapon;
 	private Spell[] HeroSpell;
-	private int iniative;
 	private String WeaponType;
 
 	public Hero(String name, int HP, int damagePoint, int defensePoint, int maxmana, int manaregen, Weapon HeroWeapon, Spell[] HeroSpell)
@@ -28,6 +27,8 @@ public class Hero extends Person implements Comparable<Hero>{
 	/**
  	* Return all info of the hero 
  	*/
+	public String save()
+	{return super.save()+";mmana:"+this.maxmana+";cmana:"+this.currentmana+"|weapon;"+this.HeroWeapon.save()+"|spell1;"+HeroSpell[0].save()+"|spell2;"+HeroSpell[1].save();}
 	public String info()
 	{
 		return 
@@ -98,19 +99,6 @@ public class Hero extends Person implements Comparable<Hero>{
 
 	public Spell[] getHeroSpell()
 	{return HeroSpell;}
-
-	public int getiniative()
-	{return iniative;}
-
-	public int compareTo(Hero hero)
-	{
-		int compare=0;
-		if(this.iniative>hero.iniative)
-		{compare = 1;}
-		else
-		{compare = -1;}
-		return compare;
-	}
 
 	public void setWeapon(Weapon newItem)
 	{this.HeroWeapon = newItem;}

@@ -21,6 +21,9 @@ public class Weapon extends Item {
 	public String info()
 	{return this+"(damage point:"+this.attackpoint+", weapon type:"+this.WeaponType+", gold value:"+this.goldvalue+")";}
  
+	public String save()
+	{return super.save()+";atk:"+this.attackpoint+";type:"+this.WeaponType;}
+	
 	public int getattackpoint()
 	{return this.attackpoint;}
 	

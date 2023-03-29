@@ -18,6 +18,9 @@ public class Person{
 	
 	public Person() 
 	{this("test",50,5,5);}
+
+	public String save()
+	{return "name:"+this.name+";mhp:"+this.maxHP+";chp:"+this.currentHP+";dmg:"+this.damagePoint+";def:"+this.defensePoint;}
 	
 	public String toString()
 	{return this.name;}

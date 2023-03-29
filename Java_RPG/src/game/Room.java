@@ -49,7 +49,25 @@ public class Room {
     			"\n~~~~~~exit~~~~~~\n"+
     			this.stringExit();
 	}
-	
+	public String save()
+	{
+		String content ="";
+		content +="name:"+this.RoomName+";back:"+this.canGoBack+"|";
+		if(this.RoomPerson!=null)
+		{content +=this.RoomPerson.save()+"|";}
+		else
+		{content +="null|";}
+		if(this.RoomItem!=null)
+		{content +=this.RoomItem.save()+"|";}
+		else
+		{content +="null|";}
+		for(String direction : DirectionList)
+		{
+			if(this.hasExit(direction))
+			{content+=direction+":"+this.getExit(direction).getRoomName()+";";}
+		}
+		return content;
+	}
 	public String toString() 
 	{return this.RoomName;}
 	/**

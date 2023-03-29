@@ -23,7 +23,21 @@ public class Merchant extends Person{
     {Offer.add(item);}
     public void RemoveaOffer(int index)
     {Offer.remove(index);}
-
+    public String save()
+    {
+        String offer="";
+        if(this.Offer.size()>0)
+        {
+            for(int i = 0; i<this.Offer.size();i++)
+            {
+                offer+=this.Offer.get(i).save()+"$";
+            }
+            offer = offer.substring(0,offer.length()-1);
+        }
+        else
+        {offer+="empty";}
+        return super.save()+"/"+offer;
+    }
     public ArrayList<Item> getOffer()
     {return this.Offer;}
 }

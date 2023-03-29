@@ -24,6 +24,8 @@ public class Item {
 	public String info()
 	{return this+"(gold value:"+goldvalue+")";}
 
+	public String save()
+	{return "nameI:"+this.nameItem+";gold:"+this.goldvalue+";chance:"+this.chance;}
 	public int getchance()
 	{return this.chance;}
 	public int getgoldValue()

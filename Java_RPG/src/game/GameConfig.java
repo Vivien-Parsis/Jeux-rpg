@@ -38,7 +38,7 @@ public class GameConfig{
 		RoomHash.put("11",new Room("11",new Boss("wolf",50,6,5),new UsableItem("red flask", 100, 0, 10, "heal_potion")));
 		RoomHash.put("12",new Room("12",new Boss("goblin",65,8,5),new Item()));
 		
-		RoomHash.put("20",new Room("20",new Boss("wolf",50,7,5),new UsableItem("black flask", 75, 0, 10, "damage_potion"),true));
+		RoomHash.put("20",new Room("20",new Boss("wolf",50,7,5),new UsableItem("black flask", 75, 0, 10, "damage_potion"),false));
 		RoomHash.put("21",new Room("21",new Boss("skeleton",65,9,5),new Item()));
 		RoomHash.put("22",new Room("22",new Boss("spider",45,8,5),new Item()));
 		
