@@ -52,15 +52,15 @@ public class Room {
 	public String save()
 	{
 		String content ="";
-		content +=this.RoomName+"|"+this.canGoBack+"|";
+		content +=this.RoomName+"&"+this.canGoBack+"&";
 		if(this.RoomPerson!=null)
-		{content +=this.RoomPerson.save()+"|";}
+		{content +=this.RoomPerson.save()+"&";}
 		else
-		{content +="null|";}
+		{content +="null&";}
 		if(this.RoomItem!=null)
-		{content +=this.RoomItem.save()+"|";}
+		{content +=this.RoomItem.save()+"&";}
 		else
-		{content +="null|";}
+		{content +="null&";}
 		for(String direction : DirectionList)
 		{
 			if(this.hasExit(direction))
@@ -82,6 +82,8 @@ public class Room {
 			{continue;}
 			exit += direction+ ":"+this.HashExit.get(direction)+"\n";
 		}
+		if(exit.equals(""))
+		{return exit;}
 		return exit.substring(0,exit.length()-1).replaceAll("null", "no exit");
 	}
 	/**

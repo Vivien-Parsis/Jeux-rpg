@@ -29,14 +29,12 @@ public class Merchant extends Person{
         if(this.Offer.size()>0)
         {
             for(int i = 0; i<this.Offer.size();i++)
-            {
-                offer+=this.Offer.get(i).save()+"$";
-            }
+            {offer+=this.Offer.get(i).save()+":";}
             offer = offer.substring(0,offer.length()-1);
         }
         else
         {offer+="empty";}
-        return super.save()+offer;
+        return "merchant"+super.save()+offer;
     }
     public ArrayList<Item> getOffer()
     {return this.Offer;}

@@ -22,13 +22,26 @@ public class Hero extends Person{
 	public Hero()
 	{this("DefaultHero",50,5,5,10,1,new Weapon(),new Spell[]{new Spell(), new Spell()});}
 
+	public Hero(String name, int maxHP, int currentHP, int damagePoint, int defensePoint,int currentmana, int maxmana, int manaregen, Weapon HeroWeapon, Spell[] HeroSpell)
+	{
+		super(name, maxHP, damagePoint, defensePoint);
+		this.currentHP = currentHP;
+		this.currentmana = currentmana;
+		this.maxmana = maxmana;
+		this.manaregen = manaregen;
+		this.HeroWeapon = HeroWeapon;
+		if(HeroSpell.length==2)
+		{this.HeroSpell = HeroSpell;}
+		this.WeaponType = HeroWeapon.getWeaponType();
+	}
+
 	public String toString()
 	{return this.name +"(HP:"+this.currentHP+"/"+this.maxHP+", Mana:"+this.currentmana+"/"+this.maxmana+")";}
 	/**
  	* Return all info of the hero 
  	*/
 	public String save()
-	{return super.save()+";"+this.currentmana+";"+this.maxmana+"|"+HeroWeapon.save()+"|"+this.HeroSpell[0].save()+"|"+this.HeroSpell[1].save()+"|"+this.WeaponType;}
+	{return super.save()+";"+this.currentmana+";"+this.maxmana+";"+this.manaregen+"&"+HeroWeapon.save()+"&"+this.HeroSpell[0].save()+"&"+this.HeroSpell[1].save();}
 	public String info()
 	{
 		return 

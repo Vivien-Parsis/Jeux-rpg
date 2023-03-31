@@ -38,6 +38,7 @@ public abstract class Game {
 						break;
 					}
 				}
+				
 				GameConfig.Run(GameConfig.saveGameConfig(savefile));
 			}
 			if(Stringinput.equals("3"))

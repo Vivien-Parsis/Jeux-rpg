@@ -32,7 +32,8 @@ public class Boss extends Person {
  	*/
 	public void hurtBoss(final int damage)
     {this.currentHP-=damage;}
-
+	public void setcurrentHP(int newhp)
+	{this.currentHP=newhp;}
 	public boolean getisFinalBoss()
 	{return this.isFinalBoss;}
 }

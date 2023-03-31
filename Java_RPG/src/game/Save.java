@@ -15,35 +15,35 @@ public abstract class Save {
             //hero
             for(int i = 0; i<myGame.getHeroTab().length;i++)
             {
-                SaveContent+="#Hero"+i+"\n";
+                SaveContent+="Hero"+i+"#";
                 if(myGame.getHeroTab()[i]==null)
                 {SaveContent+="null\n";}
                 else
                 {SaveContent+=myGame.getHeroTab()[i].save()+"\n";}
             }
             //bag
-            SaveContent+="#bag\n";
+            SaveContent+="bag_hero#";
             if(myGame.getHeroBag().size()>0)
             {
                 for(int i = 0; i<myGame.getHeroBag().size();i++)
-                {SaveContent+=myGame.getHeroBag().get(i).save()+"|";}
+                {SaveContent+=myGame.getHeroBag().get(i).save()+"&";}
                 SaveContent=SaveContent.substring(0,SaveContent.length()-1);
             }
             else
             {SaveContent+="empty";}
-            SaveContent+="\n#Gold\n"+myGame.getGold()+"\n#dungeon\n";
+            SaveContent+="\nGold#"+myGame.getGold()+"\n";
             //list of room
             for(String key : myGame.getDonjon().getRoomHash().keySet())
             {
-                SaveContent+=myGame.getDonjon().getRoomHash().get(key).save()+"\n";
+                SaveContent+="room_dungeon#"+myGame.getDonjon().getRoomHash().get(key).save()+"\n";
             }  
-            SaveContent+="#current_room\n"+myGame.getCurrentRoom().getRoomName()+"\n#LastRoom\n";
+            SaveContent+="current_room#"+myGame.getCurrentRoom().getRoomName()+"\nLastRoom#";
             
             if(myGame.getLastRoom().size()>0)
             {
                 for(int i=0; i<myGame.getLastRoom().size();i++)
                 {
-                    SaveContent+=myGame.getLastRoom().get(i).save()+"||";
+                    SaveContent+=myGame.getLastRoom().get(i).save()+"&&";
                 }
                 SaveContent=SaveContent.substring(0, SaveContent.length()-2);
             }
