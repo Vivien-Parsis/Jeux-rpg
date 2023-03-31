@@ -33,18 +33,15 @@ public abstract class Save {
             {SaveContent+="empty";}
             SaveContent+="\nGold#"+myGame.getGold()+"\n";
             //list of room
-            for(String key : myGame.getDonjon().getRoomHash().keySet())
-            {
-                SaveContent+="room_dungeon#"+myGame.getDonjon().getRoomHash().get(key).save()+"\n";
-            }  
+            for(String key : myGame.getDungeon().getRoomHash().keySet())
+            {SaveContent+="room_dungeon#"+myGame.getDungeon().getRoomHash().get(key).save()+"\n";}  
+            //current room
             SaveContent+="current_room#"+myGame.getCurrentRoom().getRoomName()+"\nLastRoom#";
-            
+            //last room(s)
             if(myGame.getLastRoom().size()>0)
             {
                 for(int i=0; i<myGame.getLastRoom().size();i++)
-                {
-                    SaveContent+=myGame.getLastRoom().get(i).save()+"&&";
-                }
+                {SaveContent+=myGame.getLastRoom().get(i).save()+"&&";}
                 SaveContent=SaveContent.substring(0, SaveContent.length()-2);
             }
             else
@@ -54,9 +51,7 @@ public abstract class Save {
             savefile.print(SaveContent);
             savefile.close();
         } catch (IOException e)
-        {
-            System.out.println("!error when writing to the file");
-        }
+        {System.out.println("!error when writing to the file");}
     }
     public static ArrayList<String> ReadSave(int saveNumber)
     {

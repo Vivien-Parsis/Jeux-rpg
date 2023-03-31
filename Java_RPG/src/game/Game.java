@@ -21,9 +21,7 @@ public abstract class Game {
 			System.out.print(">");
 			Stringinput = input.next();
 			if(Stringinput.equals("1"))
-			{
-				GameConfig.Run(GameConfig.defaultGameConfig());
-			}
+			{GameConfig.Run(GameConfig.defaultGameConfig());}
 			if(Stringinput.equals("2"))
 			{
 				int savefile = 0;
@@ -38,7 +36,6 @@ public abstract class Game {
 						break;
 					}
 				}
-				
 				GameConfig.Run(GameConfig.saveGameConfig(savefile));
 			}
 			if(Stringinput.equals("3"))

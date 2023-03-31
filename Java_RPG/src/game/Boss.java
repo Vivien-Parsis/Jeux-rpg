@@ -17,23 +17,21 @@ public class Boss extends Person {
 	public String info()
 	{
 		return 
-			this.name+"(HP:"+this.currentHP+"/"+this.maxHP+
-			", damage point:"+this.damagePoint+
-			", defense point:"+this.defensePoint+")";
+			this.getname()+"(HP:"+this.getcurrentHP()+"/"+this.getmaxHP()+
+			", damage point:"+this.getdamagePoint()+
+			", defense point:"+this.getdefensePoint()+")";
 	}
 	public String save()
 	{
 		return "boss;"+super.save()+";"+isFinalBoss;
 	}
 	public String toString()
-	{return this.name + "(HP:"+this.currentHP+"/"+this.maxHP+")";}
+	{return this.getname() + "(HP:"+this.getcurrentHP()+"/"+this.getmaxHP()+")";}
 	/**
  	* hurt the boss
  	*/
 	public void hurtBoss(final int damage)
-    {this.currentHP-=damage;}
-	public void setcurrentHP(int newhp)
-	{this.currentHP=newhp;}
+    {this.setcurrentHP(getcurrentHP()-damage);}
 	public boolean getisFinalBoss()
 	{return this.isFinalBoss;}
 }

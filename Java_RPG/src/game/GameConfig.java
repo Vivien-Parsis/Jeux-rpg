@@ -13,9 +13,13 @@ public class GameConfig{
 
 	public GameConfig(GameEngine mygame)
 	{this.gameEngine=mygame;}
-
+	
+	/**
+	 * load default game config
+	 */
 	protected static GameEngine defaultGameConfig()
 	{	
+		GameEngine defaultGame; 
 		//creat all heroes	
 		Hero[] HeroTab = new Hero[]{
 			new Hero("warrior",160,15,5,10,1,new Weapon("sword",1,0,"sword"),new Spell[]{new Spell("reinforce_weapon","offensive",7,15),new Spell("flash","stun",10,2)}),
@@ -83,18 +87,30 @@ public class GameConfig{
 		RoomHash.get("22").setExit("south",RoomHash.get("12"));
 		RoomHash.get("22").setExit("east",RoomHash.get("21"));
 
-		return new GameEngine(HeroTab,new Dungeon(RoomHash),RoomHash.get("start"),myinput);
+		defaultGame = new GameEngine(HeroTab,new Dungeon(RoomHash),RoomHash.get("start"),myinput);
+		defaultGame.getHeroBag().add(new UsableItem("red flask", 100, 0, 10, "heal_potion"));
+		defaultGame.getHeroBag().add(new Item());
+		return defaultGame;
 	}
+	/**
+	 * load a game config from a save file
+	 */
 	protected static GameEngine saveGameConfig(int SaveNumber)
 	{
+		GameEngine mySaveGame;
 		ArrayList<String>  SaveData = Save.ReadSave(SaveNumber);
 		ArrayList<String[]> SplitedData = new ArrayList<String[]>();
-		ArrayList<String[]> Exit = new ArrayList<String[]>();
+		ArrayList<ArrayList<String>> Exit = new ArrayList<ArrayList<String>>();
+		if(SaveData.size()==0)
+		{
+			System.out.println("!error while loading save file, empty file");
+			return null;
+		}
 		for(String line : SaveData)
 		{
 			if(line.split("#").length!=2)
 			{
-				System.out.println("!error while loading save file. unknown format or empty");
+				System.out.println("!error while loading save file, unknown format");
 				return null;
 			}
 			SplitedData.add(line.split("#"));
@@ -102,6 +118,7 @@ public class GameConfig{
 		Hero[] HeroTab = new Hero[3];
 		String StartRoom = "";
 		HashMap<String, Room> RoomHash = new HashMap<String, Room>();
+		ArrayList<Item> bag = new ArrayList<Item>();
 		for(String[] data : SplitedData)
 		{
 			//creation of heroes
@@ -123,6 +140,23 @@ public class GameConfig{
 				Integer.parseInt(primaryparam[2]),Integer.parseInt(primaryparam[3]),Integer.parseInt(primaryparam[4]),
 				Integer.parseInt(primaryparam[5]),Integer.parseInt(primaryparam[6]),Integer.parseInt(primaryparam[7]),
 				HeroWeapon, heroSpells);
+			}
+			if(data[0].equals("bag_hero"))
+			{
+				if(!data[1].equals("empty"))
+				{
+					String[] listItem = data[1].split("&");
+					for(String item : listItem)
+					{
+						String[] paramItem = item.split(";");
+						if(paramItem[paramItem.length-1].equals("USABLE"))
+						{bag.add(new UsableItem(paramItem[0],Integer.parseInt(paramItem[2]),Integer.parseInt(paramItem[1]),Integer.parseInt(paramItem[4]),paramItem[3]));}
+						else if(paramItem[paramItem.length-1].equals("WEAPON"))
+						{bag.add(new Weapon(paramItem[0], Integer.parseInt(paramItem[3]), Integer.parseInt(paramItem[0]), paramItem[4]));}
+						else
+						{bag.add(new Item(paramItem[0], Integer.parseInt(paramItem[2]), Integer.parseInt(paramItem[1])));}
+					}
+				}
 			}
 			//creation of dungeon
 			if(data[0].equals("room_dungeon"))
@@ -171,8 +205,14 @@ public class GameConfig{
 				{RoomItem = new Item(paramItem[0],Integer.parseInt(paramItem[2]),Integer.parseInt(paramItem[1]));}
 				if(param[param.length-1].equals("LOCKED"))
 				{
-					String[] paramkey = param[param.length-4].split(";");
-					Item keyItem = new Item(paramkey[0],Integer.parseInt(paramkey[2]),Integer.parseInt(paramkey[1]));
+					Item keyItem;
+					if(param[param.length-4].equals("null"))
+					{keyItem = null;}
+					else
+					{
+						String[] paramkey = param[param.length-4].split(";");
+						keyItem = new Item(paramkey[0],Integer.parseInt(paramkey[2]),Integer.parseInt(paramkey[1]));
+					}
 					currentRoom = new LockedRoom(param[0],RoomPerson,RoomItem,Boolean.parseBoolean(param[1]),keyItem,param[param.length-3],param[param.length-2]);
 				}
 				else
@@ -192,22 +232,28 @@ public class GameConfig{
 						for(int i = 0; i<param[4].split(";").length; i++)
 						{currentExit.add(param[param.length-1].split(";")[i]);}
 					}
+					Exit.add(currentExit);
 				}
 			}
 			if(data[0].equals("current_room"))
 			{StartRoom=data[1];}
 		}
 		//setup exit
-		for(String[] currentexit: Exit)
+		for(ArrayList<String> currentexit: Exit)
 		{
-			if(currentexit.length>1)
+			if(currentexit.size()>1)
 			{
-				for(String currentdirection : currentexit)
-				{RoomHash.get(currentexit[0]).setExit(currentdirection.split(":")[0], RoomHash.get(currentdirection.split(":")[1]));}
+				for(int i = 1; i<currentexit.size(); i++)
+				{
+					if(currentexit.get(i).equals("LOCKED"))
+					{continue;}
+					RoomHash.get(currentexit.get(0)).setExit(currentexit.get(i).split(":")[0], RoomHash.get(currentexit.get(i).split(":")[1]));
+				}
 			}
 		}
-
-		return new GameEngine(HeroTab, new Dungeon(RoomHash), RoomHash.get(StartRoom), myinput);
+		mySaveGame = new GameEngine(HeroTab, new Dungeon(RoomHash), RoomHash.get(StartRoom), myinput);
+		mySaveGame.setHeroBag(bag);
+		return mySaveGame;
 	}
 	/**
  	* Run the game

@@ -61,7 +61,7 @@ public abstract class Command {
 			{
 				if(hero==null)
 				{continue;}
-				if(hero.name.equals(tabCommand[1]))
+				if(hero.getname().equals(tabCommand[1]))
 				{
 					ishero = true;
 					info = hero.info();
@@ -71,7 +71,7 @@ public abstract class Command {
 			boolean isitem = false;
 			for(Item item : myGameEngine.getHeroBag())
 			{
-				if(item.nameItem.equals(tabCommand[1]))
+				if(item.toString().equals(tabCommand[1]))
 				{
 					isitem = true;
 					info = item.info();
@@ -283,7 +283,7 @@ public abstract class Command {
 			int index = -1;
 			for(int i = 0; i<myGameEngine.getHeroBag().size(); i++)
 			{
-				if(tabCommand[1].equals(myGameEngine.getHeroBag().get(i).nameItem))
+				if(tabCommand[1].equals(myGameEngine.getHeroBag().get(i).toString()))
 				{
 					knowitem = true;
 					index  = i;
@@ -535,7 +535,7 @@ public abstract class Command {
         		return "-1";
 			}
 			System.out.println(":attacking with a weapon");
-			myGameEngine.hurtBoss((currentHero.getHeroWeapon().getattackpoint()*currentHero.damagePoint)-myGameEngine.getCurrentRoom().getRoomBoss().defensePoint);
+			myGameEngine.hurtBoss((currentHero.getHeroWeapon().getattackpoint()*currentHero.getdamagePoint())-myGameEngine.getCurrentRoom().getRoomBoss().getdefensePoint());
 			return "/weapon";
 		}
 		//info case
@@ -552,7 +552,7 @@ public abstract class Command {
 				return "/info";
 			}
 			String info = "";
-			boolean isboss = tabCommand[1].equals("boss") || tabCommand[1].equals(myGameEngine.getCurrentRoom().getRoomBoss().name);
+			boolean isboss = tabCommand[1].equals("boss") || tabCommand[1].equals(myGameEngine.getCurrentRoom().getRoomBoss().getname());
 			if(isboss)
 			{info=myGameEngine.getCurrentRoom().getRoomBoss().info();}
 			boolean ishero = false;
@@ -560,7 +560,7 @@ public abstract class Command {
 			{
 				if(hero==null)
 				{continue;}
-				if(hero.name.equals(tabCommand[1]))
+				if(hero.getname().equals(tabCommand[1]))
 				{
 					ishero = true;
 					info = hero.info();
@@ -570,7 +570,7 @@ public abstract class Command {
 			boolean isitem = false;
 			for(Item item : myGameEngine.getHeroBag())
 			{
-				if(item.nameItem.equals(tabCommand[1]))
+				if(item.toString().equals(tabCommand[1]))
 				{
 					isitem = true;
 					info = item.info();

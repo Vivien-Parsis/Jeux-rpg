@@ -25,7 +25,7 @@ public class Hero extends Person{
 	public Hero(String name, int maxHP, int currentHP, int damagePoint, int defensePoint,int currentmana, int maxmana, int manaregen, Weapon HeroWeapon, Spell[] HeroSpell)
 	{
 		super(name, maxHP, damagePoint, defensePoint);
-		this.currentHP = currentHP;
+		this.setcurrentHP(currentHP);
 		this.currentmana = currentmana;
 		this.maxmana = maxmana;
 		this.manaregen = manaregen;
@@ -36,7 +36,7 @@ public class Hero extends Person{
 	}
 
 	public String toString()
-	{return this.name +"(HP:"+this.currentHP+"/"+this.maxHP+", Mana:"+this.currentmana+"/"+this.maxmana+")";}
+	{return this.getname() +"(HP:"+this.getcurrentHP()+"/"+this.getmaxHP()+", Mana:"+this.currentmana+"/"+this.maxmana+")";}
 	/**
  	* Return all info of the hero 
  	*/
@@ -45,8 +45,8 @@ public class Hero extends Person{
 	public String info()
 	{
 		return 
-			this.name+
-			"\nHP:"+this.currentHP+"/"+this.maxHP+", damage point:"+this.damagePoint+
+			this.getname()+
+			"\nHP:"+this.getcurrentHP()+"/"+this.getmaxHP()+", damage point:"+this.getdamagePoint()+
 			"\nMana:"+this.currentmana+"/"+this.maxmana+", mana regen:"+this.manaregen+
 			"\nWeapon type:"+this.WeaponType+", weapon:"+this.HeroWeapon.info()+
 			"\n"+StringSpellList();
@@ -81,12 +81,12 @@ public class Hero extends Person{
  	* hurt the hero
  	*/
 	public void hurtHero(int damage)
-	{this.currentHP-=damage;}
+	{this.setcurrentHP(this.getcurrentHP()-damage);}
 	public void heal(int heal)
 	{
-		this.currentHP+=heal;
-		if(this.currentHP>this.maxHP)
-		{this.currentHP=this.maxHP;}
+		this.setcurrentHP(heal);
+		if(this.getcurrentHP()>this.getmaxHP())
+		{this.setcurrentHP(this.getmaxHP());}
 	}
 
 	public int getcurrentmana()

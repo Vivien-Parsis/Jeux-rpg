@@ -1,11 +1,11 @@
 package game;
 
 public abstract class Person{
-	final protected String name;
-	final protected int maxHP;
-	protected int currentHP;
-	final protected int damagePoint;
-	protected int defensePoint;
+	final private String name;
+	final private int maxHP;
+	private int currentHP;
+	final private int damagePoint;
+	private int defensePoint;
 	
 	public Person(String name, int HP, int damagePoint, int defensePoint)
 	{

@@ -24,5 +24,11 @@ public class LockedRoom extends Room{
     {KeyItem = keyItem;}
 
     public String save()
-    {return super.save()+"&"+this.KeyItem.save()+"&"+this.ExitName+"&"+this.ExitDirection+"&LOCKED";}
+    {
+        String save = super.save()+"&";
+        if(this.KeyItem==null)
+        {save+="null"+"&"+this.ExitName+"&"+this.ExitDirection+"&LOCKED";;}
+        else
+        {save+=this.KeyItem.save()+"&"+this.ExitName+"&"+this.ExitDirection+"&LOCKED";;}
+        return save;}
 }

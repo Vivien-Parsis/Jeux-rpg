@@ -15,5 +15,5 @@ room_dungeon#final&true&boss;demon;100;100;14;5;true&null&down:11&final_key;0;10
 room_dungeon#20&false&boss;wolf;50;50;7;5;false&black_flask;0;75;damage_potion;10;USABLE&south:10;down:21
 room_dungeon#10&true&boss;goblin;60;60;10;5;false&coin;1;50&south:00;east:11;up:20
 room_dungeon#21&true&boss;skeleton;65;65;9;5;false&coin;1;50&south:11;east:22
-current_room#00
-LastRoom#01&true&boss;spider;40;40;6;5;false&coin;1;50&north:11;east:02;west:00
+current_room#01
+LastRoom#Empty

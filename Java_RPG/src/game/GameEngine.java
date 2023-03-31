@@ -13,7 +13,7 @@ public class GameEngine{
     private Hero[] HeroTab;
     private int gold;
 	final public Scanner command = new Scanner(System.in);	
-    final private Dungeon GameDungeon;
+    private Dungeon GameDungeon;
     private Room CurrentRoom;
     private Stack<Room> LastRoom;
     
@@ -36,8 +36,6 @@ public class GameEngine{
     protected void Run()
     {
 		System.out.println("\n############\nrunning game\n############\n");
-        this.HeroBag.add(new UsableItem("red flask", 100, 0, 10, "heal_potion"));
-        this.HeroBag.add(new Item());
         System.out.println(this.info(this.stringCurrentSituation(),stringCommandList()));
         this.Explore();
     }
@@ -206,7 +204,7 @@ public class GameEngine{
                     if((enoughmana && (resultFightCommand.split(" ")[0].equals("/spell")) || resultFightCommand.equals("/weapon") || (useDamagePotion && resultFightCommand.split(" ")[0].equals("/use"))))
                     {
                         //defeat on current boss case
-                        if(this.CurrentRoom.getRoomBoss().currentHP<=0)
+                        if(this.CurrentRoom.getRoomBoss().getcurrentHP()<=0)
                         {
                             winoncurrentboss = true;
                             this.CurrentRoom.kill();
@@ -238,7 +236,7 @@ public class GameEngine{
                 {
                     if(this.HeroTab[i]==null)
                     {continue;}
-                    if(this.HeroTab[i].currentHP<=0)
+                    if(this.HeroTab[i].getcurrentHP()<=0)
                     {this.HeroTab[i]=null;}
                 }
                 //stop combat in case of successfull leave or win on boss or no alive hero
@@ -359,7 +357,7 @@ public class GameEngine{
         //successfull leave
         if(leave)
         {
-            this.CurrentRoom.getRoomBoss().currentHP = this.CurrentRoom.getRoomBoss().maxHP;
+            this.CurrentRoom.getRoomBoss().setcurrentHP(this.CurrentRoom.getRoomBoss().getmaxHP());
             System.out.println(":successfull to leave");
         }
         //not successfull leave
@@ -504,7 +502,7 @@ public class GameEngine{
         {return "";}
     }
     
-    public Dungeon getDonjon()
+    public Dungeon getDungeon()
     {return this.GameDungeon;}
 
     public Stack<Room> getLastRoom()
@@ -547,4 +545,7 @@ public class GameEngine{
     
     public void addGold(int plus)
     {this.gold+=plus;}
+
+    public void setHeroBag(ArrayList<Item> heroBag) 
+    {HeroBag = heroBag;}
 }

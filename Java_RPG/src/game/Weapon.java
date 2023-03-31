@@ -19,8 +19,8 @@ public class Weapon extends Item {
  	*	return info of the weapon 
  	*/
 	public String info()
-	{return this+"(damage point:"+this.attackpoint+", weapon type:"+this.WeaponType+", gold value:"+this.goldvalue+")";}
- 
+	{return this+"(damage point:"+this.attackpoint+", weapon type:"+this.WeaponType+", gold value:"+this.getgoldValue()+")";}
+	
 	public String save()
 	{return super.save()+";"+this.attackpoint+";"+this.WeaponType+";WEAPON";}
 	
@@ -43,9 +43,9 @@ public class Weapon extends Item {
 
 	public boolean equals(Weapon toCompare)
 	{
-		return this.nameItem.equals(toCompare.nameItem)&&
+		return this.toString().equals(toCompare.toString())&&
 			this.WeaponType.equals(toCompare.WeaponType)&&
 			this.attackpoint==toCompare.attackpoint&&
-			this.goldvalue==toCompare.goldvalue;
+			this.getgoldValue()==toCompare.getgoldValue();
 	}
 }

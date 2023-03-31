@@ -32,7 +32,7 @@ public class UsableItem extends Item{
         return check;
     }
     public String info()
-    {return this+"(gold value:"+goldvalue+", usable type:"+this.ItemType+", value:"+this.Itemvalue+")";}
+    {return this+"(gold value:"+this.getgoldValue()+", usable type:"+this.ItemType+", value:"+this.Itemvalue+")";}
 
     public String save()
     {return super.save()+";"+this.ItemType+";"+this.Itemvalue+";USABLE";}

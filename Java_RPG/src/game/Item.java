@@ -1,9 +1,9 @@
 package game;
 
 public class Item {
-	final protected String nameItem;
-	final protected int goldvalue;
-	final protected int chance;
+	final private String nameItem;
+	final private int goldvalue;
+	final private int chance;
 	
 	public Item(String nameItem, int chance, int goldvalue)
 	{
@@ -20,7 +20,6 @@ public class Item {
 
 	final public String toString()
 	{return this.nameItem;}
-
 	public String info()
 	{return this+"(gold value:"+goldvalue+")";}
 
