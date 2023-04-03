@@ -13,7 +13,6 @@ public class GameConfig{
 
 	public GameConfig(GameEngine mygame)
 	{this.gameEngine=mygame;}
-	
 	/**
 	 * load default game config
 	 */
@@ -26,7 +25,6 @@ public class GameConfig{
 			new Hero("tank",190,10,6,10,1,new Weapon("spear",1,0,"spear"),new Spell[]{new Spell("shield","defensive",5,1),new Spell("shield_bash","stun",10,2)}),
 			new Hero("wizard",135,15,4,10,2,new Weapon("staff",1,0,"staff"),new Spell[]{new Spell("fire_ball","offensive",5,15),new Spell("heal","heal",10,15)})
 		};
-		
 		//create all rooms
 		HashMap<String,Room> RoomHash = new HashMap<String,Room>();
 		//start room
@@ -98,7 +96,7 @@ public class GameConfig{
 	protected static GameEngine saveGameConfig(int SaveNumber)
 	{
 		GameEngine mySaveGame;
-		ArrayList<String>  SaveData = Save.ReadSave(SaveNumber);
+		ArrayList<String> SaveData = Save.ReadSave(SaveNumber);
 		ArrayList<String[]> SplitedData = new ArrayList<String[]>();
 		ArrayList<ArrayList<String>> Exit = new ArrayList<ArrayList<String>>();
 		if(SaveData.size()==0)
@@ -119,6 +117,7 @@ public class GameConfig{
 		String StartRoom = "";
 		HashMap<String, Room> RoomHash = new HashMap<String, Room>();
 		ArrayList<Item> bag = new ArrayList<Item>();
+		Item finalkey = null;
 		for(String[] data : SplitedData)
 		{
 			//creation of heroes
@@ -170,7 +169,7 @@ public class GameConfig{
 				else if(param[2].split(";")[0].equals("boss"))
 				{
 					String[] paramboss = param[2].split(";");
-					RoomPerson = new Boss(paramboss[1],Integer.parseInt(paramboss[2]),Integer.parseInt(paramboss[4]),Integer.parseInt(paramboss[5]));
+					RoomPerson = new Boss(paramboss[1],Integer.parseInt(paramboss[2]),Integer.parseInt(paramboss[4]),Integer.parseInt(paramboss[5]), Boolean.parseBoolean(paramboss[6]));
 					RoomPerson.setcurrentHP(Integer.parseInt(paramboss[3]));
 				}
 				else
@@ -237,6 +236,13 @@ public class GameConfig{
 			}
 			if(data[0].equals("current_room"))
 			{StartRoom=data[1];}
+			//final key
+			if(data[0].equals("final_key"))
+			{
+				if(!data[1].equals("null"))
+				{finalkey = new Item(data[1].split(";")[0],Integer.parseInt(data[1].split(";")[1]));}
+			}
+
 		}
 		//setup exit
 		for(ArrayList<String> currentexit: Exit)
@@ -253,6 +259,7 @@ public class GameConfig{
 		}
 		mySaveGame = new GameEngine(HeroTab, new Dungeon(RoomHash), RoomHash.get(StartRoom), myinput);
 		mySaveGame.setHeroBag(bag);
+		mySaveGame.getDungeon().setFinalKey(finalkey);
 		return mySaveGame;
 	}
 	/**

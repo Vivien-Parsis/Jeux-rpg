@@ -34,7 +34,7 @@ public class Merchant extends Person{
         }
         else
         {offer+="empty";}
-        return "merchant"+super.save()+offer;
+        return "merchant;"+super.save()+offer;
     }
     public ArrayList<Item> getOffer()
     {return this.Offer;}

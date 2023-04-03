@@ -415,7 +415,7 @@ public abstract class Command {
 				System.out.println(":must be "+tabCommand[0]+" "+infoCommand[0]+"!");
         		return "-1";
 			}
-			if(!tabCommand[1].equals("1")&&!tabCommand[1].equals("2")&&!tabCommand[1].equals("3"))
+			if(!(tabCommand[1].equals("1")||tabCommand[1].equals("2")||tabCommand[1].equals("3")))
 			{
 				System.out.println(":unknown save number");
 				return "-1";

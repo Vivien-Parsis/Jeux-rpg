@@ -9,11 +9,12 @@ room_dungeon#22&true&boss;spider;45;45;8;5;false&coin;1;50&south:12;east:21
 room_dungeon#01&true&boss;spider;40;40;6;5;false&coin;1;50&north:11;east:02;west:00
 room_dungeon#12&true&boss;goblin;65;65;8;5;false&coin;1;50&north:22;south:02;west:11
 room_dungeon#02&true&boss;skeleton;60;60;9;5;false&blue_flask;0;100;mana_potion;10;USABLE&north:12;west:01
-room_dungeon#cave&true&merchantMerchant;1;1;0;0$gold_sword;2;100;2;sword;WEAPON:void_staff;2;100;2;staff;WEAPON:coin;1;100&null&up:12&key;0;100&12&down&LOCKED
+room_dungeon#cave&true&merchant;Merchant;1;1;0;0$gold_sword;2;100;2;sword;WEAPON:void_staff;2;100;2;staff;WEAPON:coin;1;100&null&up:12&key;0;100&12&down&LOCKED
 room_dungeon#gate&false&null&null&down:01
 room_dungeon#final&true&boss;demon;100;100;14;5;true&null&down:11&final_key;0;100&11&up&LOCKED
 room_dungeon#20&false&boss;wolf;50;50;7;5;false&black_flask;0;75;damage_potion;10;USABLE&south:10;down:21
 room_dungeon#10&true&boss;goblin;60;60;10;5;false&coin;1;50&south:00;east:11;up:20
 room_dungeon#21&true&boss;skeleton;65;65;9;5;false&coin;1;50&south:11;east:22
+final_key#final_key;0;100
 current_room#01
 LastRoom#Empty

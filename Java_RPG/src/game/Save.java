@@ -35,6 +35,12 @@ public abstract class Save {
             //list of room
             for(String key : myGame.getDungeon().getRoomHash().keySet())
             {SaveContent+="room_dungeon#"+myGame.getDungeon().getRoomHash().get(key).save()+"\n";}  
+            //final key
+            SaveContent+="final_key#";
+            if(myGame.getDungeon().getFinalKey()==null)
+            {SaveContent+="null\n";}
+            else
+            {SaveContent+=myGame.getDungeon().getFinalKey().save()+"\n";}
             //current room
             SaveContent+="current_room#"+myGame.getCurrentRoom().getRoomName()+"\nLastRoom#";
             //last room(s)
@@ -48,7 +54,7 @@ public abstract class Save {
             {SaveContent+="Empty\n";}
             
             System.out.println(":successfully save the game");
-            savefile.print(SaveContent);
+            savefile.print(SaveContent.substring(0, SaveContent.length()-1));
             savefile.close();
         } catch (IOException e)
         {System.out.println("!error when writing to the file");}
@@ -56,9 +62,9 @@ public abstract class Save {
     public static ArrayList<String> ReadSave(int saveNumber)
     {
         List<String> SaveData = new ArrayList<String>();
-        try{
-            SaveData = Files.readAllLines(Paths.get("game/save/save"+saveNumber+".txt"));
-        }catch (IOException e)
+        try
+        {SaveData = Files.readAllLines(Paths.get("game/save/save"+saveNumber+".txt"));}
+        catch (IOException e)
         {System.out.println("!error when writing to the file");}
         return (ArrayList<String>) SaveData;
     }
