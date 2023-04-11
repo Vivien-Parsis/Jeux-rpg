@@ -1,8 +1,8 @@
 package game;
 
-public class Weapon extends Item {
+public class Weapon extends Item implements GameData{
 	final private int attackpoint;
-	final protected static String[] ListWeaponType = {"spear", "staff", "sword"};
+	
 	private String WeaponType;
 	public Weapon(final String nameItem,final int attackpoint, int goldvalue, String WeaponType)
 	{

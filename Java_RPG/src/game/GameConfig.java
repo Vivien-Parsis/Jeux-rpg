@@ -3,6 +3,7 @@ import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
+import java.util.Stack;
 /**
 * Class that create the config of gameEngine
 * @author VivienP
@@ -10,7 +11,6 @@ import java.util.Scanner;
 public class GameConfig{
 	final private GameEngine gameEngine;
 	final static private Scanner myinput = new Scanner(System.in);
-
 	public GameConfig(GameEngine mygame)
 	{this.gameEngine=mygame;}
 	/**
@@ -32,7 +32,7 @@ public class GameConfig{
 		//final room
 		RoomHash.put("final",new LockedRoom("final",new Boss("demon",100,14,5,true),null,true,new Item("final key",0),"11","up"));
 		//merchant room
-		RoomHash.put("cave",new LockedRoom("cave",new Merchant("Merchant",
+		RoomHash.put("merchant",new LockedRoom("cave",new Merchant("Merchant",
 		new ArrayList<Item>(Arrays.asList(new Item[]{new Weapon("gold sword",2,2,"sword"),new Weapon("void staff",2,2,"staff"),new Item("coin",1)}))),
 		null,true,new Item("key",0),"12","down"));
 		
@@ -48,7 +48,7 @@ public class GameConfig{
 		RoomHash.put("21",new Room("21",new Boss("skeleton",65,9,5),new Item()));
 		RoomHash.put("22",new Room("22",new Boss("spider",45,8,5),new Item()));
 		//setup exit for all rooms
-		RoomHash.get("cave").setExit("up",RoomHash.get("12"));
+		RoomHash.get("merchant").setExit("up",RoomHash.get("12"));
 		RoomHash.get("final").setExit("down",RoomHash.get("11"));
 
 		RoomHash.get("start").setExit("down",RoomHash.get("01"));
@@ -117,7 +117,9 @@ public class GameConfig{
 		String StartRoom = "";
 		HashMap<String, Room> RoomHash = new HashMap<String, Room>();
 		ArrayList<Item> bag = new ArrayList<Item>();
+		Stack<String> LastRoom = new Stack<String>();
 		Item finalkey = null;
+
 		for(String[] data : SplitedData)
 		{
 			//creation of heroes
@@ -164,17 +166,17 @@ public class GameConfig{
 				Room currentRoom;
 				Person RoomPerson;
 				Item RoomItem;
-				if(param[2].equals("null"))
+				if(param[3].equals("null"))
 				{RoomPerson = null;}
-				else if(param[2].split(";")[0].equals("boss"))
+				else if(param[3].split(";")[0].equals("boss"))
 				{
-					String[] paramboss = param[2].split(";");
+					String[] paramboss = param[3].split(";");
 					RoomPerson = new Boss(paramboss[1],Integer.parseInt(paramboss[2]),Integer.parseInt(paramboss[4]),Integer.parseInt(paramboss[5]), Boolean.parseBoolean(paramboss[6]));
 					RoomPerson.setcurrentHP(Integer.parseInt(paramboss[3]));
 				}
 				else
 				{
-					String[] parammerch = param[2].split(":");
+					String[] parammerch = param[3].split(":");
 					ArrayList<Item> offer = new ArrayList<Item>();
 					if(!parammerch[1].equals("empty"))
 					{
@@ -193,8 +195,8 @@ public class GameConfig{
 					}
 					RoomPerson = new Merchant(parammerch[0].split(";")[0],offer);
 				}
-				String[] paramItem=param[3].split(";");
-				if(param[3].equals("null"))
+				String[] paramItem=param[4].split(";");
+				if(param[4].equals("null"))
 				{RoomItem=null;}
 				else if(paramItem[paramItem.length-1].equals("WEAPON"))
 				{RoomItem = new Weapon(paramItem[0],Integer.parseInt(paramItem[1]),Integer.parseInt(paramItem[3]),paramItem[4]);}
@@ -212,25 +214,18 @@ public class GameConfig{
 						String[] paramkey = param[param.length-4].split(";");
 						keyItem = new Item(paramkey[0],Integer.parseInt(paramkey[2]),Integer.parseInt(paramkey[1]));
 					}
-					currentRoom = new LockedRoom(param[0],RoomPerson,RoomItem,Boolean.parseBoolean(param[1]),keyItem,param[param.length-3],param[param.length-2]);
+					currentRoom = new LockedRoom(param[1],RoomPerson,RoomItem,Boolean.parseBoolean(param[2]),keyItem,param[param.length-3],param[param.length-2]);
 				}
 				else
-				{currentRoom = new Room(param[0],RoomPerson,RoomItem,Boolean.parseBoolean(param[1]));}
+				{currentRoom = new Room(param[1],RoomPerson,RoomItem,Boolean.parseBoolean(param[2]));}
 				RoomHash.put(param[0],currentRoom);
 				if(currentRoom!=null)
 				{
 					ArrayList<String> currentExit = new ArrayList<String>();
-					currentExit.add(currentRoom.getRoomName());
-					if(currentRoom instanceof LockedRoom)
-					{
-						for(int i = 0; i<param[param.length-1].split(";").length; i++)
-						{currentExit.add(param[param.length-1].split(";")[i]);}
-					}
-					else
-					{
-						for(int i = 0; i<param[4].split(";").length; i++)
-						{currentExit.add(param[param.length-1].split(";")[i]);}
-					}
+					currentExit.add(param[0]);
+					for(int i = 0; i<param[5].split(";").length; i++)
+					{currentExit.add(param[5].split(";")[i]);}
+					
 					Exit.add(currentExit);
 				}
 			}
@@ -242,6 +237,15 @@ public class GameConfig{
 				if(!data[1].equals("null"))
 				{finalkey = new Item(data[1].split(";")[0],Integer.parseInt(data[1].split(";")[1]));}
 			}
+			if(data[0].equals("LastRoom"))
+			{
+				String[] listBackRoom = data[1].split("&");
+				if(!data[1].equals("Empty"))
+				{
+					for(String backRoom : listBackRoom)
+					{LastRoom.push(backRoom);}
+				}
+			}
 
 		}
 		//setup exit
@@ -251,14 +255,15 @@ public class GameConfig{
 			{
 				for(int i = 1; i<currentexit.size(); i++)
 				{
-					if(currentexit.get(i).equals("LOCKED"))
-					{continue;}
-					RoomHash.get(currentexit.get(0)).setExit(currentexit.get(i).split(":")[0], RoomHash.get(currentexit.get(i).split(":")[1]));
+					String[] exits = currentexit.get(i).split(":");
+					RoomHash.get(currentexit.get(0)).setExit(exits[0], RoomHash.get(exits[1]));;
 				}
 			}
 		}
-		mySaveGame = new GameEngine(HeroTab, new Dungeon(RoomHash), RoomHash.get(StartRoom), myinput);
+		System.out.println(StartRoom);
+		mySaveGame = new GameEngine(HeroTab, new Dungeon(RoomHash),RoomHash.get(StartRoom), myinput);
 		mySaveGame.setHeroBag(bag);
+		mySaveGame.setLastRoom(LastRoom);
 		mySaveGame.getDungeon().setFinalKey(finalkey);
 		return mySaveGame;
 	}

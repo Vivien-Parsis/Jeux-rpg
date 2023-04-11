@@ -13,6 +13,7 @@ public abstract class Game {
 	{
 		//menu
 		Scanner input = new Scanner(System.in);
+		System.out.println(CommandList.getcommandHash().get("s"));
         String Stringinput;
 		System.out.println("Welcome to the java RPG made by @VivienP !");
 		while(true)

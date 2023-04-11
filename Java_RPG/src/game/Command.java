@@ -22,7 +22,7 @@ public abstract class Command {
 		String[] infoCommand;
     	
 		if(CommandList.knownCommand(tabCommand[0]))
-		{infoCommand = CommandList.commandHash.get(tabCommand[0]);}
+		{infoCommand = CommandList.getcommandHash().get(tabCommand[0]);}
 		else
 		{return "-2";}
 
@@ -102,11 +102,11 @@ public abstract class Command {
 			else
 			{
 				String infoHelp = "";
-				for(String command : CommandList.commandHash.keySet())
+				for(String command : CommandList.getcommandHash().keySet())
 				{
 					if(tabCommand[1].equals(command) || tabCommand[1].equals(command.substring(1)))
 					{
-						infoHelp = CommandList.commandHash.get(command)[1];
+						infoHelp = CommandList.getcommandHash().get(command)[1];
 						break;
 					}
 				}
@@ -149,7 +149,7 @@ public abstract class Command {
         	else
         	{
 				if(myGameEngine.getCurrentRoom().getcanGoBack())
-				{myGameEngine.pushLastRoom(myGameEngine.getCurrentRoom());}
+				{myGameEngine.pushLastRoom(myGameEngine.getDungeon().getKeyofRoomHash(myGameEngine.getCurrentRoom()));}
 				else
 				{myGameEngine.getLastRoom().clear();}
         		myGameEngine.setCurrentRoom(myGameEngine.getCurrentRoom().getExit(tabCommand[1]));
@@ -212,7 +212,7 @@ public abstract class Command {
 			else
 			{
 				System.out.println(":go back\n");
-				myGameEngine.setCurrentRoom(myGameEngine.popLastRoom());
+				myGameEngine.setCurrentRoom(myGameEngine.getDungeon().getRoomHash().get(myGameEngine.popLastRoom()));
 				System.out.println(myGameEngine.info(myGameEngine.stringCurrentSituation(),myGameEngine.stringCommandList()));
 				return "/back";
 			}
@@ -448,7 +448,7 @@ public abstract class Command {
 		String[] tabCommand = ReadCommand(myGameEngine);
 		String[] infoAttackCommand;
 		if(CommandList.knownAttackCommand(tabCommand[0]))
-		{infoAttackCommand = CommandList.AttackcommandHash.get(tabCommand[0]);}
+		{infoAttackCommand = CommandList.getAttackcommandHash().get(tabCommand[0]);}
 		else
 		{return "-2";}
 		//leave case
@@ -478,11 +478,11 @@ public abstract class Command {
 			{
 				String infoHelp = "";
 				
-				for(String command : CommandList.AttackcommandHash.keySet())
+				for(String command : CommandList.getAttackcommandHash().keySet())
 				{
 					if(tabCommand[1].equals(command) || tabCommand[1].equals(command.substring(1)))
 					{
-						infoHelp = CommandList.AttackcommandHash.get(command)[1];
+						infoHelp = CommandList.getAttackcommandHash().get(command)[1];
 						break;
 					}
 				}

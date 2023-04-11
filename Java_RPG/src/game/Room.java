@@ -2,16 +2,13 @@ package game;
 
 import java.util.HashMap;
 
-public class Room {
+public class Room implements GameData{
 	final private String RoomName;
 	private Person RoomPerson;
 	private Item RoomItem;
 	private HashMap<String, Room> HashExit;
 	private final boolean canGoBack;
-	/**
-     *	List of all possible direction
-     */
-	final static String[] DirectionList = {"north", "south", "east", "west", "up", "down"};
+	
 
 	public Room(final String RoomName,final Person RoomPerson, final Item RoomItem,final boolean canGoBack)
 	{
@@ -167,6 +164,19 @@ public class Room {
 
 	public Item getRoomItem()
 	{return this.RoomItem;}
+
+	public boolean equals(Room toCompare)
+	{
+		boolean checkitem=false;
+		if(this.RoomItem==null && toCompare.RoomItem==null)
+		{checkitem=true;}
+		else if(this.RoomItem==null || toCompare.RoomItem==null)
+		{checkitem=false;}
+		else
+		{checkitem=this.RoomItem.equals(toCompare.RoomItem);}
+
+		return this.RoomName.equals(toCompare.RoomName)&&canGoBack==toCompare.canGoBack&&checkitem;
+	}
 
 	public HashMap<String, Room> getHashExit()
 	{return this.HashExit;}

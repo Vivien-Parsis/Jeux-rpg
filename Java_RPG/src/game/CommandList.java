@@ -10,11 +10,11 @@ public abstract class CommandList {
     /**
     * List of all commands in explore phase
     */
-	static protected LinkedHashMap<String, String[]> commandHash = new LinkedHashMap<String, String[]>();
+	static final private LinkedHashMap<String, String[]> commandHash = new LinkedHashMap<String, String[]>();
 	/**
     * List of all commands in combat phase
     */
-	static protected LinkedHashMap<String, String[]> AttackcommandHash = new LinkedHashMap<String, String[]>();
+	static final  private LinkedHashMap<String, String[]> AttackcommandHash = new LinkedHashMap<String, String[]>();
 	
 	static
 	{
@@ -66,4 +66,9 @@ public abstract class CommandList {
 		}
 		return check;
 	}
+
+	public static LinkedHashMap<String, String[]> getcommandHash()
+	{return commandHash;}
+	public static LinkedHashMap<String, String[]> getAttackcommandHash()
+	{return AttackcommandHash;}
 }

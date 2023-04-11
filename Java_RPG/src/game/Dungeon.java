@@ -26,6 +26,17 @@ public class Dungeon {
 		}
 		return check;
 	}
+
+	public String getKeyofRoomHash(Room room)
+	{
+		for(String key : this.RoomHash.keySet())
+		{
+			if(this.RoomHash.get(key).equals(room))
+			{return key;}
+		}
+		return null;
+	}
+
 	public HashMap<String, Room> getRoomHash()
 	{return this.RoomHash;}
 	public Item getFinalKey()

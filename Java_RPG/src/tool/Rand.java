@@ -10,7 +10,6 @@ public abstract class Rand
  	*/
 	public static int randint(int number1, int number2)
 	{return (int) (Math.random()*(Math.max(number1,number2)-Math.min(number1,number2))+Math.min(number1,number2));}
-	
 	/**
  	* generate a random float between [min(number1, number2), max(number1, number2)[
  	*/

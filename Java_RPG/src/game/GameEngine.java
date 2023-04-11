@@ -12,10 +12,11 @@ public class GameEngine{
     private ArrayList<Item> HeroBag = new ArrayList<Item>();
     private Hero[] HeroTab;
     private int gold;
-	final public Scanner command = new Scanner(System.in);	
+	final public Scanner command = new Scanner(System.in);
     private Dungeon GameDungeon;
     private Room CurrentRoom;
-    private Stack<Room> LastRoom;
+    private Stack<String> LastRoom;
+    
     
     public GameEngine(Hero[] heroTab, Dungeon GameDungeon, Room CurrentRoom, Scanner command) 
     {
@@ -27,7 +28,7 @@ public class GameEngine{
         this.GameDungeon = GameDungeon;
         this.CurrentRoom = CurrentRoom;
         this.HeroBag = new ArrayList<Item>();
-        this.LastRoom = new Stack<Room>();
+        this.LastRoom = new Stack<String>();
         this.gold = 0;
     }
     /**
@@ -471,12 +472,12 @@ public class GameEngine{
 	public String stringCommandList()
     {
     	String list ="~~~~commands~~~~\n";
-    	for(String command : CommandList.commandHash.keySet())
+    	for(String command : CommandList.getcommandHash().keySet())
         {
             if((!CurrentRoom.hasBoss() && command.equals("/attack")) ||
             !CurrentRoom.hasMerchant() && (command.equals("/sell") || command.equals("/buy")))
             {continue;}
-            list+=command+" "+CommandList.commandHash.get(command)[0];
+            list+=command+" "+CommandList.getcommandHash().get(command)[0];
         }
     	return list.replaceAll(" /", ", /");
     }
@@ -486,9 +487,9 @@ public class GameEngine{
 	public String stringCombatCommandList()
     {
     	String list ="~~~~commands~~~~\n";
-    	for(String command : CommandList.AttackcommandHash.keySet())
+    	for(String command : CommandList.getAttackcommandHash().keySet())
         {
-            list+=command+" "+CommandList.AttackcommandHash.get(command)[0];
+            list+=command+" "+CommandList.getAttackcommandHash().get(command)[0];
         }
     	return list.replaceAll(" /", ", /");
     }
@@ -505,11 +506,13 @@ public class GameEngine{
     public Dungeon getDungeon()
     {return this.GameDungeon;}
 
-    public Stack<Room> getLastRoom()
+    public Stack<String> getLastRoom()
     {return this.LastRoom;}
-    public void pushLastRoom(Room room)
-    {this.LastRoom.push(room);}
-    public Room popLastRoom()
+    public void setLastRoom(Stack<String> lastRoom)
+    {this.LastRoom = lastRoom;}
+    public void pushLastRoom(String RoomHashKey)
+    {this.LastRoom.push(RoomHashKey);}
+    public String popLastRoom()
     {return this.LastRoom.pop();}
 
     public Hero[] getHeroTab()
@@ -548,4 +551,5 @@ public class GameEngine{
 
     public void setHeroBag(ArrayList<Item> heroBag) 
     {HeroBag = heroBag;}
+
 }
