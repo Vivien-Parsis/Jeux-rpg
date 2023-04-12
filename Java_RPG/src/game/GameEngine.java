@@ -514,7 +514,7 @@ public class GameEngine implements GameData{
         if(this.CurrentRoom.hasBoss())
         {return "\n~~~~~~boss~~~~~~\n"+this.CurrentRoom.getRoomPerson();}
         else if(this.CurrentRoom.hasMerchant())
-        {return "\n~~~~~Person~~~~~\n"+this.CurrentRoom.getRoomPerson()+this.CurrentRoom.getRoomMerchant().info();}
+        {return "\n~~~~~Person~~~~~\n"+this.CurrentRoom.getRoomPerson().getname()+this.CurrentRoom.getRoomMerchant().info();}
         else
         {return "";}
     }

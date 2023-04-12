@@ -34,7 +34,7 @@ public class Merchant extends Person{
         }
         else
         {offer+="empty";}
-        return "merchant;"+super.save()+offer;
+        return "merchant;"+this.getname()+";"+this.getmaxHP()+";"+this.getcurrentHP()+";"+this.getdamagePoint()+";"+this.getdefensePoint()+offer;
     }
     public ArrayList<Item> getOffer()
     {return this.Offer;}

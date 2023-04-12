@@ -41,7 +41,7 @@ public class Hero extends Person{
  	* Return all info of the hero 
  	*/
 	public String save()
-	{return super.save()+";"+this.currentmana+";"+this.maxmana+";"+this.manaregen+"&"+HeroWeapon.save()+"&"+this.HeroSpell[0].save()+"&"+this.HeroSpell[1].save();}
+	{return this.getname()+";"+this.getmaxHP()+";"+this.getcurrentHP()+";"+this.getdamagePoint()+";"+this.getdefensePoint()+";"+this.currentmana+";"+this.maxmana+";"+this.manaregen+"&"+HeroWeapon.save()+"&"+this.HeroSpell[0].save()+"&"+this.HeroSpell[1].save();}
 	public String info()
 	{
 		return 

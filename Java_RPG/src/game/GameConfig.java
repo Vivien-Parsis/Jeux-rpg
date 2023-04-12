@@ -42,7 +42,7 @@ public class GameConfig{
 		
 		RoomHash.put("10",new Room("hallway",new Boss("goblin",60,10,5),new Item()));
 		RoomHash.put("11",new Room("intersection",new Boss("wolf",50,6,5),new UsableItem("red flask", 100, 0, 10, "heal_potion")));
-		RoomHash.put("12",new Room("12",new Boss("goblin",65,8,5),new Item()));
+		RoomHash.put("12",new Room("hallway",new Boss("goblin",65,8,5),new Item()));
 		
 		RoomHash.put("20",new Room("hallway",new Boss("wolf",50,7,5),new UsableItem("black flask", 75, 0, 10, "damage_potion"),false));
 		RoomHash.put("21",new Room("hallway",new Boss("skeleton",65,9,5),new Item()));

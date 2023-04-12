@@ -15,17 +15,9 @@ public abstract class Person{
 		this.damagePoint = damagePoint;
 		this.defensePoint = defensePoint;
 	}
-	
+
 	public abstract String info();
-
-	public Person() 
-	{this("test",50,5,5);}
-
-	public String save()
-	{return name+";"+this.maxHP+";"+this.currentHP+";"+this.damagePoint+";"+this.defensePoint;}
-	
-	public String toString()
-	{return this.name;}
+	public abstract String save();
 	
 	public String getname()
 	{return this.name;}
