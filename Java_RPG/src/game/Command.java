@@ -152,7 +152,7 @@ public abstract class Command {
 				{myGameEngine.pushLastRoom(myGameEngine.getDungeon().getKeyofRoomHash(myGameEngine.getCurrentRoom()));}
 				else
 				{myGameEngine.getLastRoom().clear();}
-        		myGameEngine.setCurrentRoom(myGameEngine.getCurrentRoom().getExit(tabCommand[1]));
+        		myGameEngine.setCurrentRoom(myGameEngine.getDungeon().getRoomHash().get(myGameEngine.getCurrentRoom().getExit(tabCommand[1])));
         		System.out.println(":moving "+tabCommand[1]+"\n");
         		System.out.println(myGameEngine.info(myGameEngine.stringCurrentSituation(),myGameEngine.stringCommandList()));
         		return "/move";

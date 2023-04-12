@@ -36,54 +36,53 @@ public class GameConfig{
 		new ArrayList<Item>(Arrays.asList(new Item[]{new Weapon("gold sword",2,2,"sword"),new Weapon("void staff",2,2,"staff"),new Item("coin",1)}))),
 		null,true,new Item("key",0),"12","down"));
 		
-		RoomHash.put("00",new Room("00",new Boss("goblin",60,7,5),new Item("key",0)));
-		RoomHash.put("01",new Room("01",new Boss("spider",40,6,5),new Item()));
-		RoomHash.put("02",new Room("02",new Boss("skeleton",60,9,5),new UsableItem("blue flask", 100, 0, 10, "mana_potion")));
+		RoomHash.put("00",new Room("hallway",new Boss("goblin",60,7,5),new Item("key",0)));
+		RoomHash.put("01",new Room("hallway",new Boss("spider",40,6,5),new Item()));
+		RoomHash.put("02",new Room("hallway",new Boss("skeleton",60,9,5),new UsableItem("blue flask", 100, 0, 10, "mana_potion")));
 		
-		RoomHash.put("10",new Room("10",new Boss("goblin",60,10,5),new Item()));
-		RoomHash.put("11",new Room("11",new Boss("wolf",50,6,5),new UsableItem("red flask", 100, 0, 10, "heal_potion")));
+		RoomHash.put("10",new Room("hallway",new Boss("goblin",60,10,5),new Item()));
+		RoomHash.put("11",new Room("intersection",new Boss("wolf",50,6,5),new UsableItem("red flask", 100, 0, 10, "heal_potion")));
 		RoomHash.put("12",new Room("12",new Boss("goblin",65,8,5),new Item()));
 		
-		RoomHash.put("20",new Room("20",new Boss("wolf",50,7,5),new UsableItem("black flask", 75, 0, 10, "damage_potion"),false));
-		RoomHash.put("21",new Room("21",new Boss("skeleton",65,9,5),new Item()));
-		RoomHash.put("22",new Room("22",new Boss("spider",45,8,5),new Item()));
+		RoomHash.put("20",new Room("hallway",new Boss("wolf",50,7,5),new UsableItem("black flask", 75, 0, 10, "damage_potion"),false));
+		RoomHash.put("21",new Room("hallway",new Boss("skeleton",65,9,5),new Item()));
+		RoomHash.put("22",new Room("hallway",new Boss("spider",45,8,5),new Item()));
 		//setup exit for all rooms
-		RoomHash.get("merchant").setExit("up",RoomHash.get("12"));
-		RoomHash.get("final").setExit("down",RoomHash.get("11"));
+		RoomHash.get("merchant").setExit("up","12");
+		RoomHash.get("final").setExit("down","11");
+		RoomHash.get("start").setExit("down","01");
 
-		RoomHash.get("start").setExit("down",RoomHash.get("01"));
+		RoomHash.get("00").setExit("north","10");
+		RoomHash.get("00").setExit("east","01");
 
-		RoomHash.get("00").setExit("north",RoomHash.get("10"));
-		RoomHash.get("00").setExit("east",RoomHash.get("01"));
+		RoomHash.get("01").setExit("north","11");
+		RoomHash.get("01").setExit("east","02");
+		RoomHash.get("01").setExit("west","00");
 
-		RoomHash.get("01").setExit("north",RoomHash.get("11"));
-		RoomHash.get("01").setExit("east",RoomHash.get("02"));
-		RoomHash.get("01").setExit("west",RoomHash.get("00"));
+		RoomHash.get("02").setExit("north","12");
+		RoomHash.get("02").setExit("west","01");
 
-		RoomHash.get("02").setExit("north",RoomHash.get("12"));
-		RoomHash.get("02").setExit("west",RoomHash.get("01"));
+		RoomHash.get("10").setExit("south","00");
+		RoomHash.get("10").setExit("up","20");
+		RoomHash.get("10").setExit("east","11");
 
-		RoomHash.get("10").setExit("south",RoomHash.get("00"));
-		RoomHash.get("10").setExit("up",RoomHash.get("20"));
-		RoomHash.get("10").setExit("east",RoomHash.get("11"));
+		RoomHash.get("11").setExit("south","01");
+		RoomHash.get("11").setExit("north","21");
+		RoomHash.get("11").setExit("east","12");
+		RoomHash.get("11").setExit("west","10");
 
-		RoomHash.get("11").setExit("south",RoomHash.get("01"));
-		RoomHash.get("11").setExit("north",RoomHash.get("21"));
-		RoomHash.get("11").setExit("east",RoomHash.get("12"));
-		RoomHash.get("11").setExit("west",RoomHash.get("10"));
+		RoomHash.get("12").setExit("south","02");
+		RoomHash.get("12").setExit("north","22");
+		RoomHash.get("12").setExit("west","11");
 
-		RoomHash.get("12").setExit("south",RoomHash.get("02"));
-		RoomHash.get("12").setExit("north",RoomHash.get("22"));
-		RoomHash.get("12").setExit("west",RoomHash.get("11"));
+		RoomHash.get("20").setExit("south","10");
+		RoomHash.get("20").setExit("down","21");	
 
-		RoomHash.get("20").setExit("south",RoomHash.get("10"));
-		RoomHash.get("20").setExit("down",RoomHash.get("21"));	
+		RoomHash.get("21").setExit("south","11");
+		RoomHash.get("21").setExit("east","22");
 
-		RoomHash.get("21").setExit("south",RoomHash.get("11"));
-		RoomHash.get("21").setExit("east",RoomHash.get("22"));
-
-		RoomHash.get("22").setExit("south",RoomHash.get("12"));
-		RoomHash.get("22").setExit("east",RoomHash.get("21"));
+		RoomHash.get("22").setExit("south","12");
+		RoomHash.get("22").setExit("east","21");
 
 		defaultGame = new GameEngine(HeroTab,new Dungeon(RoomHash),RoomHash.get("start"),myinput);
 		defaultGame.getHeroBag().add(new UsableItem("red flask", 100, 0, 10, "heal_potion"));
@@ -256,7 +255,7 @@ public class GameConfig{
 				for(int i = 1; i<currentexit.size(); i++)
 				{
 					String[] exits = currentexit.get(i).split(":");
-					RoomHash.get(currentexit.get(0)).setExit(exits[0], RoomHash.get(exits[1]));;
+					RoomHash.get(currentexit.get(0)).setExit(exits[0], exits[1]);;
 				}
 			}
 		}

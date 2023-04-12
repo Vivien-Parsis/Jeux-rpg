@@ -8,7 +8,7 @@ import java.util.ArrayList;
 * Class that handle engine of the game
 * @author VivienP
 */
-public class GameEngine{
+public class GameEngine implements GameData{
     private ArrayList<Item> HeroBag = new ArrayList<Item>();
     private Hero[] HeroTab;
     private int gold;
@@ -387,7 +387,7 @@ public class GameEngine{
                     {
                         ((LockedRoom) lockedRoom).setKeyItem(null);
                         try{
-                            this.GameDungeon.getRoomHash().get(((LockedRoom) lockedRoom).getExitName()).setExit(((LockedRoom) lockedRoom).getExitDirection(), lockedRoom);
+                            this.GameDungeon.getRoomHash().get(((LockedRoom) lockedRoom).getExitName()).setExit(((LockedRoom) lockedRoom).getExitDirection(), this.GameDungeon.getKeyofRoomHash(lockedRoom));;
                             System.out.println(":unlocked a new room");
                         }catch (NullPointerException e){
                             System.out.println("!cannot asign exit for a locked room");
@@ -422,7 +422,7 @@ public class GameEngine{
     public String stringCurrentSituation()
     {
     	return
-				this.CurrentRoom.info()+
+				this.CurrentRoom.info()+this.stringCurrentExit()+
     			this.stringRoomPerson()+
     			this.stringHeroList()+
                 this.stringBag();
@@ -439,6 +439,22 @@ public class GameEngine{
             this.stringHeroList()+
             this.stringBag();
     }
+    /**
+ 	*	@return all exits of the room
+ 	*/
+	public String stringCurrentExit()
+	{	
+		String exit = "\n~~~~~~exit~~~~~~\n";
+		for(String direction : DirectionList)
+		{
+			if(CurrentRoom.getHashExit().get(direction)==null)
+			{continue;}
+			exit += direction+ ":"+this.GameDungeon.getRoomHash().get(CurrentRoom.getHashExit().get(direction)).getRoomName()+"\n";
+		}
+		if(exit.equals(""))
+		{return exit;}
+		return exit.substring(0,exit.length()-1).replaceAll("null", "no exit");
+	}
     /**
  	* @return the alive hero list
  	*/

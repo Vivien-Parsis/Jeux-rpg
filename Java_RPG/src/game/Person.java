@@ -16,6 +16,8 @@ public abstract class Person{
 		this.defensePoint = defensePoint;
 	}
 	
+	public abstract String info();
+
 	public Person() 
 	{this("test",50,5,5);}
 

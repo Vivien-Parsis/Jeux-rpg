@@ -6,7 +6,7 @@ public class Room implements GameData{
 	final private String RoomName;
 	private Person RoomPerson;
 	private Item RoomItem;
-	private HashMap<String, Room> HashExit;
+	private HashMap<String, String> HashExit;
 	private final boolean canGoBack;
 	
 
@@ -15,7 +15,7 @@ public class Room implements GameData{
 		this.RoomName = RoomName.replaceAll(" ","_");
 		this.RoomPerson = RoomPerson;
 		this.RoomItem = RoomItem;
-		HashExit = new HashMap<String, Room>();
+		HashExit = new HashMap<String, String>();
 		for(String Direction : DirectionList)
 		{this.HashExit.put(Direction, null);}
 		this.canGoBack = canGoBack;
@@ -27,7 +27,7 @@ public class Room implements GameData{
 	/**
  	*	Set up exit for a one direction
  	*/
-	public void setExit(final String direction, final Room exit)
+	public void setExit(final String direction, final String exit)
 	{
 		if(knownDirection(direction))
 		{this.HashExit.replace(direction, exit);}
@@ -37,10 +37,7 @@ public class Room implements GameData{
 
 	public String info()
 	{
-		return "~~~~~~room~~~~~~\n"+
-				this+
-    			"\n~~~~~~exit~~~~~~\n"+
-    			this.stringExit();
+		return "~~~~~~room~~~~~~\n"+this;
 	}
 	public String save()
 	{
@@ -57,28 +54,13 @@ public class Room implements GameData{
 		for(String direction : DirectionList)
 		{
 			if(this.hasExit(direction))
-			{content+=direction+":"+this.getExit(direction).getRoomName()+";";}
+			{content+=direction+":"+this.getExit(direction)+";";}
 		}
 		return content.substring(0,content.length()-1);
 	}
 	public String toString() 
 	{return this.RoomName;}
-	/**
- 	*	@return all exits of the room
- 	*/
-	public String stringExit()
-	{	
-		String exit = "";
-		for(String direction : DirectionList)
-		{
-			if(this.HashExit.get(direction)==null)
-			{continue;}
-			exit += direction+ ":"+this.HashExit.get(direction)+"\n";
-		}
-		if(exit.equals(""))
-		{return exit;}
-		return exit.substring(0,exit.length()-1).replaceAll("null", "no exit");
-	}
+	
 	/**
  	*	check if their is a exit in the selected direction
  	*/
@@ -94,7 +76,7 @@ public class Room implements GameData{
 	/**
  	*	@return if possible, the exit selected by the direction 
  	*/
-	public Room getExit(String direction)
+	public String getExit(String direction)
 	{
 		if(knownDirection(direction)==false)
 		{return null;}
@@ -178,7 +160,7 @@ public class Room implements GameData{
 		return this.RoomName.equals(toCompare.RoomName)&&canGoBack==toCompare.canGoBack&&checkitem;
 	}
 
-	public HashMap<String, Room> getHashExit()
+	public HashMap<String, String> getHashExit()
 	{return this.HashExit;}
 	public boolean getcanGoBack()
 	{return this.canGoBack;}
