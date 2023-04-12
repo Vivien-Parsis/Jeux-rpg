@@ -1,16 +1,8 @@
 package game;
 
-public class Spell {
+public class Spell implements GameData{
 	final private String SpellName;
 	final private String SpellType;
-	/**
-	 * List of all possible spell type for the game. <br><br>
-	 * heal : heal one choosen hero <br><br>
-	 * offensive : deal damage boss, bypass resistance of the boss <br><br>
-	 * defensive : give additionnal resistance for all hero <br><br>
-	 * stun : stun the boss for certain number of round
-	 */
-	final protected static String[] allSpellType = {"heal", "offensive", "defensive", "stun"};
 	final private int Manacost;
 	final private int SpellValue;			
 	

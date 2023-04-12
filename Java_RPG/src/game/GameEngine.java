@@ -128,7 +128,7 @@ public class GameEngine implements GameData{
                         if(!enoughmana)
                         {System.out.println(":Not enough mana to cast the spell !");}
                         //spell heal case
-                        if(spelltype.equals(Spell.allSpellType[0]) && enoughmana)
+                        if(spelltype.equals(allSpellType[0]) && enoughmana)
                         {
                             System.out.println(":using a heal spell");
                             while(true)
@@ -145,21 +145,21 @@ public class GameEngine implements GameData{
                             currentHero.removecurrentmana(currentSpell.getManacost());
                         }
                         //spell offensive case
-                        if(spelltype.equals(Spell.allSpellType[1]) && enoughmana)
+                        if(spelltype.equals(allSpellType[1]) && enoughmana)
                         {
                             System.out.println(":using a offensive spell");
                             this.hurtBoss(currentSpell.getSpellValue());
                             currentHero.removecurrentmana(currentSpell.getManacost());
                         }
                         //spell defensive case
-                        if(spelltype.equals(Spell.allSpellType[2]) && enoughmana)
+                        if(spelltype.equals(allSpellType[2]) && enoughmana)
                         {
                             System.out.println(":using a defensive spell");
                             SpellCombatRes = currentSpell.getSpellValue();
                             currentHero.removecurrentmana(currentSpell.getManacost());
                         }
                         //spell stun case
-                        if(spelltype.equals(Spell.allSpellType[3]) && enoughmana)
+                        if(spelltype.equals(allSpellType[3]) && enoughmana)
                         {
                             System.out.println(":using a stun spell");
                             remainStunRound = currentSpell.getSpellValue();

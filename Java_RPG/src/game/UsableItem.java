@@ -1,15 +1,9 @@
 package game;
 
-public class UsableItem extends Item{
+public class UsableItem extends Item implements GameData{
     final private int Itemvalue;
     private String ItemType;
-    /**
-	 * List of all possible item type for the game. <br><br>
-	 * heal_potion : heal one choosen hero <br><br>
-	 * mana_potion : regenerate mana of one choosen hero<br><br>
-     * damage_potion : damage the boss<br><br>
-	 */
-    final protected static String[] ListofItemType = {"heal_potion", "mana_potion", "damage_potion"};
+    
     
     public UsableItem(String nameItem, int chance, int goldvalue, int Itemvalue, String ItemType)
     {

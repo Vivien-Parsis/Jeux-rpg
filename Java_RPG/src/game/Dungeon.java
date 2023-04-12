@@ -26,7 +26,9 @@ public class Dungeon {
 		}
 		return check;
 	}
-
+	/**
+	 * return the key of Room from the roomHash
+	 */
 	public String getKeyofRoomHash(Room room)
 	{
 		for(String key : this.RoomHash.keySet())

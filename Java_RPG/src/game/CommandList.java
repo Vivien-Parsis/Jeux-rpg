@@ -31,7 +31,6 @@ public abstract class CommandList {
 		commandHash.put("/save",   new String[]{"{save number} ", "save the current game. The save number must be integer between 1 and 3"});
 		commandHash.put("/quit",   new String[]{"", "quit the game"});
 
-
 		AttackcommandHash.put("/weapon", new String[]{"", "attack with weapon of your current hero"});
 		AttackcommandHash.put("/spell",  new String[]{"{spell} ", "use one spell of your current hero"});
 		AttackcommandHash.put("/use",    new String[]{"{Usable item} {target} ", "consume a usable item"});
