@@ -75,7 +75,6 @@ public class GameConfig{
 		RoomHash.get("12").setExit("north","22");
 		RoomHash.get("12").setExit("west","11");
 
-		RoomHash.get("20").setExit("south","10");
 		RoomHash.get("20").setExit("down","21");	
 
 		RoomHash.get("21").setExit("south","11");

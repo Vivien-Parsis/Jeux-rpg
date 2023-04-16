@@ -17,7 +17,6 @@ public class GameEngine implements GameData{
     private Room CurrentRoom;
     private Stack<String> LastRoom;
     
-    
     public GameEngine(Hero[] heroTab, Dungeon GameDungeon, Room CurrentRoom, Scanner command) 
     {
         this.HeroTab = new Hero[3];

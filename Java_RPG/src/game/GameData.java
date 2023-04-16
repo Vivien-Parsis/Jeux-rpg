@@ -1,5 +1,8 @@
 package game;
-
+/**
+* Interface contain data for the game
+* @author VivienP
+*/
 public interface GameData {
     /**
      *	List of all possible direction

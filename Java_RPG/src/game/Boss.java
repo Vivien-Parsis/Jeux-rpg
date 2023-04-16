@@ -21,6 +21,9 @@ public class Boss extends Person {
 			", damage point:"+this.getdamagePoint()+
 			", defense point:"+this.getdefensePoint()+")";
 	}
+	/**
+ 	*	Create the save info of the boss
+ 	*/
 	public String save()
 	{return "boss;"+this.getname()+";"+this.getmaxHP()+";"+this.getcurrentHP()+";"+this.getdamagePoint()+";"+this.getdefensePoint()+";"+isFinalBoss;}
 	

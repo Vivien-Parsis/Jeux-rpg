@@ -80,7 +80,7 @@ public abstract class Save {
     {
         List<String> SaveData = new ArrayList<String>();
         try
-        {SaveData = Files.readAllLines(Paths.get("game/save/save"+saveNumber+".txt"));}
+        {SaveData = Files.readAllLines(Paths.get("./game/save/save"+saveNumber+".txt"));}
         catch (IOException e)
         {System.out.println("!error when writing to the file");}
         return (ArrayList<String>) SaveData;

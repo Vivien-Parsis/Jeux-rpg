@@ -4,7 +4,6 @@ public class UsableItem extends Item implements GameData{
     final private int Itemvalue;
     private String ItemType;
     
-    
     public UsableItem(String nameItem, int chance, int goldvalue, int Itemvalue, String ItemType)
     {
         super(nameItem, chance, goldvalue);
